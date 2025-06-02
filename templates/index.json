@@ -448,7 +448,7 @@
       "settings": {
         "title": "Produtos em Destaque",
         "featured_collection": "frontpage",
-        "products_limit": 7,
+        "products_limit": 13,
         "slides_per_view": 3,
         "show_pagination": true,
         "show_navigation": true,
