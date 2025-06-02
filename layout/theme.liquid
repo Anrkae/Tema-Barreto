@@ -114,7 +114,7 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
         by at the very top of the page. However, due to the fact that sections are isolated, I had to move the code
         here. Then, the collection section, based on the selected settings, will eventually hide those elements in CSS
       {%- endcomment -%}
-      <h2> teste </h2> 
+      
       {%- if request.page_type == 'collection' or request.page_type == 'search' -%}
         {%- assign active_filters_count = 0 -%}
 
@@ -143,7 +143,7 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
             {%- render 'icon' with 'filters' -%}
             <span class="mobile-toolbar__item-label">{{- 'collection.general.filters' | t -}}</span>
           </button>
-
+<h2> teste </h2> 
           <button is="toggle-button" class="mobile-toolbar__item mobile-toolbar__item--sort" aria-expanded="false" aria-controls="sort-by-popover" style="display: none">
             <span class="mobile-toolbar__item-label">{{- 'collection.general.sort_by' | t -}}</span>
             {%- render 'icon' with 'chevron' -%}
