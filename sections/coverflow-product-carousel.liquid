@@ -268,8 +268,9 @@
   {% endif %}
 </div>
 
-{% comment %} JavaScript da Seção
+{% comment %} JavaScript da Seção {% endcomment %}
 <script>
+{% comment %}
   function initCoverflowSwiper{{ section.id }}() {
     if (typeof Swiper === 'undefined') {
       console.warn('Swiper library not loaded for section {{ section.id }}.');
