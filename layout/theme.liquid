@@ -23,8 +23,8 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
 
     <title>{% if page_title == blank %}{{ shop.name }}{% else %}{{ page_title }}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% endif %}</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    {%- comment -%} Carregar Swiper CSS dos assets {% endcomment -%}
+    {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
 
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
@@ -164,6 +164,9 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
     {%- if request.page_type != 'gift_card' and request.page_type != 'password' -%}
       {%- section 'footer' -%}
     {%- endif -%}
+
+    {%- comment -%} Carregar Swiper JS dos assets ANTES de fechar o body {% endcomment -%}
+    <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 
   </body>
 </html>
