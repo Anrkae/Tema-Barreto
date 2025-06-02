@@ -260,7 +260,7 @@
   function initCoverflowSwiper{{ section.id }}() {
     alert("Função initCoverflowSwiper CHAMADA para seção {{ section.id }}"); // VERIFIQUE SE ESTE ALERTA APARECE
 
-    /* // INÍCIO DO BLOCO COMENTADO (Passo A da depuração)
+    /* // INÍCIO DO BLOCO COMENTADO (Passo A da depuração) - CORPO DA FUNÇÃO
     if (typeof Swiper === 'undefined') {
       alert('Biblioteca Swiper NÃO carregada para seção {{ section.id }}.');
       return;
@@ -319,7 +319,7 @@
         }
       }
     });
-    */ // FIM DO BLOCO COMENTADO (Passo A da depuração)
+    */ // FIM DO BLOCO COMENTADO (Passo A da depuração) - CORPO DA FUNÇÃO
   }
 
   /* // INÍCIO DO BLOCO COMENTADO - Event Listener shopify:section:load
@@ -338,6 +338,7 @@
   });
   */ // FIM DO BLOCO COMENTADO - Event Listener shopify:section:select
 
+  /* // INÍCIO DO BLOCO COMENTADO - Chamada por document.readyState / DOMContentLoaded
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     initCoverflowSwiper{{ section.id }}();
   } else {
@@ -345,4 +346,5 @@
       initCoverflowSwiper{{ section.id }}();
     });
   }
+  */ // FIM DO BLOCO COMENTADO - Chamada por document.readyState / DOMContentLoaded
 </script>
