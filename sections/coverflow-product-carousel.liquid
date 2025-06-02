@@ -322,14 +322,16 @@
     */ // FIM DO BLOCO COMENTADO (Passo A da depuração)
   }
 
+  /* // INÍCIO DO BLOCO COMENTADO - Event Listener shopify:section:load
   document.addEventListener('shopify:section:load', function(event) {
-    if (event.target.classList.contains('coverflow-section-{{ section.id }}')) { // CORRIGIDO: .contains
+    if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
       initCoverflowSwiper{{ section.id }}();
     }
   });
+  */ // FIM DO BLOCO COMENTADO - Event Listener shopify:section:load
 
   document.addEventListener('shopify:section:select', function(event) {
-     if (event.target.classList.contains('coverflow-section-{{ section.id }}')) { // CORRIGIDO: .contains
+     if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
       initCoverflowSwiper{{ section.id }}();
     }
   });
