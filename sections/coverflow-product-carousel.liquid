@@ -330,12 +330,13 @@
   });
   */ // FIM DO BLOCO COMENTADO - Event Listener shopify:section:load
 
-/*
+  /* // INÍCIO DO BLOCO COMENTADO - Event Listener shopify:section:select
   document.addEventListener('shopify:section:select', function(event) {
      if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
       initCoverflowSwiper{{ section.id }}();
     }
   });
+  */ // FIM DO BLOCO COMENTADO - Event Listener shopify:section:select
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     initCoverflowSwiper{{ section.id }}();
@@ -343,6 +344,5 @@
     document.addEventListener('DOMContentLoaded', function() {
       initCoverflowSwiper{{ section.id }}();
     });
-*/
   }
 </script>
