@@ -81,6 +81,11 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
 
     {{ content_for_header }}
+
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+
+</head>
   </head>
 
   {%- assign feature_classes = '' -%}
