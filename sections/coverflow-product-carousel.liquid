@@ -71,31 +71,30 @@
   .coverflow-section-{{ section.id }} {
     padding-top: 30px;
     padding-bottom: 30px;
-    position: relative; /* Para posicionamento absoluto das setas, se necessário */
+    position: relative;
   }
 
   .coverflow-section-{{ section.id }} .section-header {
     margin-bottom: 30px;
-    font-size: 24px; /* Ajuste conforme o seu tema */
+    font-size: 24px;
     text-align: center;
   }
 
   .coverflow-swiper-{{ section.id }} {
     width: 100%;
-    padding-top: 20px; /* Espaço para os slides em perspectiva */
-    padding-bottom: 50px; /* Espaço para paginação e perspectiva */
+    padding-top: 20px;
+    padding-bottom: 50px;
   }
 
   .coverflow-swiper-{{ section.id }} .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 300px; /* Largura do slide central - ajuste conforme necessário */
-    /* height: 400px;  Você pode definir uma altura fixa ou deixar automática baseada no conteúdo */
+    width: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: #fff; /* Cor de fundo para o card, caso a imagem não cubra tudo */
+    background-color: #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -106,12 +105,12 @@
     color: inherit;
     display: block;
     width: 100%;
-    height: 100%; /* Para garantir que o link ocupe todo o slide */
+    height: 100%;
   }
 
   .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper {
     width: 100%;
-    height: 250px; /* Altura fixa para a área da imagem, ajuste conforme necessário */
+    height: 250px;
     overflow: hidden;
     position: relative;
   }
@@ -120,35 +119,33 @@
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer, ou 'contain' para ver toda a imagem */
+    object-fit: cover;
   }
 
   .coverflow-swiper-{{ section.id }} .coverflow-product-info {
     padding: 15px;
-    min-height: 100px; /* Para garantir uma altura mínima mesmo com títulos curtos */
+    min-height: 100px;
   }
 
   .coverflow-swiper-{{ section.id }} .coverflow-product-title {
-    font-size: 16px; /* Ajuste */
+    font-size: 16px;
     margin: 0 0 8px 0;
     font-weight: bold;
     line-height: 1.3;
-    /* Limitar número de linhas para o título (opcional) */
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Número de linhas */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: calc(16px * 1.3 * 2); /* font-size * line-height * line-clamp */
+    height: calc(16px * 1.3 * 2);
   }
 
   .coverflow-swiper-{{ section.id }} .coverflow-product-price {
-    font-size: 14px; /* Ajuste */
+    font-size: 14px;
     margin: 0;
-    color: #555; /* Cor do preço */
+    color: #555;
   }
 
-  /* Paginação */
   .coverflow-swiper-{{ section.id }} .swiper-pagination-bullet {
     background-color: #ccc;
     opacity: 1;
@@ -157,29 +154,26 @@
     background-color: {{ section.settings.pagination_bullet_active_color }};
   }
 
-  /* Setas de Navegação */
   .coverflow-swiper-{{ section.id }} .swiper-button-next,
   .coverflow-swiper-{{ section.id }} .swiper-button-prev {
     color: {{ section.settings.nav_arrow_color }};
-    top: 50%; /* Alinha verticalmente com o centro dos slides */
-    transform: translateY(-50%); /* Ajuste fino do alinhamento vertical */
-    width: 28px; /* Tamanho da área clicável da seta */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
     height: 28px;
   }
   .coverflow-swiper-{{ section.id }} .swiper-button-next::after,
   .coverflow-swiper-{{ section.id }} .swiper-button-prev::after {
-    font-size: 18px; /* Tamanho do ícone da seta */
+    font-size: 18px;
     font-weight: bold;
   }
 
-  /* Efeito de sombra no slide (do Swiper) */
   .coverflow-swiper-{{ section.id }} .swiper-slide-shadow-left,
   .coverflow-swiper-{{ section.id }} .swiper-slide-shadow-right {
     background-image: none;
   }
 
-  /* Responsividade */
-  @media (max-width: 768px) { /* Tablet e abaixo */
+  @media (max-width: 768px) {
     .coverflow-swiper-{{ section.id }} .swiper-slide {
       width: 260px;
     }
@@ -188,7 +182,7 @@
     }
   }
 
-  @media (max-width: 480px) { /* Mobile */
+  @media (max-width: 480px) {
     .coverflow-swiper-{{ section.id }} .swiper-slide {
       width: 220px;
     }
@@ -264,7 +258,7 @@
 {% comment %} JavaScript da Seção {% endcomment %}
 <script>
   function initCoverflowSwiper{{ section.id }}() {
-    alert("Função initCoverflowSwiper CHAMADA para seção {{ section.id }}"); // Mantenha este alert para saber se a função é chamada
+    alert("Função initCoverflowSwiper CHAMADA para seção {{ section.id }}"); // VERIFIQUE SE ESTE ALERTA APARECE
 
     /* // INÍCIO DO BLOCO COMENTADO (Passo A da depuração)
     if (typeof Swiper === 'undefined') {
@@ -328,15 +322,14 @@
     */ // FIM DO BLOCO COMENTADO (Passo A da depuração)
   }
 
-  // As linhas abaixo (event listeners e chamada inicial) permanecem DESCOMENTADAS por enquanto
   document.addEventListener('shopify:section:load', function(event) {
-    if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
+    if (event.target.classList.contains('coverflow-section-{{ section.id }}')) { // CORRIGIDO: .contains
       initCoverflowSwiper{{ section.id }}();
     }
   });
 
   document.addEventListener('shopify:section:select', function(event) {
-     if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
+     if (event.target.classList.contains('coverflow-section-{{ section.id }}')) { // CORRIGIDO: .contains
       initCoverflowSwiper{{ section.id }}();
     }
   });
