@@ -1,13 +1,13 @@
 {% comment %} Esquema da Seção {% endcomment %}
 {% schema %}
 {
-  "name": "Coverflow Carousel",
+  "name": "Carrossel Produtos",
   "settings": [
     {
       "type": "text",
       "id": "title",
       "label": "Título da Seção",
-      "default": "Produtos em Destaque"
+      "default": "Nossos Produtos"
     },
     {
       "type": "collection",
@@ -18,49 +18,41 @@
       "type": "range",
       "id": "products_limit",
       "min": 3,
-      "max": 15,
+      "max": 12,
       "step": 1,
-      "label": "Número de Produtos",
-      "default": 7
+      "label": "Número de Produtos a Mostrar",
+      "default": 6
     },
     {
       "type": "range",
-      "id": "slides_per_view",
+      "id": "products_per_view",
       "min": 1,
-      "max": 5,
+      "max": 4,
       "step": 1,
-      "label": "Slides Visíveis (Desktop)",
-      "info": "Número de slides visíveis ao mesmo tempo. 'auto' também é uma opção.",
+      "label": "Produtos Visíveis por Vez (Desktop)",
       "default": 3
     },
     {
       "type": "checkbox",
-      "id": "show_pagination",
-      "label": "Mostrar Paginação (bolinhas)",
-      "default": true
+      "id": "autoplay",
+      "label": "Autoplay (Troca automática)",
+      "default": false
     },
     {
-      "type": "checkbox",
-      "id": "show_navigation",
-      "label": "Mostrar Setas de Navegação",
-      "default": true
-    },
-    {
-      "type": "color",
-      "id": "nav_arrow_color",
-      "label": "Cor das Setas de Navegação",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "pagination_bullet_active_color",
-      "label": "Cor da Paginação Ativa",
-      "default": "#000000"
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2000,
+      "max": 9000,
+      "step": 1000,
+      "unit": "ms",
+      "label": "Velocidade do Autoplay",
+      "default": 5000,
+      "info": "Tempo em milissegundos entre as trocas."
     }
   ],
   "presets": [
     {
-      "name": "Coverflow Carousel"
+      "name": "Carrossel de Produtos Simples"
     }
   ]
 }
@@ -68,112 +60,125 @@
 
 {% comment %} CSS da Seção {% endcomment %}
 <style>
-  .coverflow-section-{{ section.id }} {
+  .simple-carousel-section-{{ section.id }} {
     padding-top: 30px;
     padding-bottom: 30px;
     position: relative;
   }
-  .coverflow-section-{{ section.id }} .section-header {
+
+  .simple-carousel-section-{{ section.id }} .section-header {
     margin-bottom: 30px;
     font-size: 24px;
     text-align: center;
   }
-  .coverflow-swiper-{{ section.id }} {
+
+  .simple-carousel-container-{{ section.id }} {
+    position: relative;
     width: 100%;
-    padding-top: 20px;
-    padding-bottom: 50px;
-  }
-  .coverflow-swiper-{{ section.id }} .swiper-slide {
-    background-position: center;
-    background-size: cover;
-    width: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 8px;
     overflow: hidden;
+    margin: 0 auto;
+    max-width: 1200px; /* Ou a largura que preferir */
   }
-  .coverflow-swiper-{{ section.id }} .coverflow-product-card {
+
+  .simple-carousel-track-{{ section.id }} {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    /* Não defina a largura aqui, será calculada por JS */
+  }
+
+  .simple-carousel-slide-{{ section.id }} {
+    /* A largura será definida por JS baseado em products_per_view */
+    flex-shrink: 0; /* Impede que os slides encolham */
+    padding: 0 10px; /* Espaçamento entre os slides */
+    box-sizing: border-box;
+  }
+
+  .simple-carousel-product-card {
+    display: block;
     text-decoration: none;
     color: inherit;
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-  .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper {
-    width: 100%;
-    height: 250px;
+    border: 1px solid #eee;
+    border-radius: 4px;
     overflow: hidden;
-    position: relative;
+    text-align: center;
   }
-  .coverflow-swiper-{{ section.id }} .coverflow-product-image {
-    display: block;
+
+  .simple-carousel-product-image-wrapper {
+    width: 100%;
+    height: 200px; /* Ajuste conforme necessário */
+    overflow: hidden;
+  }
+
+  .simple-carousel-product-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  .coverflow-swiper-{{ section.id }} .coverflow-product-info {
+
+  .simple-carousel-product-info {
     padding: 15px;
-    min-height: 100px;
   }
-  .coverflow-swiper-{{ section.id }} .coverflow-product-title {
+
+  .simple-carousel-product-title {
     font-size: 16px;
-    margin: 0 0 8px 0;
     font-weight: bold;
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    margin: 0 0 5px 0;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: calc(16px * 1.3 * 2);
   }
-  .coverflow-swiper-{{ section.id }} .coverflow-product-price {
+
+  .simple-carousel-product-price {
     font-size: 14px;
-    margin: 0;
-    color: #555;
   }
-  .coverflow-swiper-{{ section.id }} .swiper-pagination-bullet {
-    background-color: #ccc;
-    opacity: 1;
-  }
-  .coverflow-swiper-{{ section.id }} .swiper-pagination-bullet-active {
-    background-color: {{ section.settings.pagination_bullet_active_color }};
-  }
-  .coverflow-swiper-{{ section.id }} .swiper-button-next,
-  .coverflow-swiper-{{ section.id }} .swiper-button-prev {
-    color: {{ section.settings.nav_arrow_color }};
+
+  .simple-carousel-nav-{{ section.id }} {
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
   }
-  .coverflow-swiper-{{ section.id }} .swiper-button-next::after,
-  .coverflow-swiper-{{ section.id }} .swiper-button-prev::after {
-    font-size: 18px;
-    font-weight: bold;
+
+  .simple-carousel-prev-{{ section.id }} {
+    left: 15px;
   }
-  .coverflow-swiper-{{ section.id }} .swiper-slide-shadow-left,
-  .coverflow-swiper-{{ section.id }} .swiper-slide-shadow-right {
-    background-image: none;
+
+  .simple-carousel-next-{{ section.id }} {
+    right: 15px;
   }
-  @media (max-width: 768px) {
-    .coverflow-swiper-{{ section.id }} .swiper-slide { width: 260px; }
-    .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper { height: 220px; }
+  
+  .simple-carousel-nav-{{ section.id }}:disabled {
+    opacity: 0.3;
+    cursor: default;
   }
-  @media (max-width: 480px) {
-    .coverflow-swiper-{{ section.id }} .swiper-slide { width: 220px; }
-    .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper { height: 180px; }
-    .coverflow-swiper-{{ section.id }} .coverflow-product-title { font-size: 14px; height: calc(14px * 1.3 * 2); }
-    .coverflow-swiper-{{ section.id }} .coverflow-product-price { font-size: 13px; }
+
+  /* Responsividade básica para produtos por visualização */
+  @media (max-width: 990px) {
+    /* Ajuste products_per_view para tablets se necessário, ou deixe o JS recalcular */
   }
+  @media (max-width: 749px) {
+    /* No mobile, geralmente 1 ou 1.x produtos são melhores */
+    /* O JS tentará ajustar para 1 produto em telas pequenas */
+     .simple-carousel-slide-{{ section.id }} {
+        /* A largura será recalculada pelo JS */
+     }
+  }
+
 </style>
 
 {% comment %} HTML e Liquid da Seção {% endcomment %}
-<div class="page-width coverflow-section-{{ section.id }}">
+<div class="simple-carousel-section-{{ section.id }} page-width">
   {% if section.settings.title != blank %}
     <h2 class="section-header">{{ section.settings.title | escape }}</h2>
   {% endif %}
@@ -181,162 +186,231 @@
   {%- liquid
     assign collection = collections[section.settings.featured_collection]
     assign products_limit = section.settings.products_limit
+    assign products_per_view_desktop = section.settings.products_per_view
   -%}
 
   {% if collection.products.size > 0 %}
-    <div class="swiper-container coverflow-swiper-{{ section.id }}">
-      <div class="swiper-wrapper">
+    <div class="simple-carousel-container-{{ section.id }}">
+      <div class="simple-carousel-track-{{ section.id }}">
         {% for product in collection.products limit: products_limit %}
-          <div class="swiper-slide">
-            <a href="{{ product.url | within: collection }}" class="coverflow-product-card">
-              <div class="coverflow-product-image-wrapper">
+          <div class="simple-carousel-slide-{{ section.id }}">
+            <a href="{{ product.url | within: collection }}" class="simple-carousel-product-card">
+              <div class="simple-carousel-product-image-wrapper">
                 {% if product.featured_image %}
-                  <img src="{{ product.featured_image | image_url: width: 600 }}"
+                  <img src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}"
                        alt="{{ product.featured_image.alt | escape }}"
                        loading="lazy"
-                       width="600"
-                       height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
-                       class="coverflow-product-image">
+                       class="simple-carousel-product-image">
                 {% else %}
-                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg coverflow-product-image' }}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg simple-carousel-product-image' }}
                 {% endif %}
               </div>
-              <div class="coverflow-product-info">
-                <h3 class="coverflow-product-title">{{ product.title }}</h3>
-                <p class="coverflow-product-price">{{ product.price | money }}</p>
+              <div class="simple-carousel-product-info">
+                <h3 class="simple-carousel-product-title">{{ product.title }}</h3>
+                <p class="simple-carousel-product-price">{{ product.price | money }}</p>
               </div>
             </a>
           </div>
         {% endfor %}
       </div>
-
-      {% if section.settings.show_pagination %}
-        <div class="swiper-pagination swiper-pagination-{{ section.id }}"></div>
-      {% endif %}
-
-      {% if section.settings.show_navigation %}
-        <div class="swiper-button-next swiper-button-next-{{ section.id }}"></div>
-        <div class="swiper-button-prev swiper-button-prev-{{ section.id }}"></div>
-      {% endif %}
+      <button class="simple-carousel-nav-{{ section.id }} simple-carousel-prev-{{ section.id }}" aria-label="Anterior">&#10094;</button>
+      <button class="simple-carousel-nav-{{ section.id }} simple-carousel-next-{{ section.id }}" aria-label="Próximo">&#10095;</button>
     </div>
   {% else %}
     {% if section.settings.featured_collection == blank %}
-        <p class="text-center">Por favor, selecione uma coleção nas configurações da seção.</p>
+      <p class="text-center">Por favor, selecione uma coleção nas configurações da seção.</p>
     {% else %}
-        <p class="text-center">A coleção selecionada não possui produtos ou não foi encontrada.</p>
+      <p class="text-center">A coleção selecionada não possui produtos.</p>
     {% endif %}
   {% endif %}
 </div>
 
 {% comment %} JavaScript da Seção {% endcomment %}
 <script>
-  function initCoverflowSwiper{{ section.id }}() {
-    if (typeof Swiper === 'undefined') {
-      // Este console.warn pode aparecer no Eruda se o Swiper não carregar.
-      console.warn('[Coverflow Carousel {{ section.id }}] ERRO: Biblioteca Swiper não definida. Verifique a importação no theme.liquid.');
+  function initializeSimpleCarousel{{ section.id }}() {
+    const container = document.querySelector('.simple-carousel-container-{{ section.id }}');
+    const track = document.querySelector('.simple-carousel-track-{{ section.id }}');
+    const slides = Array.from(track.children);
+    const nextButton = document.querySelector('.simple-carousel-next-{{ section.id }}');
+    const prevButton = document.querySelector('.simple-carousel-prev-{{ section.id }}');
+
+    if (!track || !nextButton || !prevButton || slides.length === 0) {
+      console.warn('[SimpleCarousel {{ section.id }}]: Elementos essenciais não encontrados ou sem slides.');
+      if(nextButton) nextButton.style.display = 'none';
+      if(prevButton) prevButton.style.display = 'none';
       return;
     }
 
-    const swiperContainer = document.querySelector('.coverflow-swiper-{{ section.id }}');
-    if (!swiperContainer) {
-      // Este console.warn pode aparecer no Eruda se o HTML não for encontrado.
-      console.warn('[Coverflow Carousel {{ section.id }}] ERRO: Container do Swiper (.coverflow-swiper-{{ section.id }}) não encontrado.');
-      return;
-    }
+    let currentIndex = 0;
+    let productsPerViewSetting = parseInt('{{ products_per_view_desktop }}') || 3;
+    let productsPerView = productsPerViewSetting; // Valor inicial
+    let slideWidth = 0; // Será calculado
+    let totalSlides = slides.length;
+    let autoplayInterval = null;
+    const autoplayEnabled = {{ section.settings.autoplay }};
+    const autoplaySpeed = parseInt('{{ section.settings.autoplay_speed }}') || 5000;
 
-    if (swiperContainer.swiper) {
-      swiperContainer.swiper.destroy(true, true);
-    }
-
-    new Swiper(swiperContainer, {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      loop: {% if collection.products.size > section.settings.slides_per_view %}true{% else %}false{% endif %},
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      coverflowEffect: {
-        rotate: 45,
-        stretch: 0,
-        depth: 120,
-        modifier: 1,
-        slideShadows: true,
-      },
-      pagination: {
-        el: '.swiper-pagination-{{ section.id }}',
-        clickable: {{ section.settings.show_pagination | default: true }},
-      },
-      navigation: {
-        nextEl: '.swiper-button-next-{{ section.id }}',
-        prevEl: '.swiper-button-prev-{{ section.id }}',
-      },
-      breakpoints: {
-        320: {
-          slidesPerView: 1.2,
-          spaceBetween: 15,
-          coverflowEffect: { rotate: 40, stretch: 0, depth: 100, modifier: 1.5 },
-        },
-        640: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-          coverflowEffect: { rotate: 45, stretch: 0, depth: 100, modifier: 1 },
-        },
-        1024: {
-          slidesPerView: {{ section.settings.slides_per_view | default: 3 }},
-          spaceBetween: 30,
-          coverflowEffect: { rotate: 50, stretch: 0, depth: 120, modifier: 1 },
-        }
+    function calculateSlideWidthAndApply() {
+      const containerWidth = container.offsetWidth;
+      // Ajuste para telas menores
+      if (window.innerWidth < 750 && window.innerWidth >= 480 && productsPerViewSetting > 2) {
+        productsPerView = 2;
+      } else if (window.innerWidth < 480 && productsPerViewSetting > 1) {
+        productsPerView = 1;
+      } else {
+        productsPerView = productsPerViewSetting;
       }
+
+      slideWidth = containerWidth / productsPerView;
+      slides.forEach(slide => {
+        slide.style.width = `${slideWidth}px`;
+      });
+      track.style.width = `${slideWidth * totalSlides}px`;
+      updateCarouselPosition(false); // Não animar ao recalcular
+    }
+
+    function updateCarouselPosition(animate = true) {
+      if (animate) {
+        track.style.transition = 'transform 0.5s ease-in-out';
+      } else {
+        track.style.transition = 'none';
+      }
+      track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+      updateNavButtons();
+    }
+
+    function updateNavButtons() {
+      prevButton.disabled = currentIndex === 0;
+      // Se houver X slides visíveis, o último "passo" é quando o primeiro dos X slides visíveis é o slide (totalSlides - X)
+      const maxIndex = totalSlides - productsPerView;
+      nextButton.disabled = currentIndex >= maxIndex || totalSlides <= productsPerView;
+       // Esconder botões se todos os slides estiverem visíveis
+      if (totalSlides <= productsPerView) {
+        prevButton.style.display = 'none';
+        nextButton.style.display = 'none';
+      } else {
+        prevButton.style.display = 'flex'; // 'flex' por causa do display:flex nos estilos
+        nextButton.style.display = 'flex';
+      }
+    }
+
+    function moveToNext() {
+      const maxIndex = totalSlides - productsPerView;
+      if (currentIndex < maxIndex) {
+        currentIndex++;
+      } else if (autoplayEnabled) { // Para autoplay, volta ao início
+        currentIndex = 0;
+      }
+      updateCarouselPosition();
+    }
+
+    function moveToPrev() {
+      if (currentIndex > 0) {
+        currentIndex--;
+      }
+      updateCarouselPosition();
+    }
+    
+    function startAutoplay() {
+      if (!autoplayEnabled || totalSlides <= productsPerView) return;
+      stopAutoplay(); // Garante que não haja múltiplos intervalos
+      autoplayInterval = setInterval(moveToNext, autoplaySpeed);
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayInterval);
+    }
+
+    // Event Listeners
+    nextButton.addEventListener('click', () => {
+      moveToNext();
+      stopAutoplay(); // Para autoplay quando navega manualmente
+      if(autoplayEnabled) startAutoplay(); // Reinicia se quiser
     });
-  }
-
-  function setupCoverflowListeners{{ section.id }}() {
-    const sectionElement = document.querySelector('.coverflow-section-{{ section.id }}');
-    if (!sectionElement) {
-      // Adiciona um pequeno delay e tenta novamente se a seção não estiver pronta imediatamente.
-      // Isso é um fallback e pode não ser ideal, mas tenta ajudar em casos de timing.
-      setTimeout(function() { setupCoverflowListeners{{ section.id }}(); }, 100);
-      return;
-    }
-
-    // Verifica se os listeners já foram adicionados para este elemento para evitar duplicação
-    if (sectionElement.dataset.coverflowListenersAttached === 'true') {
-      return;
-    }
-    sectionElement.dataset.coverflowListenersAttached = 'true';
-
-
-    document.addEventListener('shopify:section:load', function(event) {
-      if (event.target === sectionElement) {
-        initCoverflowSwiper{{ section.id }}();
-      }
-    });
-
-    document.addEventListener('shopify:section:select', function(event) {
-      if (event.target === sectionElement) {
-        initCoverflowSwiper{{ section.id }}();
-      }
+    prevButton.addEventListener('click', () => {
+      moveToPrev();
+      stopAutoplay();
+      if(autoplayEnabled) startAutoplay();
     });
     
-    // Para o carregamento inicial da página, se a seção já estiver no DOM
-    if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
-      initCoverflowSwiper{{ section.id }}();
-    } else {
-      document.addEventListener('DOMContentLoaded', function() {
-        initCoverflowSwiper{{ section.id }}();
-      });
+    // Opcional: pausar autoplay no hover
+    if (autoplayEnabled) {
+        container.addEventListener('mouseenter', stopAutoplay);
+        container.addEventListener('mouseleave', startAutoplay);
     }
+
+    // Recalcular em redimensionamento da janela
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        calculateSlideWidthAndApply();
+        // O currentIndex pode precisar ser reavaliado se productsPerView mudar drasticamente
+        const maxIndex = totalSlides - productsPerView;
+        if (currentIndex > maxIndex) {
+            currentIndex = maxIndex < 0 ? 0 : maxIndex;
+        }
+        updateCarouselPosition(false);
+        startAutoplay(); // Reinicia o autoplay com novas dimensões
+      }, 250);
+    });
+
+    // Inicialização
+    calculateSlideWidthAndApply(); // Calcula e aplica larguras iniciais
+    startAutoplay(); // Inicia o autoplay se habilitado
   }
 
-  // Chama a configuração dos listeners.
-  // Envolve em um try-catch para capturar qualquer erro de sintaxe aqui mesmo se o Eruda não pegar.
-  try {
-    setupCoverflowListeners{{ section.id }}();
-  } catch (e) {
-    console.error("[Coverflow Carousel {{ section.id }}] Erro ao configurar listeners: ", e);
-    // Se tiver um SyntaxError aqui, esta mensagem de erro pode aparecer no Eruda.
+  // Garante que o DOM está pronto e a seção está visível
+  function setupSimpleCarouselListeners{{ section.id }}() {
+    const sectionElement = document.querySelector('.simple-carousel-section-{{ section.id }}');
+    if (!sectionElement) {
+      // Tenta novamente se a seção não estiver pronta, mas com limite
+      let retries = 5;
+      function attemptSetup() {
+        if (retries <=0) return;
+        const el = document.querySelector('.simple-carousel-section-{{ section.id }}');
+        if (el) {
+          initializeSimpleCarousel{{ section.id }}();
+        } else {
+          retries--;
+          setTimeout(attemptSetup, 200);
+        }
+      }
+      attemptSetup();
+      return;
+    }
+    
+    // Verifica se já inicializou para evitar múltiplas instâncias no editor de temas
+    if (sectionElement.dataset.simpleCarouselInitialized === 'true') {
+        // Poderia ter uma lógica de "destroy" se fosse mais complexo,
+        // mas para este carrossel, apenas re-inicializar pode ser o suficiente
+        // ou simplesmente não fazer nada se já estiver ok.
+        // Por agora, vamos permitir a re-inicialização para que as configurações sejam aplicadas.
+    }
+    initializeSimpleCarousel{{ section.id }}();
+    sectionElement.dataset.simpleCarouselInitialized = 'true';
+
+  }
+
+  document.addEventListener('shopify:section:load', function(event) {
+    const sectionElement = document.querySelector('.simple-carousel-section-{{ section.id }}');
+    if (event.target === sectionElement) {
+      setupSimpleCarouselListeners{{ section.id }}();
+    }
+  });
+
+  document.addEventListener('shopify:section:select', function(event) {
+    const sectionElement = document.querySelector('.simple-carousel-section-{{ section.id }}');
+     if (event.target === sectionElement) {
+      setupSimpleCarouselListeners{{ section.id }}();
+    }
+  });
+
+  if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+    setupSimpleCarouselListeners{{ section.id }}();
+  } else {
+    document.addEventListener('DOMContentLoaded', function() {
+      setupSimpleCarouselListeners{{ section.id }}();
+    });
   }
 </script>
