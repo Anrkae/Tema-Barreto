@@ -1,3 +1,4 @@
+{% comment %} Esquema da Seção {% endcomment %}
 {% schema %}
 {
   "name": "Carrossel Coverflow Produtos",
@@ -23,19 +24,14 @@
       "default": 7
     },
     {
-      "type": "select",
+      "type": "range",
       "id": "slides_per_view",
+      "min": 1,
+      "max": 5,
+      "step": 1,
       "label": "Slides Visíveis (Desktop)",
-      "info": "Escolha o número de slides ou 'Automático' para ajuste dinâmico.",
-      "options": [
-        { "value": "auto", "label": "Automático" },
-        { "value": "1", "label": "1 Slide" },
-        { "value": "2", "label": "2 Slides" },
-        { "value": "3", "label": "3 Slides" },
-        { "value": "4", "label": "4 Slides" },
-        { "value": "5", "label": "5 Slides" }
-      ],
-      "default": "3"
+      "info": "Número de slides visíveis ao mesmo tempo. 'auto' também é uma opção.",
+      "default": 3
     },
     {
       "type": "checkbox",
@@ -70,102 +66,124 @@
 }
 {% endschema %}
 
-
+{% comment %} CSS da Seção {% endcomment %}
 <style>
   .coverflow-section-{{ section.id }} {
-    padding: 30px 0;
+    padding-top: 30px;
+    padding-bottom: 30px;
     position: relative;
   }
-
   .coverflow-section-{{ section.id }} .section-header {
-    text-align: center;
-    font-size: 24px;
     margin-bottom: 30px;
+    font-size: 24px;
+    text-align: center;
   }
-
+  .coverflow-swiper-{{ section.id }} {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+  }
   .coverflow-swiper-{{ section.id }} .swiper-slide {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    width: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
-  }
-
-  .coverflow-swiper-{{ section.id }} .coverflow-product-card {
-    width: 100%;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper {
-    height: 250px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 8px;
     overflow: hidden;
   }
-
+  .coverflow-swiper-{{ section.id }} .coverflow-product-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+  }
   .coverflow-swiper-{{ section.id }} .coverflow-product-image {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
   }
-
   .coverflow-swiper-{{ section.id }} .coverflow-product-info {
     padding: 15px;
-    text-align: center;
+    min-height: 100px;
   }
-
   .coverflow-swiper-{{ section.id }} .coverflow-product-title {
     font-size: 16px;
-    font-weight: bold;
     margin: 0 0 8px 0;
+    font-weight: bold;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: calc(16px * 1.3 * 2);
   }
-
   .coverflow-swiper-{{ section.id }} .coverflow-product-price {
     font-size: 14px;
-    color: #555;
     margin: 0;
+    color: #555;
   }
-
   .coverflow-swiper-{{ section.id }} .swiper-pagination-bullet {
     background-color: #ccc;
     opacity: 1;
   }
-
   .coverflow-swiper-{{ section.id }} .swiper-pagination-bullet-active {
     background-color: {{ section.settings.pagination_bullet_active_color }};
   }
-
   .coverflow-swiper-{{ section.id }} .swiper-button-next,
   .coverflow-swiper-{{ section.id }} .swiper-button-prev {
     color: {{ section.settings.nav_arrow_color }};
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
   }
-
+  .coverflow-swiper-{{ section.id }} .swiper-button-next::after,
+  .coverflow-swiper-{{ section.id }} .swiper-button-prev::after {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .coverflow-swiper-{{ section.id }} .swiper-slide-shadow-left,
+  .coverflow-swiper-{{ section.id }} .swiper-slide-shadow-right {
+    background-image: none;
+  }
   @media (max-width: 768px) {
     .coverflow-swiper-{{ section.id }} .swiper-slide { width: 260px; }
     .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper { height: 220px; }
   }
-
   @media (max-width: 480px) {
     .coverflow-swiper-{{ section.id }} .swiper-slide { width: 220px; }
     .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper { height: 180px; }
-    .coverflow-swiper-{{ section.id }} .coverflow-product-title { font-size: 14px; }
+    .coverflow-swiper-{{ section.id }} .coverflow-product-title { font-size: 14px; height: calc(14px * 1.3 * 2); }
     .coverflow-swiper-{{ section.id }} .coverflow-product-price { font-size: 13px; }
   }
 </style>
 
-
+{% comment %} HTML e Liquid da Seção {% endcomment %}
 <div class="page-width coverflow-section-{{ section.id }}">
   {% if section.settings.title != blank %}
     <h2 class="section-header">{{ section.settings.title | escape }}</h2>
   {% endif %}
 
-  {% assign collection = collections[section.settings.featured_collection] %}
-  {% assign products_limit = section.settings.products_limit | default: 7 %}
+  {%- liquid
+    assign collection = collections[section.settings.featured_collection]
+    assign products_limit = section.settings.products_limit
+  -%}
 
-  {% if collection and collection.products.size > 0 %}
+  {% if collection.products.size > 0 %}
     <div class="swiper-container coverflow-swiper-{{ section.id }}">
       <div class="swiper-wrapper">
         {% for product in collection.products limit: products_limit %}
@@ -173,13 +191,12 @@
             <a href="{{ product.url | within: collection }}" class="coverflow-product-card">
               <div class="coverflow-product-image-wrapper">
                 {% if product.featured_image %}
-                  <img 
-                    src="{{ product.featured_image | image_url: width: 600 }}"
-                    alt="{{ product.featured_image.alt | escape }}"
-                    class="coverflow-product-image"
-                    width="600"
-                    height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
-                    loading="lazy">
+                  <img src="{{ product.featured_image | image_url: width: 600 }}"
+                       alt="{{ product.featured_image.alt | escape }}"
+                       loading="lazy"
+                       width="600"
+                       height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
+                       class="coverflow-product-image">
                 {% else %}
                   {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg coverflow-product-image' }}
                 {% endif %}
@@ -203,17 +220,15 @@
       {% endif %}
     </div>
   {% else %}
-    <p class="text-center">
-      {% if section.settings.featured_collection == blank %}
-        Por favor, selecione uma coleção nas configurações da seção.
-      {% else %}
-        A coleção selecionada não possui produtos ou não foi encontrada.
-      {% endif %}
-    </p>
+    {% if section.settings.featured_collection == blank %}
+        <p class="text-center">Por favor, selecione uma coleção nas configurações da seção.</p>
+    {% else %}
+        <p class="text-center">A coleção selecionada não possui produtos ou não foi encontrada.</p>
+    {% endif %}
   {% endif %}
 </div>
 
-
+{% comment %} JavaScript da Seção {% endcomment %}
 <script>
   function initCoverflowSwiper{{ section.id }}() {
     if (typeof Swiper === 'undefined') {
@@ -222,7 +237,10 @@
     }
 
     const swiperContainer = document.querySelector('.coverflow-swiper-{{ section.id }}');
-    if (!swiperContainer) return;
+    if (!swiperContainer) {
+      console.warn('Swiper container not found for section {{ section.id }}.');
+      return;
+    }
 
     if (swiperContainer.swiper) {
       swiperContainer.swiper.destroy(true, true);
@@ -232,10 +250,8 @@
       effect: 'coverflow',
       grabCursor: true,
       centeredSlides: true,
-      slidesPerView: '{{ section.settings.slides_per_view }}' === 'auto' 
-        ? 'auto' 
-        : parseInt('{{ section.settings.slides_per_view }}'),
-      loop: {{ collection.products.size > section.settings.products_limit | json }},
+      slidesPerView: 'auto',
+      loop: {% if collection.products.size > section.settings.slides_per_view %}true{% else %}false{% endif %},
       autoplay: {
         delay: 5000,
         disableOnInteraction: true,
@@ -249,7 +265,7 @@
       },
       pagination: {
         el: '.swiper-pagination-{{ section.id }}',
-        clickable: {{ section.settings.show_pagination | json }},
+        clickable: {{ section.settings.show_pagination | default: true }},
       },
       navigation: {
         nextEl: '.swiper-button-next-{{ section.id }}',
@@ -258,17 +274,18 @@
       breakpoints: {
         320: {
           slidesPerView: 1.2,
-          spaceBetween: 15
+          spaceBetween: 15,
+          coverflowEffect: { rotate: 40, stretch: 0, depth: 100, modifier: 1.5 },
         },
         640: {
           slidesPerView: 2,
-          spaceBetween: 20
+          spaceBetween: 20,
+          coverflowEffect: { rotate: 45, stretch: 0, depth: 100, modifier: 1 },
         },
         1024: {
-          slidesPerView: '{{ section.settings.slides_per_view }}' === 'auto' 
-            ? 'auto' 
-            : parseInt('{{ section.settings.slides_per_view }}'),
-          spaceBetween: 30
+          slidesPerView: {{ section.settings.slides_per_view | default: 3 }},
+          spaceBetween: 30,
+          coverflowEffect: { rotate: 50, stretch: 0, depth: 120, modifier: 1 },
         }
       }
     });
@@ -281,7 +298,7 @@
   });
 
   document.addEventListener('shopify:section:select', function(event) {
-    if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
+     if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
       initCoverflowSwiper{{ section.id }}();
     }
   });
