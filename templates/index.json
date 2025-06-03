@@ -52,23 +52,17 @@
       ],
       "name": "Coverflow Carousel",
       "settings": {
-        "title": "Destaques da loja",
-        "number_of_items": 5,
         "slides_desktop": 3,
         "slides_tablet": 2,
         "slides_mobile": 2,
-        "enable_autoplay": true,
-        "autoplay_delay": 4000,
+        "slide_shadows": false,
         "rotate": 50,
         "stretch": 0,
         "depth": 0,
         "modifier": 1,
-        "slide_shadows": true,
-        "space_between": 0,
-        "max_width": 100,
-        "max_height": 100,
-        "padding_top": 60,
-        "padding_bottom": 60
+        "autoplay_speed": 4,
+        "arrow_color": "#ffffff",
+        "pagination_color": "#ffffff"
       }
     },
     "slideshow": {
