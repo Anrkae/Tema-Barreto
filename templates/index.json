@@ -227,7 +227,7 @@
       ],
       "disabled": true,
       "settings": {
-        "reveal_on_scroll": false,
+        "reveal_on_scroll": true,
         "label": "Shop the looks"
       }
     },
@@ -335,11 +335,12 @@
         "item-1": {
           "type": "item",
           "settings": {
-            "label": "2000",
-            "title": "Your heading",
-            "content": "<p>Write content about your store</p>",
-            "button_text": "",
-            "button_link": ""
+            "image": "shopify://shop_images/36ABCA8B-BE1D-45EC-AE5B-20209A3CE9B4.jpg",
+            "label": "2026",
+            "title": "Rumo ao hexa!",
+            "content": "<p>Novo manto da maior seleção do planeta!!</p>",
+            "button_text": "Aproveite!",
+            "button_link": "shopify://products/camisa-selecao-brasileira-25-26-amarela"
           }
         },
         "item-2": {
