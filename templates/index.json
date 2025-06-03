@@ -60,8 +60,8 @@
       "settings": {
         "slides_desktop": 3,
         "slides_tablet": 2,
-        "slides_mobile": 3,
-        "slide_shadows": true,
+        "slides_mobile": 2,
+        "slide_shadows": false,
         "rotate": 0,
         "stretch": 0,
         "depth": 330,
