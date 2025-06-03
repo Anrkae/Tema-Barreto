@@ -16,7 +16,7 @@
         "title": "Produtos em Destaque",
         "featured_collection": "frontpage",
         "products_limit": 4,
-        "slides_per_view": 3,
+        "slides_per_view": 1,
         "show_pagination": true,
         "show_navigation": true,
         "nav_arrow_color": "#000000",
