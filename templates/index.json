@@ -46,6 +46,12 @@
             "image": "shopify://shop_images/1000204598.png",
             "url": ""
           }
+        },
+        "product_JhmPKp": {
+          "type": "product",
+          "settings": {
+            "product": "kids-selecao-da-italia-ll-2024-36"
+          }
         }
       },
       "block_order": [
@@ -53,7 +59,8 @@
         "custom_image_ACyKMj",
         "custom_image_yiWzkL",
         "custom_image_MQw8gj",
-        "custom_image_RhjCHF"
+        "custom_image_RhjCHF",
+        "product_JhmPKp"
       ],
       "name": "Coverflow Carrossel",
       "settings": {
