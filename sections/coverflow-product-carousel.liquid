@@ -1,7 +1,7 @@
 {% comment %} Esquema da Seção {% endcomment %}
 {% schema %}
 {
-  "name": "Carrossel Coverflow",
+  "name": "Coverflow Carousel",
   "settings": [
     {
       "type": "text",
@@ -60,7 +60,7 @@
   ],
   "presets": [
     {
-      "name": "Carrossel Coverflow Produtos"
+      "name": "Coverflow Carousel"
     }
   ]
 }
@@ -232,6 +232,8 @@
 <script>
   function initCoverflowSwiper{{ section.id }}() {
     if (typeof Swiper === 'undefined') {
+      // Este console.warn pode não ser visível no Eruda se o erro for de sintaxe antes disso.
+      // Mas se o Swiper não carregar por outra razão, ele apareceria.
       console.warn('Swiper library not loaded for section {{ section.id }}.');
       return;
     }
@@ -311,4 +313,3 @@
     });
   }
 </script>
-
