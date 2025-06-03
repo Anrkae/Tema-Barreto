@@ -61,7 +61,7 @@
         "slides_per_view_tablet": 2,
         "slides_per_view_mobile": 2,
         "card_width": 380,
-        "rotation": 50,
+        "rotation": 0,
         "depth": 300,
         "stretch": 0,
         "enable_shadow": true,
