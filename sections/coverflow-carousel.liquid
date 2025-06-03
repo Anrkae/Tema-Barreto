@@ -1,76 +1,169 @@
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'swiper-bundle.min.js' | asset_url | script_tag }}
+
+<style>
+  .coverflow-carousel {
+    position: relative;
+    padding: 2rem 0;
+    background: transparent;
+  }
+
+  .coverflow-slide {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.4s ease;
+  }
+
+  .coverflow-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .swiper-slide-prev,
+  .swiper-slide-next {
+    filter: blur(4px);
+    opacity: 0.6;
+    transition: filter 0.4s ease, opacity 0.4s ease;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: {{ section.settings.arrow_color }};
+  }
+
+  .swiper-pagination-bullet {
+    background: {{ section.settings.pagination_color }};
+  }
+</style>
+
+<div class="coverflow-carousel">
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          {% if block.type == 'product' and block.settings.product != blank %}
+            {% assign product = all_products[block.settings.product] %}
+            <div class="coverflow-slide" onclick="window.Focal.theme.openQuickView('{{ product.handle }}')">
+              <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}">
+            </div>
+          {% elsif block.type == 'custom' and block.settings.image != blank %}
+            <a href="{{ block.settings.link }}" class="coverflow-slide" target="_blank">
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Custom Slide">
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- Add Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+
+<script>
+  const swiper = new Swiper('.swiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    loop: true,
+    autoplay: {
+      delay: {{ section.settings.autoplay_speed | times: 1000 }},
+      disableOnInteraction: false,
+    },
+    coverflowEffect: {
+      rotate: {{ section.settings.rotate }},
+      stretch: {{ section.settings.stretch }},
+      depth: {{ section.settings.depth }},
+      modifier: {{ section.settings.modifier }},
+      slideShadows: {{ section.settings.slide_shadows }},
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: {{ section.settings.slides_mobile }},
+      },
+      768: {
+        slidesPerView: {{ section.settings.slides_tablet }},
+      },
+      1024: {
+        slidesPerView: {{ section.settings.slides_desktop }},
+      },
+    }
+  });
+</script>
+
 {% schema %}
 {
   "name": "Coverflow Carrossel",
   "tag": "section",
-  "class": "coverflow-carousel-section",
+  "class": "section-coverflow-carousel",
   "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Título do carrossel",
-      "default": "Destaques"
-    },
-    {
-      "type": "range",
-      "id": "number_of_items",
-      "label": "Número de itens",
-      "min": 1,
-      "max": 20,
-      "default": 6
-    },
     {
       "type": "range",
       "id": "slides_desktop",
-      "label": "Itens no Desktop",
+      "label": "Slides Desktop",
       "min": 1,
       "max": 5,
+      "step": 1,
       "default": 3
     },
     {
       "type": "range",
       "id": "slides_tablet",
-      "label": "Itens no Tablet",
+      "label": "Slides Tablet",
       "min": 1,
       "max": 3,
+      "step": 1,
       "default": 2
     },
     {
       "type": "range",
       "id": "slides_mobile",
-      "label": "Itens no Mobile",
+      "label": "Slides Mobile",
       "min": 1,
       "max": 3,
-      "default": 1
+      "step": 1,
+      "default": 2
     },
     {
       "type": "checkbox",
-      "id": "enable_autoplay",
-      "label": "Ativar autoplay",
+      "id": "slide_shadows",
+      "label": "Ativar sombra nos slides",
       "default": true
     },
     {
       "type": "range",
-      "id": "autoplay_delay",
-      "label": "Tempo do autoplay (ms)",
-      "min": 1000,
-      "max": 9000,
-      "step": 500,
-      "default": 4000
-    },
-    {
-      "type": "range",
       "id": "rotate",
-      "label": "Rotação dos itens",
+      "label": "Rotação",
       "min": 0,
       "max": 100,
+      "step": 1,
       "default": 50
     },
     {
       "type": "range",
       "id": "stretch",
-      "label": "Distância lateral (Stretch)",
+      "label": "Esticamento",
       "min": 0,
       "max": 100,
+      "step": 1,
       "default": 0
     },
     {
@@ -78,63 +171,39 @@
       "id": "depth",
       "label": "Profundidade",
       "min": 0,
-      "max": 100,
-      "default": 100
+      "max": 1000,
+      "step": 10,
+      "default": 300
     },
     {
       "type": "range",
       "id": "modifier",
-      "label": "Intensidade do efeito (Modifier)",
-      "min": 0.1,
-      "max": 3,
+      "label": "Modificador",
+      "min": 1,
+      "max": 5,
       "step": 0.1,
       "default": 1
     },
     {
-      "type": "checkbox",
-      "id": "slide_shadows",
-      "label": "Habilitar sombras nos itens laterais",
-      "default": true
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Velocidade do autoplay (segundos)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4
     },
     {
-      "type": "range",
-      "id": "space_between",
-      "label": "Espaço entre os slides (px)",
-      "min": 0,
-      "max": 100,
-      "default": 30
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Cor das setas",
+      "default": "#ffffff"
     },
     {
-      "type": "range",
-      "id": "max_width",
-      "label": "Largura máxima dos cards (px)",
-      "min": 0,
-      "max": 100,
-      "default": 50
-    },
-    {
-      "type": "range",
-      "id": "max_height",
-      "label": "Altura máxima dos cards (px)",
-      "min": 0,
-      "max": 100,
-      "default": 50
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Espaçamento superior (px)",
-      "min": 0,
-      "max": 100,
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Espaçamento inferior (px)",
-      "min": 0,
-      "max": 100,
-      "default": 60
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Cor da paginação",
+      "default": "#ffffff"
     }
   ],
   "blocks": [
@@ -148,272 +217,30 @@
           "label": "Produto"
         }
       ]
+    },
+    {
+      "type": "custom",
+      "name": "Slide Manual",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
     }
   ],
+  "max_blocks": 15,
   "presets": [
     {
       "name": "Coverflow Carrossel",
-      "category": "Custom"
+      "category": "Imagens"
     }
   ]
 }
 {% endschema %}
-
-<div class="coverflow-carousel-wrapper page-width" style="padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;">
-  {% if section.settings.title != blank %}
-    <h2 class="coverflow-carousel-title">{{ section.settings.title }}</h2>
-  {% endif %}
-
-  <div class="swiper coverflow-carousel-{{ section.id }}">
-    <div class="swiper-wrapper">
-      {% for block in section.blocks limit: section.settings.number_of_items %}
-        {% assign product = block.settings.product %}
-        {% if product != blank %}
-          <div class="swiper-slide">
-            <div class="glass-card"
-                 data-title="{{ product.title }}"
-                 data-image="{{ product.featured_image | image_url: width: 800 }}"
-                 data-link="{{ product.url }}"
-                 data-price="{{ product.price | money }}"
-                 data-id="{{ product.id }}">
-              <img
-                src="{{ product.featured_image | image_url: width: 600 }}"
-                alt="{{ product.title | escape }}"
-                loading="lazy">
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-pagination"></div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="product-modal" id="product-modal-{{ section.id }}">
-  <div class="product-modal-content">
-    <span class="product-modal-close">&times;</span>
-    <div class="product-modal-body">
-      <div class="product-modal-image">
-        <img id="product-modal-img" src="" alt="">
-      </div>
-      <div class="product-modal-info">
-        <h2 id="product-modal-title"></h2>
-        <p id="product-modal-price"></p>
-        <form method="post" action="/cart/add">
-          <input type="hidden" id="product-id-{{ section.id }}" name="id" value="">
-          <input type="number" name="quantity" value="1" min="1" style="width: 60px; margin: 10px 0;">
-          <button type="submit" class="product-modal-button">Adicionar ao carrinho</button>
-        </form>
-        <a id="product-modal-link" class="product-modal-link" href="#">Ver detalhes</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CSS -->
-<style>
-.coverflow-carousel-wrapper {
-  text-align: center;
-}
-
-.coverflow-carousel-title {
-  font-size: 2rem;
-  margin-bottom: 30px;
-}
-
-/* Glassmorphism */
-.glass-card {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 20px;
-  cursor: pointer;
-  transition: transform 0.3s;
-  max-width: {{ section.settings.max_width }}px;
-  max-height: {{ section.settings.max_height }}px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.glass-card:hover {
-  transform: scale(1.05);
-}
-
-.glass-card img {
-  width: 100%;
-  border-radius: 16px;
-}
-
-/* Blur nos itens laterais */
-.swiper-slide-prev,
-.swiper-slide-next {
-  filter: blur(4px) brightness(0.7);
-  transform: scale(0.9);
-}
-
-.swiper-slide {
-  transition: filter 0.3s, transform 0.3s;
-}
-
-/* Navegação */
-.swiper-button-next,
-.swiper-button-prev {
-  color: #fff;
-}
-
-.swiper-pagination-bullet {
-  background: #fff;
-}
-
-/* Modal */
-.product-modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-}
-
-.product-modal-content {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 30px;
-  max-width: 600px;
-  width: 90%;
-  position: relative;
-  color: white;
-  text-align: center;
-}
-
-.product-modal-close {
-  position: absolute;
-  top: 15px;
-  right: 25px;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.product-modal-body img {
-  width: 100%;
-  border-radius: 16px;
-}
-
-.product-modal-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
-  background-color: white;
-  color: black;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-}
-
-.product-modal-link {
-  display: block;
-  margin-top: 10px;
-  color: #eee;
-  text-decoration: underline;
-}
-</style>
-
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const swiper = new Swiper('.coverflow-carousel-{{ section.id }}', {
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    loop: true,
-    autoplay: {
-      delay: {{ section.settings.autoplay_delay }},
-      disableOnInteraction: false,
-      pauseOnMouseEnter: true,
-    },
-    slidesPerView: {{ section.settings.slides_desktop }},
-    spaceBetween: {{ section.settings.space_between }},
-    coverflowEffect: {
-      rotate: {{ section.settings.rotate }},
-      stretch: {{ section.settings.stretch }},
-      depth: {{ section.settings.depth }},
-      modifier: {{ section.settings.modifier }},
-      slideShadows: {{ section.settings.slide_shadows }},
-    },
-    pagination: {
-      el: '.coverflow-carousel-{{ section.id }} .swiper-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.coverflow-carousel-{{ section.id }} .swiper-button-next',
-      prevEl: '.coverflow-carousel-{{ section.id }} .swiper-button-prev',
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: {{ section.settings.slides_mobile }}
-      },
-      768: {
-        slidesPerView: {{ section.settings.slides_tablet }}
-      },
-      1024: {
-        slidesPerView: {{ section.settings.slides_desktop }}
-      }
-    }
-  });
-
-  if (!{{ section.settings.enable_autoplay | json }}) {
-    swiper.autoplay.stop();
-  }
-
-  // Modal
-  const modal = document.getElementById('product-modal-{{ section.id }}');
-  const modalImg = document.getElementById('product-modal-img');
-  const modalTitle = document.getElementById('product-modal-title');
-  const modalPrice = document.getElementById('product-modal-price');
-  const modalLink = document.getElementById('product-modal-link');
-  const closeBtn = modal.querySelector('.product-modal-close');
-  const variantInput = document.getElementById('product-id-{{ section.id }}');
-
-  document.querySelectorAll('.coverflow-carousel-{{ section.id }} .glass-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const img = card.getAttribute('data-image');
-      const title = card.getAttribute('data-title');
-      const price = card.getAttribute('data-price');
-      const link = card.getAttribute('data-link');
-      const id = card.getAttribute('data-id');
-
-      modalImg.src = img;
-      modalTitle.innerText = title;
-      modalPrice.innerText = price;
-      modalLink.href = link;
-      variantInput.value = id;
-      modal.style.display = 'flex';
-    });
-  });
-
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  window.addEventListener('click', (e) => {
-    if (e.target == modal) {
-      modal.style.display = 'none';
-    }
-  });
-});
-</script>
