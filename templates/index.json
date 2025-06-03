@@ -225,6 +225,7 @@
       "block_order": [
         "look-1"
       ],
+      "disabled": true,
       "settings": {
         "reveal_on_scroll": false,
         "label": "Shop the looks"
@@ -382,6 +383,7 @@
       "blocks": {
         "variant-picker": {
           "type": "variant_picker",
+          "disabled": true,
           "settings": {
             "hide_sold_out_variants": false,
             "selector_mode": "block",
@@ -391,29 +393,42 @@
         },
         "quantity-selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "buy-buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
-            "show_payment_button": true,
+            "show_payment_button": false,
             "atc_button_background": "rgba(0,0,0,0)",
             "atc_button_text_color": "rgba(0,0,0,0)",
             "buy_now_button_background": "rgba(0,0,0,0)",
             "buy_now_button_text_color": "rgba(0,0,0,0)"
+          }
+        },
+        "button_UdxgfB": {
+          "type": "button",
+          "settings": {
+            "link": "shopify://products/camisa-real-madrid-25-26-home-i-branco",
+            "text": "Comprar",
+            "stretch": true,
+            "background": "rgba(0,0,0,0)",
+            "text_color": "rgba(0,0,0,0)"
           }
         }
       },
       "block_order": [
         "variant-picker",
         "quantity-selector",
-        "buy-buttons"
+        "buy-buttons",
+        "button_UdxgfB"
       ],
       "settings": {
         "product": "camisa-real-madrid-25-26-home-i-branco",
         "subheading": "Novo manto",
         "title": "Hala madrid!",
-        "show_vendor": true,
+        "show_vendor": false,
         "show_sku": false,
         "show_taxes_included": false,
         "show_product_rating": false,
