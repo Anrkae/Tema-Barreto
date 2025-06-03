@@ -11,20 +11,54 @@
   "sections": {
     "coverflow_carousel_YTXCHy": {
       "type": "coverflow-carousel",
+      "blocks": {
+        "product_fn38JU": {
+          "type": "product",
+          "settings": {
+            "title": "Produto",
+            "link": "shopify://products/kids-selecao-da-italia-ll-2024-36"
+          }
+        },
+        "product_DAqg63": {
+          "type": "product",
+          "settings": {
+            "title": "Produto",
+            "link": "shopify://products/kids-selecao-da-italia-ll-2024-43"
+          }
+        },
+        "product_ybdVVm": {
+          "type": "product",
+          "settings": {
+            "title": "Produto",
+            "link": "shopify://products/kids-selecao-da-italia-ll-2024-42"
+          }
+        },
+        "product_h86RDf": {
+          "type": "product",
+          "settings": {
+            "title": "Produto",
+            "link": "shopify://products/camisa-128"
+          }
+        },
+        "product_wAnT7W": {
+          "type": "product",
+          "settings": {
+            "title": "Produto",
+            "link": "shopify://products/ac-milan-25-26-special-edition"
+          }
+        }
+      },
+      "block_order": [
+        "product_fn38JU",
+        "product_DAqg63",
+        "product_ybdVVm",
+        "product_h86RDf",
+        "product_wAnT7W"
+      ],
       "name": "Coverflow Carousel",
       "settings": {
         "title": "Destaques da loja",
-        "collection": "temporada-2025-26",
-        "effect": "coverflow",
-        "rotate": 0,
-        "depth": 170,
-        "stretch": 0,
-        "show_navigation": true,
-        "show_pagination": false,
-        "enable_loop": false,
-        "slides_per_view_desktop": 3,
-        "slides_per_view_tablet": 2,
-        "slides_per_view_mobile": 2
+        "number_of_items": 5
       }
     },
     "slideshow": {
