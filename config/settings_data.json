@@ -120,7 +120,7 @@
           "enable_sticky_header": true,
           "logo": "shopify://shop_images/1000211161.png",
           "logo_max_width": 140,
-          "mobile_logo_max_width": 60,
+          "mobile_logo_max_width": 90,
           "navigation_menu": "main-menu",
           "sidebar_navigation_menu": "",
           "header_layout": "logo_center_search_open",
