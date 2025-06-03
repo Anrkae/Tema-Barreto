@@ -95,21 +95,23 @@
         "item-1": {
           "type": "item",
           "settings": {
-            "tab_label": "Text 1",
-            "subheading": "Subheading",
-            "title": "Image with text",
-            "content": "<p>Use image with text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>",
+            "image": "shopify://shop_images/1000211136.png",
+            "tab_label": "",
+            "subheading": "",
+            "title": "",
+            "content": "",
             "button_text": "",
-            "button_link": ""
+            "button_link": "shopify://collections/all"
           }
         },
         "item-2": {
           "type": "item",
           "settings": {
-            "tab_label": "Text 2",
-            "subheading": "Subheading",
-            "title": "Image with text",
-            "content": "<p>Use image with text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>",
+            "image": "shopify://shop_images/1000211136.png",
+            "tab_label": "",
+            "subheading": "",
+            "title": "",
+            "content": "",
             "button_text": "",
             "button_link": ""
           }
@@ -125,7 +127,7 @@
         "background_overlap": "image",
         "image_position": "left",
         "text_alignment": "center",
-        "cycle_speed": 8,
+        "cycle_speed": 5,
         "accent_background": "rgba(0,0,0,0)",
         "text_color": "rgba(0,0,0,0)",
         "button_background": "rgba(0,0,0,0)",
