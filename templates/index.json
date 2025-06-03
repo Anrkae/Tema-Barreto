@@ -20,11 +20,11 @@
         "depth": 170,
         "stretch": 0,
         "show_navigation": true,
-        "show_pagination": true,
+        "show_pagination": false,
         "enable_loop": false,
         "slides_per_view_desktop": 3,
         "slides_per_view_tablet": 2,
-        "slides_per_view_mobile": 3
+        "slides_per_view_mobile": 1
       }
     },
     "slideshow": {
