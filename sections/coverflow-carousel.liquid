@@ -15,8 +15,8 @@
       "id": "number_of_items",
       "label": "Número de itens",
       "min": 1,
-      "max": 10,
-      "default": 5
+      "max": 20,
+      "default": 6
     },
     {
       "type": "range",
@@ -41,6 +41,100 @@
       "min": 1,
       "max": 3,
       "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Ativar autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Tempo do autoplay (ms)",
+      "min": 1000,
+      "max": 9000,
+      "step": 500,
+      "default": 4000
+    },
+    {
+      "type": "range",
+      "id": "rotate",
+      "label": "Rotação dos itens",
+      "min": 0,
+      "max": 100,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "stretch",
+      "label": "Distância lateral (Stretch)",
+      "min": 0,
+      "max": 100,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "depth",
+      "label": "Profundidade",
+      "min": 0,
+      "max": 100,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "modifier",
+      "label": "Intensidade do efeito (Modifier)",
+      "min": 0.1,
+      "max": 3,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_shadows",
+      "label": "Habilitar sombras nos itens laterais",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "space_between",
+      "label": "Espaço entre os slides (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Largura máxima dos cards (px)",
+      "min": 0,
+      "max": 100,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "max_height",
+      "label": "Altura máxima dos cards (px)",
+      "min": 0,
+      "max": 100,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaçamento superior (px)",
+      "min": 0,
+      "max": 100,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaçamento inferior (px)",
+      "min": 0,
+      "max": 100,
+      "default": 60
     }
   ],
   "blocks": [
@@ -49,20 +143,9 @@
       "name": "Produto",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Imagem do produto"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Nome do produto",
-          "default": "Produto"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link do produto"
+          "type": "product",
+          "id": "product",
+          "label": "Produto"
         }
       ]
     }
@@ -76,7 +159,7 @@
 }
 {% endschema %}
 
-<div class="coverflow-carousel-wrapper page-width">
+<div class="coverflow-carousel-wrapper page-width" style="padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;">
   {% if section.settings.title != blank %}
     <h2 class="coverflow-carousel-title">{{ section.settings.title }}</h2>
   {% endif %}
@@ -84,21 +167,22 @@
   <div class="swiper coverflow-carousel-{{ section.id }}">
     <div class="swiper-wrapper">
       {% for block in section.blocks limit: section.settings.number_of_items %}
-        <div class="swiper-slide">
-          <div class="glass-card" data-title="{{ block.settings.title }}" data-image="{{ block.settings.image | image_url: width: 800 }}" data-link="{{ block.settings.link }}">
-            {% if block.settings.image != blank %}
+        {% assign product = block.settings.product %}
+        {% if product != blank %}
+          <div class="swiper-slide">
+            <div class="glass-card"
+                 data-title="{{ product.title }}"
+                 data-image="{{ product.featured_image | image_url: width: 800 }}"
+                 data-link="{{ product.url }}"
+                 data-price="{{ product.price | money }}"
+                 data-id="{{ product.id }}">
               <img
-                src="{{ block.settings.image | image_url: width: 600 }}"
-                alt="{{ block.settings.title | escape }}"
-                loading="lazy"
-              >
-            {% else %}
-              <div style="width:100%;height:200px;background:#eee;border-radius:16px;display:flex;align-items:center;justify-content:center;">
-                Sem imagem
-              </div>
-            {% endif %}
+                src="{{ product.featured_image | image_url: width: 600 }}"
+                alt="{{ product.title | escape }}"
+                loading="lazy">
+            </div>
           </div>
-        </div>
+        {% endif %}
       {% endfor %}
     </div>
 
@@ -108,7 +192,7 @@
   </div>
 </div>
 
-<!-- Modal Popup -->
+<!-- Modal -->
 <div class="product-modal" id="product-modal-{{ section.id }}">
   <div class="product-modal-content">
     <span class="product-modal-close">&times;</span>
@@ -118,7 +202,13 @@
       </div>
       <div class="product-modal-info">
         <h2 id="product-modal-title"></h2>
-        <a id="product-modal-link" class="product-modal-button" href="#">Ver detalhes</a>
+        <p id="product-modal-price"></p>
+        <form method="post" action="/cart/add">
+          <input type="hidden" id="product-id-{{ section.id }}" name="id" value="">
+          <input type="number" name="quantity" value="1" min="1" style="width: 60px; margin: 10px 0;">
+          <button type="submit" class="product-modal-button">Adicionar ao carrinho</button>
+        </form>
+        <a id="product-modal-link" class="product-modal-link" href="#">Ver detalhes</a>
       </div>
     </div>
   </div>
@@ -127,7 +217,6 @@
 <!-- CSS -->
 <style>
 .coverflow-carousel-wrapper {
-  padding: 60px 20px;
   text-align: center;
 }
 
@@ -136,9 +225,9 @@
   margin-bottom: 30px;
 }
 
-/* Glassmorphism Card */
+/* Glassmorphism */
 .glass-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -147,6 +236,11 @@
   padding: 20px;
   cursor: pointer;
   transition: transform 0.3s;
+  max-width: {{ section.settings.max_width }}px;
+  max-height: {{ section.settings.max_height }}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .glass-card:hover {
@@ -155,9 +249,7 @@
 
 .glass-card img {
   width: 100%;
-  max-width: 400px;
   border-radius: 16px;
-  display: block;
 }
 
 /* Blur nos itens laterais */
@@ -171,7 +263,7 @@
   transition: filter 0.3s, transform 0.3s;
 }
 
-/* Swiper navigation */
+/* Navegação */
 .swiper-button-next,
 .swiper-button-prev {
   color: #fff;
@@ -194,7 +286,7 @@
 }
 
 .product-modal-content {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
@@ -228,11 +320,15 @@
   border-radius: 30px;
   text-decoration: none;
   font-weight: 600;
-  transition: background-color 0.3s;
+  border: none;
+  cursor: pointer;
 }
 
-.product-modal-button:hover {
-  background-color: #eee;
+.product-modal-link {
+  display: block;
+  margin-top: 10px;
+  color: #eee;
+  text-decoration: underline;
 }
 </style>
 
@@ -246,16 +342,18 @@ document.addEventListener('DOMContentLoaded', function () {
     centeredSlides: true,
     loop: true,
     autoplay: {
-      delay: 4000,
+      delay: {{ section.settings.autoplay_delay }},
       disableOnInteraction: false,
+      pauseOnMouseEnter: true,
     },
     slidesPerView: {{ section.settings.slides_desktop }},
+    spaceBetween: {{ section.settings.space_between }},
     coverflowEffect: {
-      rotate: 50,
-      stretch: 0,
-      depth: 100,
-      modifier: 1,
-      slideShadows: true,
+      rotate: {{ section.settings.rotate }},
+      stretch: {{ section.settings.stretch }},
+      depth: {{ section.settings.depth }},
+      modifier: {{ section.settings.modifier }},
+      slideShadows: {{ section.settings.slide_shadows }},
     },
     pagination: {
       el: '.coverflow-carousel-{{ section.id }} .swiper-pagination',
@@ -278,22 +376,32 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  if (!{{ section.settings.enable_autoplay | json }}) {
+    swiper.autoplay.stop();
+  }
+
   // Modal
   const modal = document.getElementById('product-modal-{{ section.id }}');
   const modalImg = document.getElementById('product-modal-img');
   const modalTitle = document.getElementById('product-modal-title');
+  const modalPrice = document.getElementById('product-modal-price');
   const modalLink = document.getElementById('product-modal-link');
   const closeBtn = modal.querySelector('.product-modal-close');
+  const variantInput = document.getElementById('product-id-{{ section.id }}');
 
   document.querySelectorAll('.coverflow-carousel-{{ section.id }} .glass-card').forEach(card => {
     card.addEventListener('click', () => {
       const img = card.getAttribute('data-image');
       const title = card.getAttribute('data-title');
+      const price = card.getAttribute('data-price');
       const link = card.getAttribute('data-link');
+      const id = card.getAttribute('data-id');
 
       modalImg.src = img;
       modalTitle.innerText = title;
+      modalPrice.innerText = price;
       modalLink.href = link;
+      variantInput.value = id;
       modal.style.display = 'flex';
     });
   });
