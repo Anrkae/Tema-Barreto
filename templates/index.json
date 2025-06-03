@@ -447,7 +447,7 @@
       "name": "Coverflow Carousel",
       "settings": {
         "title": "Produtos em Destaque",
-        "featured_collection": "",
+        "featured_collection": "frontpage",
         "products_limit": 7,
         "slides_per_view": 3,
         "show_pagination": true,
@@ -458,6 +458,7 @@
     }
   },
   "order": [
+    "coverflow_carousel_ALQ9Uh",
     "slideshow",
     "featured-collections",
     "image-with-text",
@@ -469,7 +470,6 @@
     "timeline",
     "featured-product",
     "text-with-icons",
-    "newsletter",
-    "coverflow_carousel_ALQ9Uh"
+    "newsletter"
   ]
 }
