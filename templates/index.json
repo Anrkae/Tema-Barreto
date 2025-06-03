@@ -24,7 +24,7 @@
         "enable_loop": false,
         "slides_per_view_desktop": 3,
         "slides_per_view_tablet": 2,
-        "slides_per_view_mobile": 1
+        "slides_per_view_mobile": 2
       }
     },
     "slideshow": {
