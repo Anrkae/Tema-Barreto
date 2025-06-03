@@ -12,43 +12,48 @@
     "coverflow_carousel_YTXCHy": {
       "type": "coverflow-carousel",
       "blocks": {
-        "product_fn38JU": {
-          "type": "product",
+        "custom_baFUr8": {
+          "type": "custom",
           "settings": {
-            "product": "kids-selecao-da-italia-ll-2024-36"
+            "image": "shopify://shop_images/1000204597.png",
+            "link": "shopify://products/camisa-flamengo-25-26-home"
           }
         },
-        "product_DAqg63": {
-          "type": "product",
+        "custom_hHHw8U": {
+          "type": "custom",
           "settings": {
-            "product": "kids-selecao-da-italia-ll-2024-42"
+            "image": "shopify://shop_images/1000204594.png",
+            "link": "shopify://products/camisa-130"
           }
         },
-        "product_ybdVVm": {
-          "type": "product",
+        "custom_k68ynt": {
+          "type": "custom",
           "settings": {
-            "product": "kids-selecao-da-italia-ll-2024-43"
+            "image": "shopify://shop_images/1000204596.png",
+            "link": "shopify://products/kids-selecao-da-italia-ll-2024-42"
           }
         },
-        "product_h86RDf": {
-          "type": "product",
+        "custom_Rkehx4": {
+          "type": "custom",
           "settings": {
-            "product": "camisa-182"
+            "image": "shopify://shop_images/1000204595.png",
+            "link": "shopify://products/kids-selecao-da-italia-ll-2024-43"
           }
         },
-        "product_wAnT7W": {
-          "type": "product",
+        "custom_yMMB3r": {
+          "type": "custom",
           "settings": {
-            "product": "camisa-aik-25-26-commemorative-black"
+            "image": "shopify://shop_images/1000204598.png",
+            "link": "shopify://products/camisa-alemanha-25-26-femino-away"
           }
         }
       },
       "block_order": [
-        "product_fn38JU",
-        "product_DAqg63",
-        "product_ybdVVm",
-        "product_h86RDf",
-        "product_wAnT7W"
+        "custom_baFUr8",
+        "custom_hHHw8U",
+        "custom_k68ynt",
+        "custom_Rkehx4",
+        "custom_yMMB3r"
       ],
       "name": "Coverflow Carousel",
       "settings": {
