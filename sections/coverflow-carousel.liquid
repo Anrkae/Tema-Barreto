@@ -227,6 +227,202 @@
 
 {% comment %} JavaScript da Seção {% endcomment %}
 <script>
-  
-        
+  function initializeSimpleCarousel{{ section.id }}() {
+    const sectionId = '{{ section.id }}'; // Para logs mais claros
+    const container = document.querySelector('.simple-carousel-container-' + sectionId);
+    const track = document.querySelector('.simple-carousel-track-' + sectionId);
+    const slidesNodeList = track ? track.children : [];
+    const slides = Array.from(slidesNodeList);
+    const nextButton = document.querySelector('.simple-carousel-next-' + sectionId);
+    const prevButton = document.querySelector('.simple-carousel-prev-' + sectionId);
+
+    if (!container || !track || !nextButton || !prevButton || slides.length === 0) {
+      console.warn('[SimpleCarousel ' + sectionId + ']: Elementos essenciais não encontrados ou sem slides. Verifique seletores e HTML.');
+      if(nextButton) nextButton.style.display = 'none';
+      if(prevButton) prevButton.style.display = 'none';
+      return;
+    }
+
+    let currentIndex = 0;
+    let productsPerViewSetting = parseInt('{{ section.settings.products_per_view }}', 10) || 3;
+    let productsPerView = productsPerViewSetting;
+    let slideWidth = 0;
+    const totalSlides = slides.length;
+    let autoplayInterval = null;
+    const autoplayEnabled = {{ section.settings.autoplay }};
+    const autoplaySpeed = parseInt('{{ section.settings.autoplay_speed }}', 10) || 5000;
+
+    function calculateSlideWidthAndApply() {
+      const currentContainerWidth = container.offsetWidth;
+      if (currentContainerWidth === 0) {
+        // Se o container não tem largura (ex: display:none), não faz nada.
+        // Isso pode acontecer durante o carregamento ou se a seção estiver oculta.
+        console.warn('[SimpleCarousel ' + sectionId + ']: Largura do container é 0. Carrossel não pode ser calculado.');
+        return;
+      }
+
+      // Ajusta produtos por visualização com base na largura da tela
+      if (window.innerWidth < 480) { // Mobile pequeno
+        productsPerView = 1;
+      } else if (window.innerWidth < 750) { // Mobile maior / Tablet pequeno
+        productsPerView = Math.min(productsPerViewSetting, 2); // No máximo 2, ou o configurado se for menor
+      } else {
+        productsPerView = productsPerViewSetting;
+      }
+
+      slideWidth = currentContainerWidth / productsPerView;
+      
+      slides.forEach(slide => {
+        slide.style.width = slideWidth + 'px';
+      });
+      
+      // A largura do track não precisa ser definida explicitamente se os slides têm largura fixa e display:flex
+      // track.style.width = (slideWidth * totalSlides) + 'px'; // Pode ser desnecessário
+      
+      updateCarouselPosition(false); // Atualiza a posição sem animar
+    }
+
+    function updateCarouselPosition(animate = true) {
+      if (animate) {
+        track.style.transition = 'transform 0.5s ease-in-out';
+      } else {
+        track.style.transition = 'none';
+      }
+      const newTransform = -(currentIndex * slideWidth);
+      track.style.transform = 'translateX(' + newTransform + 'px)';
+      updateNavButtons();
+    }
+
+    function updateNavButtons() {
+      prevButton.disabled = currentIndex === 0;
+      
+      // O índice máximo é alcançado quando o último "grupo" de slides está visível.
+      // Se totalSlides = 6 e productsPerView = 3, os grupos são [0,1,2] e [3,4,5].
+      // currentIndex pode ir de 0 até totalSlides - productsPerView.
+      // Se totalSlides <= productsPerView, não há para onde mover.
+      const maxPossibleIndex = Math.max(0, totalSlides - productsPerView);
+      nextButton.disabled = currentIndex >= maxPossibleIndex || totalSlides <= productsPerView;
+
+      if (totalSlides <= productsPerView) {
+        prevButton.style.display = 'none';
+        nextButton.style.display = 'none';
+      } else {
+        prevButton.style.display = 'flex';
+        nextButton.style.display = 'flex';
+      }
+    }
+
+    function moveToNext() {
+      const maxPossibleIndex = Math.max(0, totalSlides - productsPerView);
+      if (currentIndex < maxPossibleIndex) {
+        currentIndex++;
+      } else if (autoplayEnabled && totalSlides > productsPerView) { // Loop para autoplay
+        currentIndex = 0;
+      }
+      updateCarouselPosition();
+    }
+
+    function moveToPrev() {
+      if (currentIndex > 0) {
+        currentIndex--; // Decremento válido
+      }
+      updateCarouselPosition();
+    }
+    
+    function startAutoplay() {
+      if (!autoplayEnabled || totalSlides <= productsPerView) return;
+      stopAutoplay(); 
+      autoplayInterval = setInterval(moveToNext, autoplaySpeed);
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayInterval);
+    }
+
+    nextButton.addEventListener('click', function() {
+      moveToNext();
+      stopAutoplay();
+      if (autoplayEnabled && totalSlides > productsPerView) { // Reinicia se o autoplay estiver ativo e houver para onde ir
+        startAutoplay();
+      }
+    });
+
+    prevButton.addEventListener('click', function() {
+      moveToPrev();
+      stopAutoplay();
+      if (autoplayEnabled && totalSlides > productsPerView) {
+        startAutoplay();
+      }
+    });
+    
+    if (autoplayEnabled) {
+      container.addEventListener('mouseenter', stopAutoplay);
+      container.addEventListener('mouseleave', startAutoplay);
+    }
+
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function() {
+        calculateSlideWidthAndApply();
+        // Reajusta currentIndex se ele se tornar inválido após o redimensionamento
+        const maxPossibleIndex = Math.max(0, totalSlides - productsPerView);
+        if (currentIndex > maxPossibleIndex) {
+          currentIndex = maxPossibleIndex;
+        }
+        updateCarouselPosition(false); // Atualiza sem animação
+        if (autoplayEnabled) { // Reinicia autoplay após redimensionamento
+            startAutoplay();
+        }
+      }, 250);
+    });
+
+    // Inicialização
+    calculateSlideWidthAndApply(); 
+    startAutoplay();
+    console.log('[SimpleCarousel ' + sectionId + ']: Inicializado com ' + totalSlides + ' slides. Produtos por visualização: ' + productsPerView);
+  }
+
+  // Função para configurar os listeners e garantir que o DOM está pronto
+  function setupSimpleCarousel{{ section.id }}() {
+    const sectionElement = document.querySelector('.simple-carousel-section-{{ section.id }}');
+    
+    if (!sectionElement) {
+      // console.warn('[SimpleCarousel {{ section.id }}]: Elemento da seção não encontrado para configurar listeners.');
+      return; // Sai se o elemento da seção não for encontrado
+    }
+
+    // Evitar múltiplas inicializações no editor de temas
+    if (sectionElement.dataset.simpleCarouselInitialized === 'true' && sectionElement.swiperInstance) {
+        // Se precisar de uma lógica de "destruição" mais complexa, adicione aqui.
+        // Por agora, uma simples re-inicialização pode ser suficiente se as configurações mudarem.
+        // Ou apenas retorne se não houver necessidade de re-inicializar sempre.
+    }
+    
+    initializeSimpleCarousel{{ section.id }}();
+    sectionElement.dataset.simpleCarouselInitialized = 'true'; 
+  }
+
+  // Eventos do Editor de Temas do Shopify
+  document.addEventListener('shopify:section:load', function(event) {
+    if (event.detail && event.detail.sectionId === '{{ section.id }}') {
+      setupSimpleCarousel{{ section.id }}();
+    }
+  });
+
+  document.addEventListener('shopify:section:select', function(event) {
+    if (event.detail && event.detail.sectionId === '{{ section.id }}') {
+      // A seleção da seção no editor pode exigir reinicialização para refletir mudanças nas configurações
+      setupSimpleCarousel{{ section.id }}();
+    }
+  });
+
+  // Carregamento Padrão da Página
+  if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+    setupSimpleCarousel{{ section.id }}();
+  } else {
+    document.addEventListener('DOMContentLoaded', function() {
+      setupSimpleCarousel{{ section.id }}();
+    });
+  }
 </script>
