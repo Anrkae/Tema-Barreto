@@ -55,6 +55,9 @@
         "custom_Rkehx4",
         "custom_yMMB3r"
       ],
+      "custom_css": [
+        ".coverflow-carousel {padding: 20rem 0; }"
+      ],
       "name": "Coverflow Carousel",
       "settings": {
         "slides_desktop": 3,
