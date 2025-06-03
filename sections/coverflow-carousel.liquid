@@ -8,94 +8,12 @@
       "type": "text",
       "id": "title",
       "label": "Título do carrossel",
-      "default": "Destaques da loja"
+      "default": "Destaques"
     },
     {
       "type": "collection",
       "id": "collection",
-      "label": "Coleção de produtos"
-    },
-    {
-      "type": "select",
-      "id": "effect",
-      "label": "Efeito do carrossel",
-      "default": "coverflow",
-      "options": [
-        { "value": "coverflow", "label": "Coverflow 3D" },
-        { "value": "slide", "label": "Deslizante tradicional" }
-      ]
-    },
-    {
-      "type": "range",
-      "id": "rotate",
-      "label": "Coverflow - Rotação",
-      "min": 0,
-      "max": 90,
-      "step": 5,
-      "default": 50
-    },
-    {
-      "type": "range",
-      "id": "depth",
-      "label": "Coverflow - Profundidade",
-      "min": 0,
-      "max": 500,
-      "step": 10,
-      "default": 100
-    },
-    {
-      "type": "range",
-      "id": "stretch",
-      "label": "Coverflow - Stretch",
-      "min": -500,
-      "max": 500,
-      "step": 10,
-      "default": 0
-    },
-    {
-      "type": "checkbox",
-      "id": "show_navigation",
-      "label": "Exibir setas de navegação",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_pagination",
-      "label": "Exibir paginação (bolinhas)",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_loop",
-      "label": "Loop infinito",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "slides_per_view_desktop",
-      "label": "Slides visíveis no desktop",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 3
-    },
-    {
-      "type": "range",
-      "id": "slides_per_view_tablet",
-      "label": "Slides visíveis no tablet",
-      "min": 1,
-      "max": 4,
-      "step": 1,
-      "default": 2
-    },
-    {
-      "type": "range",
-      "id": "slides_per_view_mobile",
-      "label": "Slides visíveis no mobile",
-      "min": 1,
-      "max": 3,
-      "step": 1,
-      "default": 1
+      "label": "Coleção"
     }
   ],
   "presets": [
@@ -117,38 +35,41 @@
       {% if section.settings.collection != blank %}
         {% for product in collections[section.settings.collection].products %}
           <div class="swiper-slide">
-            <a href="{{ product.url }}" class="coverflow-slide-link">
+            <div class="glass-card" data-product-handle="{{ product.handle }}">
               <img
                 src="{{ product.featured_image | image_url: width: 600 }}"
                 alt="{{ product.title }}"
-                class="coverflow-slide-image"
                 loading="lazy"
               >
-              <p class="coverflow-slide-title">{{ product.title }}</p>
-            </a>
-          </div>
-        {% endfor %}
-      {% else %}
-        {% for i in (1..5) %}
-          <div class="swiper-slide">
-            <img src="https://via.placeholder.com/600x600?text=Produto+{{ i }}" alt="Produto {{ i }}">
-            <p class="coverflow-slide-title">Produto {{ i }}</p>
+            </div>
           </div>
         {% endfor %}
       {% endif %}
     </div>
 
-    {% if section.settings.show_navigation %}
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-    {% endif %}
-
-    {% if section.settings.show_pagination %}
-      <div class="swiper-pagination"></div>
-    {% endif %}
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
   </div>
 </div>
 
+<!-- Modal Popup -->
+<div class="product-modal" id="product-modal-{{ section.id }}">
+  <div class="product-modal-content">
+    <span class="product-modal-close">&times;</span>
+    <div class="product-modal-body">
+      <div class="product-modal-image">
+        <img id="product-modal-img" src="" alt="">
+      </div>
+      <div class="product-modal-info">
+        <h2 id="product-modal-title"></h2>
+        <a id="product-modal-link" class="product-modal-button" href="#">Ver detalhes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CSS -->
 <style>
 .coverflow-carousel-wrapper {
   padding: 60px 20px;
@@ -160,81 +81,154 @@
   margin-bottom: 30px;
 }
 
-.coverflow-carousel-{{ section.id }} .swiper-slide {
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 20px;
+  cursor: pointer;
   transition: transform 0.3s;
 }
 
-.coverflow-slide-image {
+.glass-card:hover {
+  transform: scale(1.05);
+}
+
+.glass-card img {
   width: 100%;
   max-width: 400px;
-  height: auto;
+  border-radius: 16px;
   display: block;
 }
 
-.coverflow-slide-title {
-  margin-top: 12px;
-  font-size: 1rem;
+/* Modal */
+.product-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.product-modal-content {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  color: white;
+  text-align: center;
+}
+
+.product-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.product-modal-body img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.product-modal-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: white;
+  color: black;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.product-modal-button:hover {
+  background-color: #eee;
 }
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: #333;
+  color: #fff;
 }
 
 .swiper-pagination-bullet {
-  background: #333;
+  background: #fff;
 }
 </style>
 
+<!-- JS Swiper e Modal -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const swiper = new Swiper('.coverflow-carousel-{{ section.id }}', {
-    effect: '{{ section.settings.effect }}',
+    effect: 'coverflow',
     grabCursor: true,
     centeredSlides: true,
-    loop: {{ section.settings.enable_loop }},
-    slidesPerView: {{ section.settings.slides_per_view_desktop }},
-    breakpoints: {
-      1024: {
-        slidesPerView: {{ section.settings.slides_per_view_desktop }},
-      },
-      768: {
-        slidesPerView: {{ section.settings.slides_per_view_tablet }},
-      },
-      320: {
-        slidesPerView: {{ section.settings.slides_per_view_mobile }},
-      }
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
     },
-    {% if section.settings.effect == 'coverflow' %}
+    slidesPerView: 'auto',
     coverflowEffect: {
-      rotate: {{ section.settings.rotate }},
-      stretch: {{ section.settings.stretch }},
-      depth: {{ section.settings.depth }},
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
       modifier: 1,
       slideShadows: true,
     },
-    {% endif %}
-    {% if section.settings.show_pagination %}
     pagination: {
       el: '.coverflow-carousel-{{ section.id }} .swiper-pagination',
       clickable: true,
     },
-    {% endif %}
-    {% if section.settings.show_navigation %}
     navigation: {
       nextEl: '.coverflow-carousel-{{ section.id }} .swiper-button-next',
       prevEl: '.coverflow-carousel-{{ section.id }} .swiper-button-prev',
     },
-    {% endif %}
+  });
+
+  // Modal
+  const modal = document.getElementById('product-modal-{{ section.id }}');
+  const modalImg = document.getElementById('product-modal-img');
+  const modalTitle = document.getElementById('product-modal-title');
+  const modalLink = document.getElementById('product-modal-link');
+  const closeBtn = modal.querySelector('.product-modal-close');
+
+  document.querySelectorAll('.coverflow-carousel-{{ section.id }} .glass-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const handle = card.getAttribute('data-product-handle');
+      fetch(`/products/${handle}.js`)
+        .then(res => res.json())
+        .then(product => {
+          modalImg.src = product.images[0];
+          modalTitle.innerText = product.title;
+          modalLink.href = product.url;
+          modal.style.display = 'flex';
+        });
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target == modal) {
+      modal.style.display = 'none';
+    }
   });
 });
 </script>
