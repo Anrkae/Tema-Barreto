@@ -98,7 +98,7 @@
       "max": 10,
       "step": 1,
       "default": 4,
-      "label": "Número de itens"
+      "label": "Número de itens (apenas informativo)"
     }
   ],
   "blocks": [
@@ -139,21 +139,31 @@
 }
 {% endschema %}
 
-<div class="coverflow-carousel">
-  <div class="swiper">
+<div class="coverflow-carousel-section">
+  <div class="swiper coverflow-swiper-instance">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
         <div class="swiper-slide">
           <div class="coverflow-slide">
             {% if block.type == 'product' and block.settings.product != blank %}
               {% assign product = all_products[block.settings.product] %}
-              <a href="{{ product.url }}" class="quick-add-link" data-product-handle="{{ product.handle }}">
-                <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}">
+              {% if product != blank %}
+                <a href="{{ product.url }}" class="coverflow-product-link" data-product-handle="{{ product.handle }}">
+                  {% if product.featured_image %}
+                    <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}">
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
+                </a>
+              {% else %}
+                 <div class="placeholder-content">Produto não encontrado</div>
+              {% endif %}
+            {% elsif block.type == 'custom_image' and block.settings.image != blank %}
+              <a href="{{ block.settings.url | default: "#" }}">
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt | default: 'Imagem customizada' | escape }}">
               </a>
-            {% elsif block.type == 'custom_image' %}
-              <a href="{{ block.settings.url }}">
-                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Custom Image">
-              </a>
+            {% else %}
+              <div class="placeholder-content">Bloco vazio</div>
             {% endif %}
           </div>
         </div>
@@ -165,82 +175,167 @@
   </div>
 </div>
 
+<div id="quick-buy-popover-modal" class="quick-buy-popover__modal" style="display: none;">
+  <div class="quick-buy-popover__overlay"></div>
+  <div class="quick-buy-popover__content">
+    <button class="quick-buy-popover__close-button" aria-label="Fechar">&times;</button>
+    <div class="quick-buy-popover__body">
+      </div>
+  </div>
+</div>
+
+
 <link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}">
 <script src="{{ 'swiper-bundle.min.js' | asset_url }}"></script>
 
 <script>
-  const swiper = new Swiper('.swiper', {
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: 'auto',
-    coverflowEffect: {
-      rotate: {{ section.settings.rotation }},
-      stretch: {{ section.settings.stretch }},
-      depth: {{ section.settings.depth }},
-      modifier: 1,
-      slideShadows: {{ section.settings.enable_shadow }}
-    },
-    loop: true,
-    autoplay: {
-      delay: 4000,
-      disableOnInteraction: false
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: {{ section.settings.slides_per_view_mobile }},
+  document.addEventListener('DOMContentLoaded', function() {
+    const swiperInstance = new Swiper('.coverflow-swiper-instance', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: {{ section.settings.rotation }},
+        stretch: {{ section.settings.stretch }},
+        depth: {{ section.settings.depth }},
+        modifier: 1,
+        slideShadows: {{ section.settings.enable_shadow }}
       },
-      768: {
-        slidesPerView: {{ section.settings.slides_per_view_tablet }},
+      loop: true, // Considere se o loop é desejado com popovers
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false
       },
-      1200: {
-        slidesPerView: {{ section.settings.slides_per_view_desktop }},
+      navigation: {
+        nextEl: '.coverflow-swiper-instance .swiper-button-next',
+        prevEl: '.coverflow-swiper-instance .swiper-button-prev'
+      },
+      pagination: {
+        el: '.coverflow-swiper-instance .swiper-pagination',
+        clickable: true
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: {{ section.settings.slides_per_view_mobile }},
+        },
+        768: {
+          slidesPerView: {{ section.settings.slides_per_view_tablet }},
+        },
+        1200: {
+          slidesPerView: {{ section.settings.slides_per_view_desktop }},
+        }
       }
-    }
-  });
-
-  // Quick view drawer do Focal
-  document.querySelectorAll('.quick-add-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      window.Shopify.theme.jsDrawer.open(link.dataset.productHandle);
     });
+
+    // --- Início da lógica do Quick Buy Popover ---
+    const quickBuyModal = document.getElementById('quick-buy-popover-modal');
+    const quickBuyBody = quickBuyModal.querySelector('.quick-buy-popover__body');
+    const closeButton = quickBuyModal.querySelector('.quick-buy-popover__close-button');
+    const overlay = quickBuyModal.querySelector('.quick-buy-popover__overlay');
+
+    function openQuickBuyPopover(productHandle) {
+      quickBuyBody.innerHTML = '<div class="loading-spinner">Carregando...</div>'; // Indicador de carregamento
+      quickBuyModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // Previne scroll da página ao fundo
+
+      fetch(`/products/${productHandle}?view=quick-buy-popover`)
+        .then(response => response.text())
+        .then(html => {
+          quickBuyBody.innerHTML = html;
+          // Re-inicializar scripts do Shopify para o conteúdo carregado, se necessário
+          // Exemplo: Shopify.PaymentButton.init() para botões dinâmicos de checkout
+          if (window.Shopify && Shopify.PaymentButton) {
+            Shopify.PaymentButton.init();
+          }
+          // Outras inicializações de scripts de tema podem ser necessárias aqui
+          // para seletores de variantes, etc., se não funcionarem automaticamente.
+          // O Shopify geralmente lida bem com isso para formulários de produto.
+
+          // Adicionar listeners para forms dentro do popover, se necessário
+          // Ex: para fechar o popover após adicionar ao carrinho.
+        })
+        .catch(error => {
+          console.error('Erro ao carregar quick buy popover:', error);
+          quickBuyBody.innerHTML = '<p>Ocorreu um erro ao carregar as informações do produto.</p>';
+        });
+    }
+
+    function closeQuickBuyPopover() {
+      quickBuyModal.style.display = 'none';
+      quickBuyBody.innerHTML = ''; // Limpa o conteúdo
+      document.body.style.overflow = ''; // Restaura scroll da página
+    }
+
+    // Adicionar listener aos links de produto no carrossel
+    document.querySelectorAll('.coverflow-product-link').forEach(link => {
+      link.addEventListener('click', function(event) {
+        event.preventDefault(); // Previne a navegação padrão
+        const productHandle = this.dataset.productHandle;
+        if (productHandle) {
+          openQuickBuyPopover(productHandle);
+        }
+      });
+    });
+
+    // Fechar popover ao clicar no botão de fechar ou no overlay
+    closeButton.addEventListener('click', closeQuickBuyPopover);
+    overlay.addEventListener('click', closeQuickBuyPopover);
+
+    // Fechar popover com a tecla ESC
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && quickBuyModal.style.display === 'flex') {
+        closeQuickBuyPopover();
+      }
+    });
+    // --- Fim da lógica do Quick Buy Popover ---
+
+    // Remover o código anterior do jsDrawer se não for mais necessário
+    // Ex:
+    // document.querySelectorAll('.quick-add-link').forEach(link => {
+    //   link.removeEventListener('click', oldFunction); // Se você tiver a referência da função antiga
+    // });
   });
 </script>
 
 <style>
-  .coverflow-carousel {
+  .coverflow-carousel-section { /* Adicionado para escopo das setas/paginação */
     padding: 2rem 0;
+    position: relative; /* Para posicionar setas dentro se necessário */
   }
-  .swiper {
+  .coverflow-swiper-instance { /* Adicionado para escopo das setas/paginação */
     width: 100%;
+    padding-bottom: 40px; /* Espaço para paginação */
   }
   .swiper-slide {
     width: {{ section.settings.card_width }}px;
     max-width: 90%;
+    /* height: auto; */ /* Permite que a altura seja definida pelo conteúdo */
   }
   .coverflow-slide {
     backdrop-filter: blur(16px);
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.15); /* Considere um fallback para navegadores sem backdrop-filter */
     border-radius: 1rem;
     box-shadow: {% if section.settings.enable_shadow %}0 8px 32px rgba(0,0,0,0.2){% else %}none{% endif %};
     overflow: hidden;
     transition: transform 0.4s ease;
-    height: 100%;
+    height: 100%; /* Garante que o slide preencha a altura do swiper-slide */
+    display: flex; /* Para centralizar a imagem se ela for menor */
+    align-items: center;
+    justify-content: center;
   }
-  .coverflow-slide img {
+  .coverflow-slide img,
+  .coverflow-slide .placeholder-svg {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto; /* Mantém proporção da imagem */
+    max-height: 100%; /* Não ultrapassa a altura do slide */
+    object-fit: cover; /* ou 'contain' dependendo do efeito desejado */
     display: block;
+  }
+  .coverflow-slide .placeholder-content {
+    padding: 20px;
+    text-align: center;
+    color: #555;
   }
   .swiper-slide-prev,
   .swiper-slide-next {
@@ -248,11 +343,68 @@
     opacity: 0.6;
     transition: filter 0.6s ease, opacity 0.6s ease, transform 0.6s ease;
   }
-  .swiper-button-next,
-  .swiper-button-prev {
+
+  /* Ajuste para que as setas e paginação fiquem dentro do container da seção, se necessário */
+  .coverflow-swiper-instance .swiper-button-next,
+  .coverflow-swiper-instance .swiper-button-prev {
     color: {{ section.settings.arrow_color }};
+    /* top: 50%; */ /* Ajuste conforme necessário */
   }
-  .swiper-pagination-bullet {
+  .coverflow-swiper-instance .swiper-pagination .swiper-pagination-bullet {
     background: {{ section.settings.pagination_color }};
   }
+
+  /* Estilos para o Quick Buy Popover */
+  .quick-buy-popover__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; /* Usado para mostrar/esconder */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Alto z-index para ficar sobre outros conteúdos */
+  }
+  .quick-buy-popover__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo escurecido */
+  }
+  .quick-buy-popover__content {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90vw; /* Largura máxima */
+    max-height: 90vh; /* Altura máxima */
+    overflow-y: auto; /* Scroll se o conteúdo for maior */
+    z-index: 1001;
+    width: 600px; /* Ou uma largura base desejada */
+  }
+  .quick-buy-popover__close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 5px;
+  }
+  .quick-buy-popover__body .loading-spinner {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+  }
+
+  /* Estilos para o conteúdo do produto dentro do popover podem ser herdados
+     do seu tema ou você pode precisar adicionar estilos específicos aqui ou
+     no arquivo CSS principal do tema.
+     Ex: .quick-buy-popover__body .product-form { ... }
+  */
 </style>
