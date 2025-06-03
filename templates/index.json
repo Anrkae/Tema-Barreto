@@ -62,7 +62,7 @@
         "slides_mobile": 2,
         "slide_shadows": true,
         "rotate": 0,
-        "stretch": 0,
+        "stretch": 99,
         "depth": 330,
         "modifier": 1,
         "autoplay_speed": 4,
