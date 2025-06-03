@@ -11,15 +11,18 @@
   "current": {
     "button_border_radius": 18,
     "block_border_radius": "large",
-    "heading_color": "#282828",
-    "text_color": "#282828",
-    "secondary_background": "#f5f5f5",
+    "heading_color": "#f2f2f2",
+    "text_color": "#f2f2f2",
+    "background": "#141414",
+    "secondary_background": "#2c2c2c",
     "success_color": "#2e9e7b",
     "error_color": "#de2a2a",
-    "header_background": "#282828",
-    "footer_background": "#282828",
-    "footer_text_color": "#ffffff",
-    "primary_button_background": "#405de6",
+    "header_background": "#131313",
+    "header_text_color": "#f2f2f2",
+    "footer_background": "#131313",
+    "footer_text_color": "#f2f2f2",
+    "primary_button_background": "#f2f2f2",
+    "primary_button_text_color": "#131313",
     "secondary_button_background": "#f3ff34",
     "secondary_button_text_color": "#282828",
     "product_on_sale_accent": "#de2a2a",
@@ -195,6 +198,73 @@
           "empty_button_link": "shopify://collections/all",
           "show_recommendations": true,
           "recommendations_title": "You may also like"
+        }
+      },
+      "static-text-with-icons": {
+        "type": "static-text-with-icons",
+        "blocks": {
+          "static-text-with-icons-0": {
+            "type": "item",
+            "settings": {
+              "icon": "picto-box",
+              "custom_icon_width": 50,
+              "title": "Free shipping",
+              "content": "<p>Free worldwide shipping and returns - customs and duties taxes included</p>"
+            }
+          },
+          "static-text-with-icons-1": {
+            "type": "item",
+            "settings": {
+              "icon": "picto-phone",
+              "custom_icon_width": 50,
+              "title": "Customer service",
+              "content": "<p>We are available from monday to friday to answer your questions.</p>"
+            }
+          },
+          "static-text-with-icons-2": {
+            "type": "item",
+            "settings": {
+              "icon": "picto-lock",
+              "custom_icon_width": 50,
+              "title": "Secure payment",
+              "content": "<p>Your payment information is processed securely.</p>"
+            }
+          },
+          "static-text-with-icons-3": {
+            "type": "item",
+            "settings": {
+              "icon": "picto-email",
+              "custom_icon_width": 50,
+              "title": "Contact us",
+              "content": "<p>Need to contact us ? Just send us an e-mail at info@yourstore.com</p>"
+            }
+          }
+        },
+        "block_order": [
+          "static-text-with-icons-0",
+          "static-text-with-icons-1",
+          "static-text-with-icons-2",
+          "static-text-with-icons-3"
+        ],
+        "settings": {
+          "show_section": false,
+          "background": "rgba(0,0,0,0)",
+          "text_color": "rgba(0,0,0,0)"
+        }
+      },
+      "static-newsletter": {
+        "type": "static-newsletter",
+        "settings": {
+          "show_section": false,
+          "reveal_on_scroll": true,
+          "subheading": "Subscribe to our newsletter",
+          "content": "<p>Promotions, new products and sales. Directly to your inbox.</p>",
+          "text_position": "right",
+          "text_alignment": "left",
+          "text_background": "rgba(0,0,0,0)",
+          "text_color": "rgba(0,0,0,0)",
+          "button_background": "rgba(0,0,0,0)",
+          "button_text_color": "rgba(0,0,0,0)"
         }
       }
     },
