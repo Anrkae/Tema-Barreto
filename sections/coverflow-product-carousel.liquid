@@ -232,38 +232,41 @@
 <script>
   function initCoverflowSwiper{{ section.id }}() {
     if (typeof Swiper === 'undefined') {
-      // Este console.warn pode não ser visível no Eruda se o erro for de sintaxe antes disso.
-      // Mas se o Swiper não carregar por outra razão, ele apareceria.
-      console.warn('Swiper library not loaded for section {{ section.id }}.');
+      // Se o Eruda estiver funcionando e este log aparecer,
+      // significa que o Swiper não carregou via CDN ou está bloqueado.
+      console.warn('ERRO FATAL: Biblioteca Swiper não foi carregada. Verifique a importação no theme.liquid e a conexão com a internet.');
       return;
     }
 
     const swiperContainer = document.querySelector('.coverflow-swiper-{{ section.id }}');
     if (!swiperContainer) {
-      console.warn('Swiper container not found for section {{ section.id }}.');
+      // Isso indicaria um problema no HTML da seção ou o seletor JS está errado.
+      console.warn('ERRO: Container do Swiper (.coverflow-swiper-{{ section.id }}) não encontrado na página.');
       return;
     }
 
+    // Destruir instância anterior para evitar conflitos no editor de temas
     if (swiperContainer.swiper) {
       swiperContainer.swiper.destroy(true, true);
     }
 
+    // Inicializa o Swiper
     new Swiper(swiperContainer, {
       effect: 'coverflow',
       grabCursor: true,
       centeredSlides: true,
-      slidesPerView: 'auto',
-      loop: {% if collection.products.size > section.settings.slides_per_view %}true{% else %}false{% endif %},
+      slidesPerView: 'auto', // 'auto' é bom para coverflow, ou defina um número
+      loop: {% if collection.products.size > section.settings.slides_per_view %}true{% else %}false{% endif %}, // Loop se houver produtos suficientes
       autoplay: {
         delay: 5000,
-        disableOnInteraction: true,
+        disableOnInteraction: false, // Mude para true se quiser que pare ao interagir
       },
       coverflowEffect: {
-        rotate: 45,
-        stretch: 0,
-        depth: 120,
-        modifier: 1,
-        slideShadows: true,
+        rotate: 45,       // Rotação dos slides laterais
+        stretch: 0,       // Distância entre os slides
+        depth: 120,       // Profundidade do efeito
+        modifier: 1,      // Multiplicador do efeito
+        slideShadows: true, // Sombras nos slides laterais
       },
       pagination: {
         el: '.swiper-pagination-{{ section.id }}',
@@ -274,42 +277,6 @@
         prevEl: '.swiper-button-prev-{{ section.id }}',
       },
       breakpoints: {
+        // views menores primeiro
         320: {
-          slidesPerView: 1.2,
-          spaceBetween: 15,
-          coverflowEffect: { rotate: 40, stretch: 0, depth: 100, modifier: 1.5 },
-        },
-        640: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-          coverflowEffect: { rotate: 45, stretch: 0, depth: 100, modifier: 1 },
-        },
-        1024: {
-          slidesPerView: {{ section.settings.slides_per_view | default: 3 }},
-          spaceBetween: 30,
-          coverflowEffect: { rotate: 50, stretch: 0, depth: 120, modifier: 1 },
-        }
-      }
-    });
-  }
-
-  document.addEventListener('shopify:section:load', function(event) {
-    if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
-      initCoverflowSwiper{{ section.id }}();
-    }
-  });
-
-  document.addEventListener('shopify:section:select', function(event) {
-     if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
-      initCoverflowSwiper{{ section.id }}();
-    }
-  });
-
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    initCoverflowSwiper{{ section.id }}();
-  } else {
-    document.addEventListener('DOMContentLoaded', function() {
-      initCoverflowSwiper{{ section.id }}();
-    });
-  }
-</script>
+          slidesPerView:
