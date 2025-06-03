@@ -64,9 +64,9 @@
         "depth": 100,
         "modifier": 1,
         "slide_shadows": true,
-        "space_between": 30,
-        "max_width": 50,
-        "max_height": 50,
+        "space_between": 0,
+        "max_width": 100,
+        "max_height": 100,
         "padding_top": 60,
         "padding_bottom": 60
       }
