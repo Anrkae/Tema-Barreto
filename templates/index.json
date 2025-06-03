@@ -16,7 +16,7 @@
         "title": "Destaques da loja",
         "collection": "temporada-2025-26",
         "effect": "coverflow",
-        "rotate": 50,
+        "rotate": 0,
         "depth": 100,
         "stretch": 0,
         "show_navigation": true,
