@@ -15,41 +15,31 @@
         "product_fn38JU": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/1000204597.png",
-            "title": "Produto",
-            "link": "shopify://products/kids-selecao-da-italia-ll-2024-36"
+            "product": "kids-selecao-da-italia-ll-2024-36"
           }
         },
         "product_DAqg63": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/1000204595.png",
-            "title": "Produto",
-            "link": "shopify://products/kids-selecao-da-italia-ll-2024-43"
+            "product": "kids-selecao-da-italia-ll-2024-42"
           }
         },
         "product_ybdVVm": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/1000204596.png",
-            "title": "Produto",
-            "link": "shopify://products/kids-selecao-da-italia-ll-2024-42"
+            "product": "kids-selecao-da-italia-ll-2024-43"
           }
         },
         "product_h86RDf": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/1000204594.png",
-            "title": "Produto",
-            "link": "shopify://products/camisa-128"
+            "product": "camisa-182"
           }
         },
         "product_wAnT7W": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/1000204598.png",
-            "title": "Produto",
-            "link": "shopify://products/ac-milan-25-26-special-edition"
+            "product": "camisa-aik-25-26-commemorative-black"
           }
         }
       },
@@ -66,7 +56,19 @@
         "number_of_items": 5,
         "slides_desktop": 3,
         "slides_tablet": 2,
-        "slides_mobile": 2
+        "slides_mobile": 2,
+        "enable_autoplay": true,
+        "autoplay_delay": 4000,
+        "rotate": 50,
+        "stretch": 0,
+        "depth": 100,
+        "modifier": 1,
+        "slide_shadows": true,
+        "space_between": 30,
+        "max_width": 50,
+        "max_height": 50,
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "slideshow": {
