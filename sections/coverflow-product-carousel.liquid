@@ -23,13 +23,19 @@
       "default": 7
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "slides_per_view",
-      "min": 1,
-      "max": 5,
-      "step": 1,
       "label": "Slides Visíveis (Desktop)",
-      "default": 3
+      "info": "Escolha o número de slides ou 'Automático' para ajuste dinâmico.",
+      "options": [
+        { "value": "auto", "label": "Automático" },
+        { "value": "1", "label": "1 Slide" },
+        { "value": "2", "label": "2 Slides" },
+        { "value": "3", "label": "3 Slides" },
+        { "value": "4", "label": "4 Slides" },
+        { "value": "5", "label": "5 Slides" }
+      ],
+      "default": "3"
     },
     {
       "type": "checkbox",
@@ -42,21 +48,6 @@
       "id": "show_navigation",
       "label": "Mostrar Setas de Navegação",
       "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_autoplay",
-      "label": "Ativar Autoplay",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "autoplay_delay",
-      "min": 2000,
-      "max": 10000,
-      "step": 500,
-      "label": "Autoplay Delay (ms)",
-      "default": 5000
     },
     {
       "type": "color",
@@ -79,77 +70,92 @@
 }
 {% endschema %}
 
+
 <style>
   .coverflow-section-{{ section.id }} {
     padding: 30px 0;
     position: relative;
   }
+
   .coverflow-section-{{ section.id }} .section-header {
     text-align: center;
-    margin-bottom: 30px;
     font-size: 24px;
+    margin-bottom: 30px;
   }
+
   .coverflow-swiper-{{ section.id }} .swiper-slide {
     background: #fff;
-    width: 300px;
     border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 300px;
   }
-  .coverflow-product-image-wrapper {
+
+  .coverflow-swiper-{{ section.id }} .coverflow-product-card {
     width: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper {
     height: 250px;
     overflow: hidden;
   }
-  .coverflow-product-image {
+
+  .coverflow-swiper-{{ section.id }} .coverflow-product-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
-  .coverflow-product-info {
+
+  .coverflow-swiper-{{ section.id }} .coverflow-product-info {
     padding: 15px;
     text-align: center;
   }
-  .coverflow-product-title {
-    font-weight: bold;
+
+  .coverflow-swiper-{{ section.id }} .coverflow-product-title {
     font-size: 16px;
-    margin-bottom: 8px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
   }
-  .coverflow-product-price {
+
+  .coverflow-swiper-{{ section.id }} .coverflow-product-price {
     font-size: 14px;
     color: #555;
+    margin: 0;
   }
-  .swiper-button-next, .swiper-button-prev {
-    color: {{ section.settings.nav_arrow_color }};
-  }
-  .swiper-pagination-bullet {
+
+  .coverflow-swiper-{{ section.id }} .swiper-pagination-bullet {
     background-color: #ccc;
     opacity: 1;
   }
-  .swiper-pagination-bullet-active {
+
+  .coverflow-swiper-{{ section.id }} .swiper-pagination-bullet-active {
     background-color: {{ section.settings.pagination_bullet_active_color }};
   }
-  @media (max-width: 768px) {
-    .coverflow-swiper-{{ section.id }} .swiper-slide {
-      width: 260px;
-    }
-    .coverflow-product-image-wrapper {
-      height: 220px;
-    }
+
+  .coverflow-swiper-{{ section.id }} .swiper-button-next,
+  .coverflow-swiper-{{ section.id }} .swiper-button-prev {
+    color: {{ section.settings.nav_arrow_color }};
   }
+
+  @media (max-width: 768px) {
+    .coverflow-swiper-{{ section.id }} .swiper-slide { width: 260px; }
+    .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper { height: 220px; }
+  }
+
   @media (max-width: 480px) {
-    .coverflow-swiper-{{ section.id }} .swiper-slide {
-      width: 220px;
-    }
-    .coverflow-product-image-wrapper {
-      height: 180px;
-    }
+    .coverflow-swiper-{{ section.id }} .swiper-slide { width: 220px; }
+    .coverflow-swiper-{{ section.id }} .coverflow-product-image-wrapper { height: 180px; }
+    .coverflow-swiper-{{ section.id }} .coverflow-product-title { font-size: 14px; }
+    .coverflow-swiper-{{ section.id }} .coverflow-product-price { font-size: 13px; }
   }
 </style>
+
 
 <div class="page-width coverflow-section-{{ section.id }}">
   {% if section.settings.title != blank %}
@@ -157,22 +163,25 @@
   {% endif %}
 
   {% assign collection = collections[section.settings.featured_collection] %}
-  {% assign products_limit = section.settings.products_limit %}
+  {% assign products_limit = section.settings.products_limit | default: 7 %}
 
   {% if collection and collection.products.size > 0 %}
-    <div class="swiper coverflow-swiper-{{ section.id }}">
+    <div class="swiper-container coverflow-swiper-{{ section.id }}">
       <div class="swiper-wrapper">
         {% for product in collection.products limit: products_limit %}
           <div class="swiper-slide">
             <a href="{{ product.url | within: collection }}" class="coverflow-product-card">
               <div class="coverflow-product-image-wrapper">
                 {% if product.featured_image %}
-                  <img src="{{ product.featured_image | image_url: width: 600 }}"
-                       alt="{{ product.featured_image.alt | escape }}"
-                       loading="lazy"
-                       class="coverflow-product-image">
+                  <img 
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="coverflow-product-image"
+                    width="600"
+                    height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
+                    loading="lazy">
                 {% else %}
-                  {{ 'product-1' | placeholder_svg_tag: 'coverflow-product-image' }}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg coverflow-product-image' }}
                 {% endif %}
               </div>
               <div class="coverflow-product-info">
@@ -185,11 +194,12 @@
       </div>
 
       {% if section.settings.show_pagination %}
-        <div class="swiper-pagination"></div>
+        <div class="swiper-pagination swiper-pagination-{{ section.id }}"></div>
       {% endif %}
+
       {% if section.settings.show_navigation %}
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+        <div class="swiper-button-next swiper-button-next-{{ section.id }}"></div>
+        <div class="swiper-button-prev swiper-button-prev-{{ section.id }}"></div>
       {% endif %}
     </div>
   {% else %}
@@ -203,20 +213,33 @@
   {% endif %}
 </div>
 
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const swiper = new Swiper('.coverflow-swiper-{{ section.id }}', {
+  function initCoverflowSwiper{{ section.id }}() {
+    if (typeof Swiper === 'undefined') {
+      console.warn('Swiper library not loaded for section {{ section.id }}.');
+      return;
+    }
+
+    const swiperContainer = document.querySelector('.coverflow-swiper-{{ section.id }}');
+    if (!swiperContainer) return;
+
+    if (swiperContainer.swiper) {
+      swiperContainer.swiper.destroy(true, true);
+    }
+
+    new Swiper(swiperContainer, {
       effect: 'coverflow',
       grabCursor: true,
       centeredSlides: true,
-      slidesPerView: {{ section.settings.slides_per_view | default: 3 }},
-      loop: {{ collection.products.size > section.settings.slides_per_view | default: false }},
-      {% if section.settings.enable_autoplay %}
+      slidesPerView: '{{ section.settings.slides_per_view }}' === 'auto' 
+        ? 'auto' 
+        : parseInt('{{ section.settings.slides_per_view }}'),
+      loop: {{ collection.products.size > section.settings.products_limit | json }},
       autoplay: {
-        delay: {{ section.settings.autoplay_delay }},
+        delay: 5000,
         disableOnInteraction: true,
       },
-      {% endif %}
       coverflowEffect: {
         rotate: 45,
         stretch: 0,
@@ -225,27 +248,49 @@
         slideShadows: true,
       },
       pagination: {
-        el: '.swiper-pagination',
-        clickable: {{ section.settings.show_pagination }},
+        el: '.swiper-pagination-{{ section.id }}',
+        clickable: {{ section.settings.show_pagination | json }},
       },
       navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
+        nextEl: '.swiper-button-next-{{ section.id }}',
+        prevEl: '.swiper-button-prev-{{ section.id }}',
       },
       breakpoints: {
         320: {
           slidesPerView: 1.2,
-          spaceBetween: 15,
+          spaceBetween: 15
         },
         640: {
           slidesPerView: 2,
-          spaceBetween: 20,
+          spaceBetween: 20
         },
         1024: {
-          slidesPerView: {{ section.settings.slides_per_view }},
-          spaceBetween: 30,
+          slidesPerView: '{{ section.settings.slides_per_view }}' === 'auto' 
+            ? 'auto' 
+            : parseInt('{{ section.settings.slides_per_view }}'),
+          spaceBetween: 30
         }
       }
     });
+  }
+
+  document.addEventListener('shopify:section:load', function(event) {
+    if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
+      initCoverflowSwiper{{ section.id }}();
+    }
   });
+
+  document.addEventListener('shopify:section:select', function(event) {
+    if (event.target.classList.contains('coverflow-section-{{ section.id }}')) {
+      initCoverflowSwiper{{ section.id }}();
+    }
+  });
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initCoverflowSwiper{{ section.id }}();
+  } else {
+    document.addEventListener('DOMContentLoaded', function() {
+      initCoverflowSwiper{{ section.id }}();
+    });
+  }
 </script>
