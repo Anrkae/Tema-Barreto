@@ -1,6 +1,6 @@
 {% schema %}
 {
-  "name": "Coverflow Carousel",
+  "name": "Coverflow Carrossel",
   "tag": "section",
   "class": "coverflow-carousel-section",
   "settings": [
@@ -11,14 +11,41 @@
       "default": "Destaques"
     },
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "Coleção"
+      "type": "range",
+      "id": "number_of_items",
+      "label": "Número de itens",
+      "min": 1,
+      "max": 10,
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Produto",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem do produto"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Nome do produto",
+          "default": "Produto"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link do produto"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Coverflow Carousel",
+      "name": "Coverflow Carrossel",
       "category": "Custom"
     }
   ]
@@ -32,40 +59,28 @@
 
   <div class="swiper coverflow-carousel-{{ section.id }}">
     <div class="swiper-wrapper">
-      {% if section.settings.collection != blank %}
-        {% for product in collections[section.settings.collection].products %}
-          <div class="swiper-slide">
-            <div class="glass-card" data-product-handle="{{ product.handle }}">
+      {% for block in section.blocks limit: section.settings.number_of_items %}
+        <div class="swiper-slide">
+          <div class="glass-card" data-link="{{ block.settings.link }}">
+            {% if block.settings.image != blank %}
               <img
-                src="{{ product.featured_image | image_url: width: 600 }}"
-                alt="{{ product.title }}"
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.title | escape }}"
                 loading="lazy"
               >
-            </div>
+            {% else %}
+              <div style="width:100%;height:200px;background:#eee;border-radius:16px;display:flex;align-items:center;justify-content:center;">
+                Sem imagem
+              </div>
+            {% endif %}
           </div>
-        {% endfor %}
-      {% endif %}
+        </div>
+      {% endfor %}
     </div>
 
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
     <div class="swiper-pagination"></div>
-  </div>
-</div>
-
-<!-- Modal Popup -->
-<div class="product-modal" id="product-modal-{{ section.id }}">
-  <div class="product-modal-content">
-    <span class="product-modal-close">&times;</span>
-    <div class="product-modal-body">
-      <div class="product-modal-image">
-        <img id="product-modal-img" src="" alt="">
-      </div>
-      <div class="product-modal-info">
-        <h2 id="product-modal-title"></h2>
-        <a id="product-modal-link" class="product-modal-button" href="#">Ver detalhes</a>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -105,60 +120,7 @@
   display: block;
 }
 
-/* Modal */
-.product-modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-}
-
-.product-modal-content {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 30px;
-  max-width: 600px;
-  width: 90%;
-  position: relative;
-  color: white;
-  text-align: center;
-}
-
-.product-modal-close {
-  position: absolute;
-  top: 15px;
-  right: 25px;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.product-modal-body img {
-  width: 100%;
-  border-radius: 16px;
-}
-
-.product-modal-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
-  background-color: white;
-  color: black;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
-
-.product-modal-button:hover {
-  background-color: #eee;
-}
-
+/* Swiper navigation */
 .swiper-button-next,
 .swiper-button-prev {
   color: #fff;
@@ -169,7 +131,7 @@
 }
 </style>
 
-<!-- JS Swiper e Modal -->
+<!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -200,35 +162,14 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   });
 
-  // Modal
-  const modal = document.getElementById('product-modal-{{ section.id }}');
-  const modalImg = document.getElementById('product-modal-img');
-  const modalTitle = document.getElementById('product-modal-title');
-  const modalLink = document.getElementById('product-modal-link');
-  const closeBtn = modal.querySelector('.product-modal-close');
-
+  // Clique nos cards
   document.querySelectorAll('.coverflow-carousel-{{ section.id }} .glass-card').forEach(card => {
     card.addEventListener('click', () => {
-      const handle = card.getAttribute('data-product-handle');
-      fetch(`/products/${handle}.js`)
-        .then(res => res.json())
-        .then(product => {
-          modalImg.src = product.images[0];
-          modalTitle.innerText = product.title;
-          modalLink.href = product.url;
-          modal.style.display = 'flex';
-        });
+      const link = card.getAttribute('data-link');
+      if (link) {
+        window.location.href = link;
+      }
     });
-  });
-
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  window.addEventListener('click', (e) => {
-    if (e.target == modal) {
-      modal.style.display = 'none';
-    }
   });
 });
 </script>
