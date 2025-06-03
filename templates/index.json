@@ -9,6 +9,24 @@
  */
 {
   "sections": {
+    "coverflow_carousel_YTXCHy": {
+      "type": "coverflow-carousel",
+      "name": "Coverflow Carousel",
+      "settings": {
+        "title": "Destaques da loja",
+        "collection": "temporada-2025-26",
+        "effect": "coverflow",
+        "rotate": 50,
+        "depth": 100,
+        "stretch": 0,
+        "show_navigation": true,
+        "show_pagination": true,
+        "enable_loop": false,
+        "slides_per_view_desktop": 3,
+        "slides_per_view_tablet": 2,
+        "slides_per_view_mobile": 3
+      }
+    },
     "slideshow": {
       "type": "slideshow",
       "blocks": {
@@ -447,6 +465,7 @@
     }
   },
   "order": [
+    "coverflow_carousel_YTXCHy",
     "slideshow",
     "featured-collections",
     "image-with-text",
