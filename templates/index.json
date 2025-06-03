@@ -59,7 +59,7 @@
       "settings": {
         "slides_per_view_desktop": 3,
         "slides_per_view_tablet": 2,
-        "slides_per_view_mobile": 3,
+        "slides_per_view_mobile": 2,
         "card_width": 380,
         "rotation": 0,
         "depth": 250,
@@ -67,7 +67,7 @@
         "enable_shadow": true,
         "arrow_color": "#ffffff",
         "pagination_color": "#ffffff",
-        "items": 1
+        "items": 3
       }
     },
     "slideshow": {
