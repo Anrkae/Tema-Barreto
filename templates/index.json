@@ -63,7 +63,10 @@
       "name": "Coverflow Carousel",
       "settings": {
         "title": "Destaques da loja",
-        "number_of_items": 5
+        "number_of_items": 5,
+        "slides_desktop": 3,
+        "slides_tablet": 2,
+        "slides_mobile": 2
       }
     },
     "slideshow": {
