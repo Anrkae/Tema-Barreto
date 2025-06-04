@@ -29,6 +29,11 @@
     assign item_width_tablet = '250px'
     assign item_width_mobile = '200px'
   endif
+
+  # Define a cor de fundo padrão ou a partir de uma nova configuração (exemplo)
+  # Se quiser adicionar uma configuração de cor de fundo, descomente a linha abaixo
+  # e adicione a configuração correspondente no schema.
+  # assign section_background_color = section.settings.section_background_color | default: 'transparent'
 -%}
 
 <style>
@@ -175,7 +180,7 @@
   }
 </style>
 
-<div class="custom-collection-grid-section"> {/* Removido: color-{{ section.settings.color_scheme }} gradient */}
+<div class="custom-collection-grid-section">
   <div class="page-width">
     {% if section.settings.title != blank %}
       <div class="custom-collection-grid__header">
@@ -371,7 +376,6 @@
       "label": "Ativar efeito de flutuar ao passar o mouse",
       "default": true
     },
-    // Removida a configuração de color_scheme daqui
     {
       "type": "header",
       "content": "Espaçamento da Seção"
