@@ -66,7 +66,7 @@
         "mostrar_titulo_card": false,
         "aspect_ratio": "4/5",
         "rotate": 0,
-        "stretch": 100,
+        "stretch": 150,
         "depth": 300,
         "ativar_blur_tras": true,
         "blur_tras": 4,
