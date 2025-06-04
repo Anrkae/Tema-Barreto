@@ -122,6 +122,9 @@
         "collection_block_UrUQCg",
         "collection_block_wEXj6q"
       ],
+      "custom_css": [
+        ".custom-collection-grid__item-title {-webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%); mask-image: radial-gradient(circle, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%); }"
+      ],
       "name": "Grid Coleções",
       "settings": {
         "title": "CATEGORIAS",
