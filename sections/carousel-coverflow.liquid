@@ -3,40 +3,165 @@
   "name": "Coverflow",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "titulo", "label": "Título da seção", "default": "Destaques" },
-    { "type": "checkbox", "id": "mostrar_titulo_card", "label": "Mostrar título no card", "default": true },
+    {
+      "type": "text",
+      "id": "titulo",
+      "label": "Título da seção",
+      "default": "Destaques"
+    },
+    {
+      "type": "checkbox",
+      "id": "mostrar_titulo_card",
+      "label": "Mostrar título no card",
+      "default": true
+    },
     {
       "type": "select",
       "id": "aspect_ratio",
       "label": "Proporção do card",
       "default": "1/1",
       "options": [
-        { "value": "1/1", "label": "Quadrado (1:1)" },
-        { "value": "4/5", "label": "Vertical (4:5)" },
-        { "value": "16/9", "label": "Horizontal (16:9)" }
+        {
+          "value": "1/1",
+          "label": "Quadrado (1:1)"
+        },
+        {
+          "value": "4/5",
+          "label": "Vertical (4:5)"
+        },
+        {
+          "value": "16/9",
+          "label": "Horizontal (16:9)"
+        }
       ]
     },
-    { "type": "range", "id": "rotate", "label": "Rotate", "min": 0, "max": 90, "step": 5, "default": 20 },
-    { "type": "range", "id": "stretch", "label": "Stretch", "min": 0, "max": 300, "step": 10, "default": 100 },
-    { "type": "range", "id": "depth", "label": "Depth", "min": 0, "max": 1000, "step": 50, "default": 300 },
-    { "type": "checkbox", "id": "ativar_blur_tras", "label": "Ativar blur nos cards de trás", "default": true },
-    { "type": "range", "id": "blur_tras", "label": "Intensidade do blur (px)", "min": 0, "max": 30, "step": 1, "default": 10 },
-    { "type": "color", "id": "cor_fundo", "label": "Cor de fundo do card", "default": "#ffffff" },
-    { "type": "range", "id": "borda_radius", "label": "Borda arredondada (px)", "min": 0, "max": 50, "step": 2, "default": 20 },
-    { "type": "checkbox", "id": "ativar_sombra", "label": "Ativar sombra nos cards", "default": true },
-    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": true },
-    { "type": "range", "id": "autoplay_delay", "label": "Autoplay delay (ms)", "min": 1000, "max": 9000, "step": 500, "default": 3000 },
-    { "type": "range", "id": "slides_desktop", "label": "Slides desktop", "min": 1, "max": 5, "step": 1, "default": 3 },
-    { "type": "range", "id": "slides_tablet", "label": "Slides tablet", "min": 1, "max": 4, "step": 1, "default": 2 },
-    { "type": "range", "id": "slides_mobile", "label": "Slides mobile", "min": 1, "max": 3, "step": 1, "default": 2 }
+    {
+      "type": "range",
+      "id": "rotate",
+      "label": "Rotate",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "stretch",
+      "label": "Stretch",
+      "min": 0,
+      "max": 300,
+      "step": 10,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "depth",
+      "label": "Depth",
+      "min": 0,
+      "max": 1000,
+      "step": 50,
+      "default": 300
+    },
+    {
+      "type": "checkbox",
+      "id": "ativar_blur_tras",
+      "label": "Ativar blur nos cards de trás",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "blur_tras",
+      "label": "Intensidade do blur (px)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "cor_fundo",
+      "label": "Cor de fundo do card",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "borda_radius",
+      "label": "Borda arredondada (px)",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "ativar_sombra",
+      "label": "Ativar sombra nos cards",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay delay (ms)",
+      "min": 1000,
+      "max": 9000,
+      "step": 500,
+      "default": 3000
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Slides desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "slides_tablet",
+      "label": "Slides tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "label": "Slides mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    }
   ],
   "blocks": [
     {
       "type": "card",
       "name": "Card",
       "settings": [
-        { "type": "product", "id": "produto", "label": "Produto" },
-        { "type": "text", "id": "titulo_card", "label": "Título do card (opcional)", "default": "Produto" }
+        {
+          "type": "image_picker",
+          "id": "imagem",
+          "label": "Imagem"
+        },
+        {
+          "type": "product",
+          "id": "produto",
+          "label": "Produto"
+        },
+        {
+          "type": "text",
+          "id": "titulo_card",
+          "label": "Título do card",
+          "default": "Título"
+        }
       ]
     }
   ],
@@ -57,77 +182,66 @@
   <div class="swiper">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
-        {% assign product = block.settings.produto | product %}
-
-        {% if product %}
+        {% assign produto = block.settings.produto %}
         <div class="swiper-slide">
-          <button
-            type="button"
-            is="toggle-button"
-            class="card-button"
-            aria-controls="product-template--{{ section.id }}__{{ product.id }}-popover"
-            aria-expanded="false">
+          {% if produto %}
+            <a href="{{ produto.url }}" class="card-link" aria-label="Ver produto {{ produto.title }}">
+              <div class="card-wrapper">
+                {% if block.settings.imagem %}
+                  <img 
+                    src="{{ block.settings.imagem | image_url: width: 800 }}" 
+                    alt="{{ block.settings.titulo_card | escape }}">
+                {% else %}
+                  <img 
+                    src="{{ produto.featured_image | img_url: '800x' }}" 
+                    alt="{{ produto.title }}">
+                {% endif %}
+              </div>
+            </a>
+          {% else %}
             <div class="card-wrapper">
-              <img 
-                src="{{ product.featured_image | image_url: width: 800 }}"
-                alt="{{ product.title | escape }}">
+              {% if block.settings.imagem %}
+                <img 
+                  src="{{ block.settings.imagem | image_url: width: 800 }}" 
+                  alt="{{ block.settings.titulo_card | escape }}">
+              {% endif %}
             </div>
-          </button>
-
-          {% if section.settings.mostrar_titulo_card %}
-            <p class="card-title">
-              {{ block.settings.titulo_card | default: product.title }}
-            </p>
+          {% endif %}
+          {% if section.settings.mostrar_titulo_card and block.settings.titulo_card != blank %}
+            <p class="card-title">{{ block.settings.titulo_card }}</p>
           {% endif %}
         </div>
-        {% endif %}
       {% endfor %}
     </div>
 
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
   </div>
-
-  <!-- Popovers -->
-  {% for block in section.blocks %}
-    {% assign product = block.settings.produto | product %}
-    {% if product %}
-      <div
-        id="product-template--{{ section.id }}__{{ product.id }}-popover"
-        class="popover"
-        tabindex="-1">
-        {% render 'quick-add-popover', product: product %}
-      </div>
-    {% endif %}
-  {% endfor %}
 </div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
 <style>
   .coverflow-section {
     margin: 40px auto;
     text-align: center;
   }
-
   .swiper {
     width: 100%;
     max-width: 1400px;
   }
-
   .swiper-slide {
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: all 0.4s ease;
   }
-
-  .card-button {
-    all: unset;
-    cursor: pointer;
+  .card-link {
     display: block;
     width: 100%;
+    text-decoration: none;
+    cursor: pointer;
   }
-
   .card-wrapper {
     width: 100%;
     aspect-ratio: {{ section.settings.aspect_ratio }};
@@ -144,25 +258,20 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     {% endif %}
   }
-
   .card-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
   }
-
   .swiper-slide:hover .card-wrapper img {
     transform: scale(1.05);
   }
-
   .card-title {
     margin-top: 10px;
     color: white;
     font-size: 1.1rem;
   }
-
-  /* Blur dos não ativos */
   .swiper-slide:not(.swiper-slide-active) {
     {% if section.settings.ativar_blur_tras %}
       filter: blur({{ section.settings.blur_tras }}px) brightness(0.7);
@@ -171,7 +280,6 @@
     {% endif %}
     transform: scale(0.9);
   }
-
   .swiper-button-next,
   .swiper-button-prev {
     color: white;
@@ -179,14 +287,14 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const swiper = new Swiper('.coverflow-section .swiper', {
+    new Swiper('.coverflow-section .swiper', {
       effect: 'coverflow',
       grabCursor: true,
       centeredSlides: true,
       loop: true,
-
       coverflowEffect: {
         rotate: {{ section.settings.rotate }},
         stretch: {{ section.settings.stretch }},
@@ -194,21 +302,17 @@
         modifier: 1,
         slideShadows: false,
       },
-
       navigation: {
         nextEl: '.coverflow-section .swiper-button-next',
         prevEl: '.coverflow-section .swiper-button-prev',
       },
-
       keyboard: { enabled: true },
-
       {% if section.settings.autoplay %}
       autoplay: {
         delay: {{ section.settings.autoplay_delay }},
         disableOnInteraction: false,
       },
       {% endif %}
-
       breakpoints: {
         1024: { slidesPerView: {{ section.settings.slides_desktop }} },
         768: { slidesPerView: {{ section.settings.slides_tablet }} },
@@ -216,4 +320,4 @@
       }
     });
   });
-</script>
+</
