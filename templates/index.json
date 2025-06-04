@@ -40,11 +40,11 @@
       "settings": {
         "titulo": "Destaques",
         "tamanho_card": "grande",
-        "stretch": 60,
+        "stretch": 50,
         "rotate": 0,
         "depth": 200,
         "autoplay": true,
-        "autoplay_delay": 3000
+        "autoplay_delay": 4500
       }
     },
     "coverflow_carousel_i3Xwpk": {
@@ -93,6 +93,7 @@
         "custom_image_MQw8gj",
         "custom_image_RhjCHF"
       ],
+      "disabled": true,
       "name": "Coverflow Carrossel",
       "settings": {
         "slides_per_view_desktop": 3,
