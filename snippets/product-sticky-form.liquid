@@ -27,7 +27,7 @@
               <span class="product-sticky-form__title">{{ product.title }}</span>
               <span class="square-separator square-separator--subdued"></span>
               <span class="product-sticky-form__price">
-                <span> testando </span>
+                
                 {%- if settings.currency_code_enabled -%}
                   {{- product.selected_or_first_available_variant.price | money_with_currency -}}
                 {%- else -%}
