@@ -9,67 +9,62 @@
  */
 {
   "sections": {
-    "carousel_coverflow_4WR4jH": {
+    "carousel_coverflow_HTF9HQ": {
       "type": "carousel-coverflow",
       "blocks": {
-        "card_4CMqU6": {
+        "card_iG6tie": {
           "type": "card",
           "settings": {
-            "imagem": "shopify://shop_images/1000204597.png",
-            "produto": "camisa-flamengo-25-26-home",
-            "titulo_card": ""
+            "produto": "kids-selecao-da-italia-ll-2024-36",
+            "titulo_card": "Título"
           }
         },
-        "card_EQtcyB": {
+        "card_GjxWnU": {
           "type": "card",
           "settings": {
-            "imagem": "shopify://shop_images/1000204595.png",
-            "produto": "",
-            "titulo_card": ""
+            "produto": "kids-selecao-da-italia-ll-2024-42",
+            "titulo_card": "Título"
           }
         },
-        "card_TfkVWc": {
+        "card_8VKkzf": {
           "type": "card",
           "settings": {
-            "imagem": "shopify://shop_images/1000204596.png",
-            "produto": "",
-            "titulo_card": "Man. City"
+            "produto": "kids-selecao-da-italia-ll-2024-43",
+            "titulo_card": "Título"
           }
         },
-        "card_yg9DjP": {
+        "card_yhAFb7": {
           "type": "card",
           "settings": {
-            "imagem": "shopify://shop_images/1000204594.png",
-            "produto": "",
-            "titulo_card": "Camisa Palmeiras"
+            "produto": "camisa-182",
+            "titulo_card": "Título"
           }
         },
-        "card_xf7ytc": {
+        "card_tVDTVB": {
           "type": "card",
           "settings": {
-            "imagem": "shopify://shop_images/1000204598.png",
-            "produto": "",
-            "titulo_card": "Título do Produto"
+            "produto": "camisa-128",
+            "titulo_card": "Título"
           }
         }
       },
       "block_order": [
-        "card_4CMqU6",
-        "card_EQtcyB",
-        "card_TfkVWc",
-        "card_yg9DjP",
-        "card_xf7ytc"
+        "card_iG6tie",
+        "card_GjxWnU",
+        "card_8VKkzf",
+        "card_yhAFb7",
+        "card_tVDTVB"
       ],
-      "name": "Carrossel Coverflow",
+      "name": "Coverflow",
       "settings": {
         "titulo": "Destaques",
-        "mostrar_titulo_card": false,
+        "mostrar_titulo_card": true,
         "aspect_ratio": "4/5",
         "rotate": 0,
-        "stretch": 80,
-        "depth": 200,
+        "stretch": 100,
+        "depth": 300,
         "ativar_blur_tras": true,
-        "blur_tras": 4,
+        "blur_tras": 10,
         "cor_fundo": "#ffffff",
         "borda_radius": 20,
         "ativar_sombra": true,
@@ -78,68 +73,6 @@
         "slides_desktop": 3,
         "slides_tablet": 2,
         "slides_mobile": 2
-      }
-    },
-    "coverflow_carousel_i3Xwpk": {
-      "type": "coverflow-carousel",
-      "blocks": {
-        "custom_image_cHH4xc": {
-          "type": "custom_image",
-          "settings": {
-            "image": "shopify://shop_images/1000204597.png",
-            "url": "shopify://products/camisa-flamengo-25-26-home"
-          }
-        },
-        "custom_image_ACyKMj": {
-          "type": "custom_image",
-          "settings": {
-            "image": "shopify://shop_images/1000204595.png",
-            "url": "shopify://products/camisa-comemorativa-santos-25-26-pele-1-000-gols"
-          }
-        },
-        "custom_image_yiWzkL": {
-          "type": "custom_image",
-          "settings": {
-            "image": "shopify://shop_images/1000204596.png",
-            "url": ""
-          }
-        },
-        "custom_image_MQw8gj": {
-          "type": "custom_image",
-          "settings": {
-            "image": "shopify://shop_images/1000204594.png",
-            "url": ""
-          }
-        },
-        "custom_image_RhjCHF": {
-          "type": "custom_image",
-          "settings": {
-            "image": "shopify://shop_images/1000204598.png",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "custom_image_cHH4xc",
-        "custom_image_ACyKMj",
-        "custom_image_yiWzkL",
-        "custom_image_MQw8gj",
-        "custom_image_RhjCHF"
-      ],
-      "disabled": true,
-      "name": "Coverflow Carrossel",
-      "settings": {
-        "slides_per_view_desktop": 3,
-        "slides_per_view_tablet": 2,
-        "slides_per_view_mobile": 2,
-        "card_width": 380,
-        "rotation": 0,
-        "depth": 250,
-        "stretch": 0,
-        "enable_shadow": true,
-        "arrow_color": "#ffffff",
-        "pagination_color": "#ffffff",
-        "items": 3
       }
     },
     "slideshow": {
@@ -584,8 +517,7 @@
     }
   },
   "order": [
-    "carousel_coverflow_4WR4jH",
-    "coverflow_carousel_i3Xwpk",
+    "carousel_coverflow_HTF9HQ",
     "slideshow",
     "featured-collections",
     "image-with-text",
