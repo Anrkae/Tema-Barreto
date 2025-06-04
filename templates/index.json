@@ -9,46 +9,55 @@
  */
 {
   "sections": {
-    "carousel_coverflow_QrE7pi": {
+    "carousel_coverflow_4WR4jH": {
       "type": "carousel-coverflow",
       "blocks": {
-        "image_link_DzLnDP": {
-          "type": "image_link",
+        "product_EFaket": {
+          "type": "product",
           "settings": {
-            "imagem": "shopify://shop_images/1000204598.png",
-            "link": "shopify://products/camisa-flamengo-25-26-home",
-            "texto": ""
+            "produto": "kids-selecao-da-italia-ll-2024-36"
           }
         },
-        "image_link_q986Jy": {
-          "type": "image_link",
+        "product_rwtFN4": {
+          "type": "product",
           "settings": {
-            "imagem": "shopify://shop_images/1000204594.png",
-            "link": "",
-            "texto": "Texto opcional"
+            "produto": "kids-selecao-da-italia-ll-2024-42"
           }
         },
-        "image_link_fNBfVK": {
-          "type": "image_link",
+        "product_zHPY7A": {
+          "type": "product",
           "settings": {
-            "imagem": "shopify://shop_images/1000204596.png",
-            "link": "",
-            "texto": "Texto opcional"
+            "produto": "kids-selecao-da-italia-ll-2024-43"
+          }
+        },
+        "product_3NLxda": {
+          "type": "product",
+          "settings": {
+            "produto": "camisa-182"
+          }
+        },
+        "product_dEQbnY": {
+          "type": "product",
+          "settings": {
+            "produto": "camisa-america-do-mexico-25-26-special-edition"
           }
         }
       },
       "block_order": [
-        "image_link_DzLnDP",
-        "image_link_q986Jy",
-        "image_link_fNBfVK"
+        "product_EFaket",
+        "product_rwtFN4",
+        "product_zHPY7A",
+        "product_3NLxda",
+        "product_dEQbnY"
       ],
-      "name": "Coverflow Carousel",
+      "name": "Carrossel Coverflow",
       "settings": {
         "titulo": "Destaques",
-        "exibir_titulo": false,
-        "cor_titulo": "#ffffff",
-        "navegacao": true,
-        "paginacao": true,
+        "tamanho_card": "medio",
+        "stretch": 80,
+        "rotate": 0,
+        "depth": 200,
+        "autoplay": true,
         "autoplay_delay": 3000
       }
     },
@@ -556,7 +565,7 @@
     }
   },
   "order": [
-    "carousel_coverflow_QrE7pi",
+    "carousel_coverflow_4WR4jH",
     "coverflow_carousel_i3Xwpk",
     "slideshow",
     "featured-collections",
