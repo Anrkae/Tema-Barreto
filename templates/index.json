@@ -124,7 +124,7 @@
         "title": "CATEGORIAS",
         "heading_alignment": "center",
         "item_size": "medium",
-        "border_radius": 10,
+        "border_radius": 50,
         "gap_size": 15,
         "image_ratio": "1",
         "show_title_overlay": true,
