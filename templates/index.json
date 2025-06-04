@@ -53,7 +53,7 @@
       "name": "Carrossel Coverflow",
       "settings": {
         "titulo": "Destaques",
-        "tamanho_card": "medio",
+        "tamanho_card": "pequeno",
         "stretch": 80,
         "rotate": 0,
         "depth": 200,
