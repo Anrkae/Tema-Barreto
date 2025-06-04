@@ -705,7 +705,8 @@
   },
   "platform_customizations": {
     "custom_css": [
-      "body {background: #fff !important;}"
+      ":root {--cor-gradiente-radial-1: rgba(114, 9, 183, 0.15); --cor-gradiente-radial-2: rgba(114, 9, 183, 0.1); }",
+      "body {background: radial-gradient(circle at top left, var(--cor-gradiente-radial-1), transparent 50%), radial-gradient(circle at bottom right, var(--cor-gradiente-radial-2), transparent 50%), #141414 !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }"
     ]
   }
 }
