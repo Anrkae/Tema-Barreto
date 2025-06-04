@@ -35,10 +35,8 @@
       "type": "card",
       "name": "Card",
       "settings": [
-        { "type": "image_picker", "id": "imagem", "label": "Imagem (opcional, sobrepõe imagem do produto)" },
-        { "type": "product", "id": "produto", "label": "Produto (opcional)" },
-        { "type": "url", "id": "link_manual", "label": "Link manual (se não tiver produto)" },
-        { "type": "text", "id": "titulo_card", "label": "Título do card", "default": "Título" }
+        { "type": "product", "id": "produto", "label": "Produto" },
+        { "type": "text", "id": "titulo_card", "label": "Título do card (opcional)", "default": "Produto" }
       ]
     }
   ],
@@ -59,51 +57,50 @@
   <div class="swiper">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
-        {% assign produto = block.settings.produto %}
+        {% assign product = block.settings.produto | product %}
 
+        {% if product %}
         <div class="swiper-slide">
           <button
             type="button"
+            is="toggle-button"
             class="card-button"
-            {% if produto %}
-              data-product-handle="{{ produto.handle }}"
-            {% elsif block.settings.link_manual != blank %}
-              data-link="{{ block.settings.link_manual }}"
-            {% endif %}>
-            
+            aria-controls="product-template--{{ section.id }}__{{ product.id }}-popover"
+            aria-expanded="false">
             <div class="card-wrapper">
               <img 
-                src="{% if block.settings.imagem != blank %}
-                        {{ block.settings.imagem | image_url: width: 800 }}
-                      {% elsif produto %}
-                        {{ produto.featured_image | image_url: width: 800 }}
-                      {% endif %}"
-                alt="{{ block.settings.titulo_card | escape }}">
+                src="{{ product.featured_image | image_url: width: 800 }}"
+                alt="{{ product.title | escape }}">
             </div>
           </button>
 
-          {% if section.settings.mostrar_titulo_card and block.settings.titulo_card != blank %}
-            <p class="card-title">{{ block.settings.titulo_card }}</p>
+          {% if section.settings.mostrar_titulo_card %}
+            <p class="card-title">
+              {{ block.settings.titulo_card | default: product.title }}
+            </p>
           {% endif %}
         </div>
+        {% endif %}
       {% endfor %}
     </div>
 
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
   </div>
-</div>
 
-{% comment %} Renderiza os popovers dos produtos {% endcomment %}
-{% for block in section.blocks %}
-  {% if block.settings.produto != blank %}
-    <div 
-      id="product-template--{{ section.id }}__coverflow-{{ block.settings.produto.handle }}-popover"
-      class="popover">
-      {% render 'product-popover', product: block.settings.produto %}
-    </div>
-  {% endif %}
-{% endfor %}
+  <!-- Popovers -->
+  {% for block in section.blocks %}
+    {% assign product = block.settings.produto | product %}
+    {% if product %}
+      <div
+        id="product-template--{{ section.id }}__{{ product.id }}-popover"
+        class="popover"
+        tabindex="-1">
+        {% render 'quick-add-popover', product: product %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
@@ -217,32 +214,6 @@
         768: { slidesPerView: {{ section.settings.slides_tablet }} },
         0: { slidesPerView: {{ section.settings.slides_mobile }} }
       }
-    });
-
-    // Comportamento dos botões
-    document.querySelectorAll('.coverflow-section .card-button').forEach(button => {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        const productHandle = this.dataset.productHandle;
-        const manualLink = this.dataset.link;
-
-        if (productHandle) {
-          const popoverId = `product-template--{{ section.id }}__coverflow-${productHandle}-popover`;
-          const popover = document.getElementById(popoverId);
-
-          if (popover) {
-            popover.classList.add('is-active');
-            document.body.classList.add('popover-open');
-          } else {
-            // fallback: redireciona para página do produto
-            window.location.href = `/products/${productHandle}`;
-          }
-
-        } else if (manualLink) {
-          window.location.href = manualLink;
-        }
-      });
     });
   });
 </script>
