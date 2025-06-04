@@ -71,13 +71,13 @@
         "autoplay": true,
         "autoplay_delay": 3000,
         "ativar_blur_tras": false,
-        "intensidade_blur_tras": 10,
+        "intensidade_blur_tras": 12,
         "cor_fundo_card": "#ffffff",
         "opacidade_fundo_card": 10,
         "ativar_sombra": true,
         "slides_desktop": 3,
         "slides_tablet": 2,
-        "slides_mobile": 2
+        "slides_mobile": 3
       }
     },
     "coverflow_carousel_i3Xwpk": {
