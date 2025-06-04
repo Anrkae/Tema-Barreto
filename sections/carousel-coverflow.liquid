@@ -1,189 +1,65 @@
-<div class="coverflow-carousel-{{ section.id }}">
-  {% if section.settings.exibir_titulo %}
-    <h2 class="carousel-title" style="color: {{ section.settings.cor_titulo }}">{{ section.settings.titulo }}</h2>
-  {% endif %}
-
-  <div class="swiper coverflow-swiper-{{ section.id }}">
-    <div class="swiper-wrapper">
-      {% for block in section.blocks %}
-        <div class="swiper-slide">
-          {% if block.type == 'product' and block.settings.produto != blank %}
-            {% assign product = all_products[block.settings.produto] %}
-            <div class="card">
-              <a href="{{ product.url }}" onclick="window.Shopify.theme.jsDrawer.open('{{ product.url }}'); return false;">
-                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'card-img', alt: product.title }}
-              </a>
-              <div class="card-info">
-                <h3>{{ product.title }}</h3>
-                <p>
-                  {% if product.price_varies %}
-                    {{ product.price_min | money }} - {{ product.price_max | money }}
-                  {% else %}
-                    {{ product.price | money }}
-                  {% endif %}
-                </p>
-              </div>
-            </div>
-          {% elsif block.type == 'image_link' and block.settings.imagem != blank %}
-            <div class="card">
-              <a href="{{ block.settings.link }}">
-                {{ block.settings.imagem | image_url: width: 600 | image_tag: loading: 'lazy', class: 'card-img' }}
-              </a>
-              {% if block.settings.texto != blank %}
-                <div class="card-info">
-                  <p>{{ block.settings.texto }}</p>
-                </div>
-              {% endif %}
-            </div>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
-
-    {% if section.settings.navegacao %}
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-    {% endif %}
-    {% if section.settings.paginacao %}
-      <div class="swiper-pagination"></div>
-    {% endif %}
-  </div>
-</div>
-
-<style>
-  .coverflow-carousel-{{ section.id }} {
-    width: 100%;
-    margin: 40px auto;
-    text-align: center;
-  }
-  .coverflow-carousel-{{ section.id }} .carousel-title {
-    margin-bottom: 20px;
-    font-size: 2rem;
-  }
-  .coverflow-carousel-{{ section.id }} .swiper {
-    width: 100%;
-    max-width: 1300px;
-    margin: auto;
-  }
-  .coverflow-carousel-{{ section.id }} .swiper-slide {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.05);
-    border-radius: 20px !important;
-    backdrop-filter: blur(10px);
-    padding: 40px !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    transition: all 0.4s ease;
-  }
-  .coverflow-carousel-{{ section.id }} .swiper-slide:hover {
-    filter: contrast(1.05) saturate(1.1);
-  }
-  .coverflow-carousel-{{ section.id }} .card-img {
-    width: 100%;
-    max-width: 450px !important;
-    border-radius: 20px !important;
-    transition: transform 0.4s ease;
-  }
-  .coverflow-carousel-{{ section.id }} .card-img:hover {
-    transform: scale(1.1) translateY(-10px);
-  }
-  .coverflow-carousel-{{ section.id }} .card-info {
-    margin-top: 15px;
-    color: white;
-  }
-  .coverflow-carousel-{{ section.id }} .swiper-button-next,
-  .coverflow-carousel-{{ section.id }} .swiper-button-prev {
-    color: white !important;
-  }
-  .coverflow-carousel-{{ section.id }} .swiper-pagination-bullet {
-    background-color: white !important;
-    opacity: 0.5;
-  }
-  .coverflow-carousel-{{ section.id }} .swiper-pagination-bullet-active {
-    opacity: 1;
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const swiper{{ section.id }} = new Swiper('.coverflow-swiper-{{ section.id }}', {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      loop: true,
-      coverflowEffect: {
-        rotate: 0,
-        stretch: 80,
-        depth: 200,
-        modifier: 1,
-        slideShadows: false,
-      },
-      navigation: {
-        nextEl: '.coverflow-carousel-{{ section.id }} .swiper-button-next',
-        prevEl: '.coverflow-carousel-{{ section.id }} .swiper-button-prev',
-      },
-      pagination: {
-        el: '.coverflow-carousel-{{ section.id }} .swiper-pagination',
-        clickable: true,
-      },
-      autoplay: {
-        delay: {{ section.settings.autoplay_delay }},
-        disableOnInteraction: false,
-      },
-      breakpoints: {
-        320: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
-      },
-    });
-  });
-</script>
-
 {% schema %}
 {
-  "name": "Coverflow Carousell",
+  "name": "Carrossel Coverflow",
+  "tag": "section",
   "settings": [
     {
       "type": "text",
       "id": "titulo",
-      "label": "Título da seção",
-      "default": "Produtos em Destaque"
+      "label": "Título",
+      "default": "Destaques"
+    },
+    {
+      "type": "select",
+      "id": "tamanho_card",
+      "label": "Tamanho dos cards",
+      "default": "medio",
+      "options": [
+        { "value": "pequeno", "label": "Pequeno" },
+        { "value": "medio", "label": "Médio" },
+        { "value": "grande", "label": "Grande" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "stretch",
+      "label": "Stretch (espaçamento lateral)",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "rotate",
+      "label": "Rotate (graus de rotação)",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "depth",
+      "label": "Depth (profundidade 3D)",
+      "min": 0,
+      "max": 1000,
+      "step": 50,
+      "default": 200
     },
     {
       "type": "checkbox",
-      "id": "exibir_titulo",
-      "label": "Exibir título",
-      "default": true
-    },
-    {
-      "type": "color",
-      "id": "cor_titulo",
-      "label": "Cor do título",
-      "default": "#ffffff"
-    },
-    {
-      "type": "checkbox",
-      "id": "navegacao",
-      "label": "Exibir setas de navegação",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "paginacao",
-      "label": "Exibir paginação",
+      "id": "autoplay",
+      "label": "Ativar autoplay",
       "default": true
     },
     {
       "type": "range",
       "id": "autoplay_delay",
+      "label": "Autoplay delay (ms)",
       "min": 1000,
       "max": 9000,
       "step": 500,
-      "unit": "ms",
-      "label": "Autoplay Delay",
       "default": 3000
     }
   ],
@@ -195,38 +71,148 @@
         {
           "type": "product",
           "id": "produto",
-          "label": "Produto"
-        }
-      ]
-    },
-    {
-      "type": "image_link",
-      "name": "Imagem com link",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "imagem",
-          "label": "Imagem"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link"
-        },
-        {
-          "type": "text",
-          "id": "texto",
-          "label": "Texto opcional"
+          "label": "Selecionar produto"
         }
       ]
     }
   ],
-  "max_blocks": 12,
   "presets": [
     {
-      "name": "Coverflow Carousell",
-      "category": "Destaque"
+      "name": "Carrossel Coverflow",
+      "category": "Custom"
     }
   ]
 }
 {% endschema %}
+
+<div class="coverflow-section page-width">
+  {% if section.settings.titulo != blank %}
+    <h2 class="section-title">{{ section.settings.titulo }}</h2>
+  {% endif %}
+
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {% assign produto = block.settings.produto %}
+        {% if produto != blank %}
+          <div class="swiper-slide">
+            <a href="{{ produto.url }}">
+              <img 
+                src="{{ produto.featured_image | image_url: width: 600 }}" 
+                alt="{{ produto.title }}" 
+                class="card-img">
+            </a>
+            <p class="product-title">{{ produto.title }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<style>
+  .coverflow-section {
+    margin: 40px 0 60px;
+    text-align: center;
+  }
+
+  .swiper {
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin: auto;
+  }
+
+  .swiper-slide {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.4s ease;
+  }
+
+  .swiper-slide:hover {
+    filter: contrast(1.07) saturate(1.1);
+  }
+
+  .swiper-slide-prev,
+  .swiper-slide-next {
+    opacity: 0.6;
+  }
+
+  .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) {
+    opacity: 0.2;
+  }
+
+  .card-img {
+    border-radius: 15px !important;
+    margin-bottom: 15px !important;
+    transition: transform 0.4s ease !important;
+  }
+
+  .card-img:hover {
+    transform: scale(1.1) translateY(-10px) !important;
+  }
+
+  .product-title {
+    color: white;
+    margin-top: 10px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: white !important;
+  }
+
+  /* Tamanhos dos cards */
+  {% if section.settings.tamanho_card == 'pequeno' %}
+    .card-img { max-width: 250px !important; width: 100% !important; }
+  {% elsif section.settings.tamanho_card == 'medio' %}
+    .card-img { max-width: 350px !important; width: 100% !important; }
+  {% elsif section.settings.tamanho_card == 'grande' %}
+    .card-img { max-width: 500px !important; width: 100% !important; }
+  {% endif %}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const swiper = new Swiper('.coverflow-section .swiper', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      loop: true,
+
+      coverflowEffect: {
+        rotate: {{ section.settings.rotate }},
+        stretch: {{ section.settings.stretch }},
+        depth: {{ section.settings.depth }},
+        modifier: 1,
+        slideShadows: false,
+      },
+
+      navigation: {
+        nextEl: '.coverflow-section .swiper-button-next',
+        prevEl: '.coverflow-section .swiper-button-prev',
+      },
+
+      keyboard: { enabled: true },
+
+      {% if section.settings.autoplay %}
+      autoplay: {
+        delay: {{ section.settings.autoplay_delay }},
+        disableOnInteraction: false,
+      },
+      {% endif %}
+    });
+  });
+</script>
