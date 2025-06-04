@@ -21,6 +21,12 @@
       ]
     },
     {
+      "type": "checkbox",
+      "id": "mostrar_titulo_card",
+      "label": "Mostrar título nos cards",
+      "default": true
+    },
+    {
       "type": "range",
       "id": "stretch",
       "label": "Stretch (espaçamento lateral)",
@@ -36,7 +42,7 @@
       "min": 0,
       "max": 90,
       "step": 5,
-      "default": 0
+      "default": 20
     },
     {
       "type": "range",
@@ -45,7 +51,7 @@
       "min": 0,
       "max": 1000,
       "step": 50,
-      "default": 200
+      "default": 300
     },
     {
       "type": "checkbox",
@@ -64,9 +70,66 @@
     },
     {
       "type": "checkbox",
-      "id": "mostrar_titulo_card",
-      "label": "Mostrar título nos cards",
+      "id": "ativar_blur_tras",
+      "label": "Ativar blur nos cards de trás",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "intensidade_blur_tras",
+      "label": "Intensidade do blur nos cards de trás (px)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "cor_fundo_card",
+      "label": "Cor do fundo dos cards",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "opacidade_fundo_card",
+      "label": "Opacidade do fundo (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "ativar_sombra",
+      "label": "Ativar sombra nos cards",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Slides no desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "slides_tablet",
+      "label": "Slides no tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "label": "Slides no mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
     }
   ],
   "blocks": [
@@ -95,7 +158,7 @@
   ],
   "presets": [
     {
-      "name": "Coverflow",
+      "name": "Coverflow Avançado",
       "category": "Custom"
     }
   ]
@@ -147,7 +210,7 @@
   }
 
   .swiper-slide {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba({{ section.settings.cor_fundo_card | color_to_rgb }}, {{ section.settings.opacidade_fundo_card | divided_by: 100.0 }});
     border: 2px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -157,6 +220,9 @@
     align-items: center;
     width: 70% !important;
     transition: all 0.4s ease;
+    {% if section.settings.ativar_sombra %}
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    {% endif %}
   }
 
   .swiper-slide:hover {
@@ -166,10 +232,16 @@
   .swiper-slide-prev,
   .swiper-slide-next {
     opacity: 0.6;
+    {% if section.settings.ativar_blur_tras %}
+    filter: blur({{ section.settings.intensidade_blur_tras }}px);
+    {% endif %}
   }
 
   .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) {
     opacity: 0.2;
+    {% if section.settings.ativar_blur_tras %}
+    filter: blur({{ section.settings.intensidade_blur_tras }}px);
+    {% endif %}
   }
 
   .card-img {
@@ -212,7 +284,6 @@
       effect: 'coverflow',
       grabCursor: true,
       centeredSlides: true,
-      slidesPerView: 'auto',
       loop: true,
 
       coverflowEffect: {
@@ -236,6 +307,12 @@
         disableOnInteraction: false,
       },
       {% endif %}
+
+      breakpoints: {
+        1024: { slidesPerView: {{ section.settings.slides_desktop }} },
+        768: { slidesPerView: {{ section.settings.slides_tablet }} },
+        0: { slidesPerView: {{ section.settings.slides_mobile }} }
+      }
     });
 
     // Ativa o drawer do tema Focal
