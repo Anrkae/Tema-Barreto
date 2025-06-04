@@ -128,7 +128,7 @@
         "gap_size": 15,
         "image_ratio": "1",
         "show_title_overlay": true,
-        "show_title_always": true,
+        "show_title_always": false,
         "text_color_static_title": "#ffffff",
         "enable_hover_effect": true,
         "padding_top": 36,
