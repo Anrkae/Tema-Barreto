@@ -101,6 +101,7 @@
           "type": "collection_block",
           "settings": {
             "collection": "selecoes",
+            "image": "shopify://shop_images/1000204598.png",
             "title_override": ""
           }
         },
