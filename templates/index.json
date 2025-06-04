@@ -16,24 +16,24 @@
           "type": "image_link",
           "settings": {
             "imagem": "shopify://shop_images/1000204598.png",
-            "texto": "",
-            "link": "shopify://products/camisa-flamengo-25-26-home"
+            "link": "shopify://products/camisa-flamengo-25-26-home",
+            "texto": ""
           }
         },
         "image_link_q986Jy": {
           "type": "image_link",
           "settings": {
             "imagem": "shopify://shop_images/1000204594.png",
-            "texto": "Texto opcional",
-            "link": ""
+            "link": "",
+            "texto": "Texto opcional"
           }
         },
         "image_link_fNBfVK": {
           "type": "image_link",
           "settings": {
             "imagem": "shopify://shop_images/1000204596.png",
-            "texto": "Texto opcional",
-            "link": ""
+            "link": "",
+            "texto": "Texto opcional"
           }
         }
       },
@@ -47,25 +47,9 @@
         "titulo": "Destaques",
         "exibir_titulo": false,
         "cor_titulo": "#ffffff",
-        "aspect_ratio": "landscape",
-        "tamanho_card": "medio",
-        "ativar_blur": true,
-        "cor_fundo_card": "#ffffff",
-        "cor_borda": "#ffffff",
-        "espessura_borda": 2,
-        "arredondamento": 20,
-        "padding_card": 30,
-        "stretch": 80,
-        "rotate": 0,
-        "depth": 300,
-        "modifier": 2,
-        "slides_desktop": 3,
-        "slides_tablet": 2,
-        "slides_mobile": 1,
-        "autoplay": true,
-        "autoplay_delay": 3000,
         "navegacao": true,
-        "paginacao": false
+        "paginacao": true,
+        "autoplay_delay": 3000
       }
     },
     "coverflow_carousel_i3Xwpk": {
