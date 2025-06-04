@@ -19,7 +19,7 @@
       "type": "select",
       "id": "aspect_ratio",
       "label": "Proporção do card",
-      "default": "1/1",
+      "default": "4/5",
       "options": [
         {
           "value": "1/1",
@@ -243,7 +243,6 @@
     cursor: pointer;
   }
   .card-wrapper {
-    width: 100%;
     aspect-ratio: {{ section.settings.aspect_ratio }};
     background-color: {{ section.settings.cor_fundo | color_modify: 'alpha', 0.08 }};
     backdrop-filter: blur(8px);
@@ -257,6 +256,7 @@
     {% if section.settings.ativar_sombra %}
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     {% endif %}
+    width: 90% !important;
   }
   .card-wrapper img {
     width: 100%;
