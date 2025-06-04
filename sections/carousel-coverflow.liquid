@@ -10,35 +10,26 @@
       "default": "Destaques"
     },
     {
-      "type": "select",
-      "id": "tamanho_card",
-      "label": "Tamanho dos cards",
-      "default": "medio",
-      "options": [
-        { "value": "pequeno", "label": "Pequeno" },
-        { "value": "medio", "label": "Médio" },
-        { "value": "grande", "label": "Grande" }
-      ]
-    },
-    {
       "type": "checkbox",
       "id": "mostrar_titulo_card",
-      "label": "Mostrar título nos cards",
+      "label": "Mostrar título no card",
       "default": true
     },
     {
-      "type": "range",
-      "id": "stretch",
-      "label": "Stretch (espaçamento lateral)",
-      "min": 0,
-      "max": 200,
-      "step": 10,
-      "default": 80
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Proporção do card",
+      "default": "1/1",
+      "options": [
+        { "value": "1/1", "label": "Quadrado (1:1)" },
+        { "value": "4/5", "label": "Vertical (4:5)" },
+        { "value": "16/9", "label": "Horizontal (16:9)" }
+      ]
     },
     {
       "type": "range",
       "id": "rotate",
-      "label": "Rotate (graus de rotação)",
+      "label": "Rotate",
       "min": 0,
       "max": 90,
       "step": 5,
@@ -46,8 +37,17 @@
     },
     {
       "type": "range",
+      "id": "stretch",
+      "label": "Stretch",
+      "min": 0,
+      "max": 300,
+      "step": 10,
+      "default": 100
+    },
+    {
+      "type": "range",
       "id": "depth",
-      "label": "Depth (profundidade 3D)",
+      "label": "Depth",
       "min": 0,
       "max": 1000,
       "step": 50,
@@ -55,8 +55,23 @@
     },
     {
       "type": "checkbox",
+      "id": "ativar_blur_tras",
+      "label": "Ativar blur nos cards de trás",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "blur_tras",
+      "label": "Intensidade do blur (px)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "checkbox",
       "id": "autoplay",
-      "label": "Ativar autoplay",
+      "label": "Autoplay",
       "default": true
     },
     {
@@ -69,45 +84,9 @@
       "default": 3000
     },
     {
-      "type": "checkbox",
-      "id": "ativar_blur_tras",
-      "label": "Ativar blur nos cards de trás",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "intensidade_blur_tras",
-      "label": "Intensidade do blur nos cards de trás (px)",
-      "min": 0,
-      "max": 30,
-      "step": 1,
-      "default": 10
-    },
-    {
-      "type": "color",
-      "id": "cor_fundo_card",
-      "label": "Cor do fundo dos cards",
-      "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "opacidade_fundo_card",
-      "label": "Opacidade do fundo (%)",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "default": 10
-    },
-    {
-      "type": "checkbox",
-      "id": "ativar_sombra",
-      "label": "Ativar sombra nos cards",
-      "default": true
-    },
-    {
       "type": "range",
       "id": "slides_desktop",
-      "label": "Slides no desktop",
+      "label": "Slides desktop",
       "min": 1,
       "max": 5,
       "step": 1,
@@ -116,7 +95,7 @@
     {
       "type": "range",
       "id": "slides_tablet",
-      "label": "Slides no tablet",
+      "label": "Slides tablet",
       "min": 1,
       "max": 4,
       "step": 1,
@@ -125,7 +104,7 @@
     {
       "type": "range",
       "id": "slides_mobile",
-      "label": "Slides no mobile",
+      "label": "Slides mobile",
       "min": 1,
       "max": 3,
       "step": 1,
@@ -151,7 +130,7 @@
           "type": "text",
           "id": "titulo_card",
           "label": "Título do card",
-          "default": "Título do Produto"
+          "default": "Título"
         }
       ]
     }
@@ -177,104 +156,90 @@
           <a href="{{ block.settings.link_produto }}" 
              class="quick-add-button"
              data-product-url="{{ block.settings.link_produto }}">
-            {% if block.settings.imagem != blank %}
-              <img 
-                src="{{ block.settings.imagem | image_url: width: 600 }}" 
-                alt="{{ block.settings.titulo_card | escape }}" 
-                class="card-img">
-            {% endif %}
+            <div class="card-wrapper">
+              {% if block.settings.imagem %}
+                <img 
+                  src="{{ block.settings.imagem | image_url: width: 800 }}" 
+                  alt="{{ block.settings.titulo_card | escape }}">
+              {% endif %}
+            </div>
           </a>
           {% if section.settings.mostrar_titulo_card and block.settings.titulo_card != blank %}
-            <p class="product-title">{{ block.settings.titulo_card }}</p>
+            <p class="card-title">{{ block.settings.titulo_card }}</p>
           {% endif %}
         </div>
       {% endfor %}
     </div>
 
-    <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
   </div>
 </div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
   .coverflow-section {
-    margin: 40px 0 60px;
+    margin: 40px auto;
     text-align: center;
   }
 
   .swiper {
-    width: 100% !important;
-    max-width: 1400px !important;
-    margin: auto;
+    width: 100%;
+    max-width: 1400px;
   }
 
   .swiper-slide {
-    background: rgba({{ section.settings.cor_fundo_card | color_to_rgb }}, {{ section.settings.opacidade_fundo_card | divided_by: 100.0 }});
-    border: 2px solid rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 70% !important;
     transition: all 0.4s ease;
-    {% if section.settings.ativar_sombra %}
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    {% endif %}
   }
 
-  .swiper-slide:hover {
-    filter: contrast(1.07) saturate(1.1);
+  .card-wrapper {
+    width: 100%;
+    aspect-ratio: {{ section.settings.aspect_ratio }};
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s ease;
   }
 
-  .swiper-slide-prev,
-  .swiper-slide-next {
-    opacity: 0.6;
-    {% if section.settings.ativar_blur_tras %}
-    filter: blur({{ section.settings.intensidade_blur_tras }}px);
-    {% endif %}
+  .card-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
   }
 
-  .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) {
-    opacity: 0.2;
-    {% if section.settings.ativar_blur_tras %}
-    filter: blur({{ section.settings.intensidade_blur_tras }}px);
-    {% endif %}
+  .swiper-slide:hover .card-wrapper img {
+    transform: scale(1.05);
   }
 
-  .card-img {
-    border-radius: 15px !important;
-    margin-bottom: 15px !important;
-    transition: transform 0.4s ease !important;
-    width: 100% !important;
-    height: auto !important;
-  }
-
-  .card-img:hover {
-    transform: scale(1.1) translateY(-10px) !important;
-  }
-
-  .product-title {
+  .card-title {
+    margin-top: 10px;
     color: white;
-    margin-top: 10px !important;
-    font-size: 1.1rem !important;
+    font-size: 1.1rem;
+  }
+
+  /* Blur e opacidade dos cards não ativos */
+  .swiper-slide:not(.swiper-slide-active) {
+    {% if section.settings.ativar_blur_tras %}
+    filter: blur({{ section.settings.blur_tras }}px) brightness(0.7);
+    {% else %}
+    opacity: 0.5;
+    {% endif %}
+    transform: scale(0.9);
   }
 
   .swiper-button-next,
   .swiper-button-prev {
-    color: white !important;
+    color: white;
   }
-
-  /* Tamanhos dos cards */
-  {% if section.settings.tamanho_card == 'pequeno' %}
-    .card-img { max-width: 250px !important; }
-  {% elsif section.settings.tamanho_card == 'medio' %}
-    .card-img { max-width: 350px !important; }
-  {% elsif section.settings.tamanho_card == 'grande' %}
-    .card-img { max-width: 500px !important; }
-  {% endif %}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -315,7 +280,7 @@
       }
     });
 
-    // Ativa o drawer do tema Focal
+    // Drawer do tema Focal
     document.querySelectorAll('.coverflow-section .quick-add-button').forEach(button => {
       button.addEventListener('click', function(e) {
         e.preventDefault();
