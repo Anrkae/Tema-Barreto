@@ -36,6 +36,7 @@
     padding-top: {{ section_padding_top }}px;
     padding-bottom: {{ section_padding_bottom }}px;
     overflow: hidden; /* Para conter a grade e evitar scrollbars indesejadas no nível da seção */
+    /* background-color: {{ section_background_color }}; Descomente se adicionar a configuração de cor */
   }
 
   .custom-collection-grid__header {
@@ -46,6 +47,7 @@
   .custom-collection-grid__title {
     font-size: 24px; /* Ajuste conforme seu tema */
     margin: 0;
+    /* color: {{ section.settings.section_text_color | default: 'inherit' }}; Descomente se adicionar config de cor de texto */
   }
 
   .custom-collection-grid__scroll-wrapper {
@@ -76,7 +78,7 @@
     position: relative;
     border-radius: {{ border_radius }}px;
     overflow: hidden; /* Garante que a imagem respeite o border-radius */
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .custom-collection-grid__item:hover {
@@ -135,7 +137,7 @@
     opacity: 1;
     position: static; /* Se for sempre visível, não precisa ser absoluto */
     background: transparent;
-    color: {{ section.settings.text_color_static_title.hex }}; /* Cor do texto do tema */
+    color: {{ section.settings.text_color_static_title.hex | default: '#333333' }}; /* Cor do texto, default se não configurado */
     padding: 10px 5px;
     text-align: center;
     font-size: 14px;
@@ -173,7 +175,7 @@
   }
 </style>
 
-<div class="custom-collection-grid-section color-{{ section.settings.color_scheme }} gradient">
+<div class="custom-collection-grid-section"> {/* Removido: color-{{ section.settings.color_scheme }} gradient */}
   <div class="page-width">
     {% if section.settings.title != blank %}
       <div class="custom-collection-grid__header">
@@ -205,23 +207,20 @@
                   {{ image | image_url: width: 600 | image_tag:
                     loading: 'lazy',
                     class: 'custom-collection-grid__image',
-                    widths: '150, 200, 300, 400, 500, 600',
-                    sizes: item_size_responsive
+                    widths: '150, 200, 300, 400, 500, 600'
                   }}
                 {%- else -%}
                   {%- if collection.image != blank -%}
                      {{ collection.image | image_url: width: 600 | image_tag:
                         loading: 'lazy',
                         class: 'custom-collection-grid__image',
-                        widths: '150, 200, 300, 400, 500, 600',
-                        sizes: item_size_responsive
+                        widths: '150, 200, 300, 400, 500, 600'
                       }}
                   {%- elsif collection.products.first.featured_image != blank -%}
                     {{ collection.products.first.featured_image | image_url: width: 600 | image_tag:
                         loading: 'lazy',
                         class: 'custom-collection-grid__image',
-                        widths: '150, 200, 300, 400, 500, 600',
-                        sizes: item_size_responsive
+                        widths: '150, 200, 300, 400, 500, 600'
                       }}
                   {%- else -%}
                     {%- capture current -%}{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
@@ -372,11 +371,7 @@
       "label": "Ativar efeito de flutuar ao passar o mouse",
       "default": true
     },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Esquema de Cores da Seção"
-    },
+    // Removida a configuração de color_scheme daqui
     {
       "type": "header",
       "content": "Espaçamento da Seção"
