@@ -20,6 +20,7 @@
           <div class="product-sticky-form__image-wrapper">
             {%- assign featured_media = product.selected_or_first_available_variant.featured_image | default: product.featured_media -%}
             <img class="product-sticky-form__image" loading="lazy" sizes="55px" {% render 'image-attributes', image: featured_media, sizes: '55,110,165' %}>
+          <h2> Testando </h2>
           </div>
 
           <div class="product-sticky-form__info">
