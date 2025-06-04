@@ -38,7 +38,13 @@
       ],
       "name": "Carrossel Coverflow",
       "settings": {
-        "titulo": "Destaques"
+        "titulo": "Destaques",
+        "tamanho_card": "grande",
+        "stretch": 80,
+        "rotate": 0,
+        "depth": 200,
+        "autoplay": true,
+        "autoplay_delay": 3000
       }
     },
     "coverflow_carousel_i3Xwpk": {
