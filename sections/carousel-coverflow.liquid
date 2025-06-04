@@ -36,7 +36,7 @@
       "name": "Card",
       "settings": [
         { "type": "image_picker", "id": "imagem", "label": "Imagem" },
-        { "type": "url", "id": "link_produto", "label": "Link do produto (URL da página)" },
+        { "type": "product", "id": "produto", "label": "Produto" },
         { "type": "text", "id": "titulo_card", "label": "Título do card", "default": "Título" }
       ]
     }
@@ -58,21 +58,30 @@
   <div class="swiper">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.produto] %}
         <div class="swiper-slide">
           <button
             type="button"
             class="card-button"
-            data-product-url="{{ block.settings.link_produto }}">
+            data-product-url="/products/{{ product.handle }}">
             <div class="card-wrapper">
               {% if block.settings.imagem %}
                 <img 
                   src="{{ block.settings.imagem | image_url: width: 800 }}" 
                   alt="{{ block.settings.titulo_card | escape }}">
+              {% elsif product and product.featured_image %}
+                <img 
+                  src="{{ product.featured_image | img_url: '800x' }}" 
+                  alt="{{ product.title | escape }}">
               {% endif %}
             </div>
           </button>
-          {% if section.settings.mostrar_titulo_card and block.settings.titulo_card != blank %}
-            <p class="card-title">{{ block.settings.titulo_card }}</p>
+          {% if section.settings.mostrar_titulo_card %}
+            {% if block.settings.titulo_card != blank %}
+              <p class="card-title">{{ block.settings.titulo_card }}</p>
+            {% elsif product %}
+              <p class="card-title">{{ product.title }}</p>
+            {% endif %}
           {% endif %}
         </div>
       {% endfor %}
