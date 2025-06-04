@@ -1,226 +1,175 @@
-{% schema %}
-{
-  "name": "Coverflow Carousel",
-  "tag": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "titulo",
-      "label": "Título",
-      "default": "Destaques"
+{% comment %} Coverflow Carousel Section para Shopify Focal v9 {% endcomment %}
+
+<div class="coverflow-carousel">
+  {% if section.settings.exibir_titulo %}
+    <h2 class="carousel-title" style="color:{{ section.settings.cor_titulo }}">
+      {{ section.settings.titulo }}
+    </h2>
+  {% endif %}  <div class="swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          {% if block.type == 'product' and block.settings.produto != blank %}
+            {% assign product = all_products[block.settings.produto] %}
+            <div class="card">
+              <div class="card-img">
+                <a href="{{ product.url }}" onclick="window.Shopify.theme.jsDrawer.open('{{ product.url }}'); return false;">
+                  {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'image', alt: product.title }}
+                </a>
+              </div>
+              <div class="card-info">
+                <h3 class="product-title">{{ product.title }}</h3>
+                <p class="product-price">
+                  {% if product.price_varies %}
+                    {{ product.price_min | money }} - {{ product.price_max | money }}
+                  {% else %}
+                    {{ product.price | money }}
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+          {% elsif block.type == 'image_link' and block.settings.imagem != blank %}
+            <div class="card">
+              <div class="card-img">
+                <a href="{{ block.settings.link }}">
+                  {{ block.settings.imagem | image_url: width: 600 | image_tag: loading: 'lazy', class: 'image' }}
+                </a>
+              </div>
+              {% if block.settings.texto != blank %}
+                <div class="card-info">
+                  <p class="custom-text">{{ block.settings.texto }}</p>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>{% if section.settings.navegacao %}
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+{% endif %}
+{% if section.settings.paginacao %}
+  <div class="swiper-pagination"></div>
+{% endif %}
+
+  </div>
+</div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script><style>
+  .coverflow-carousel {
+    width: 100%;
+    margin: 40px auto;
+    text-align: center;
+  }
+  .coverflow-carousel .carousel-title {
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+
+  .swiper {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .swiper-slide {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.05);
+    border-radius: 20px !important;
+    backdrop-filter: blur(10px);
+    padding: 40px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+
+  .swiper-slide:hover {
+    filter: contrast(1.05) saturate(1.1);
+  }
+
+  .swiper-slide .card-img {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .swiper-slide .card-img img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px !important;
+    transition: transform 0.4s ease;
+  }
+
+  .swiper-slide .card-img img:hover {
+    transform: scale(1.1) translateY(-10px);
+  }
+
+  .card-info {
+    margin-top: 15px;
+  }
+
+  .product-title, .custom-text {
+    color: #fff;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .product-price {
+    color: #fff;
+    margin-top: 5px;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: white !important;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: white !important;
+    opacity: 0.5;
+  }
+
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+  }
+</style><script>
+  const swiper = new Swiper('.coverflow-carousel .swiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    loop: true,
+    coverflowEffect: {
+      rotate: 0,
+      stretch: 80,
+      depth: 200,
+      modifier: 1,
+      slideShadows: false,
     },
-    {
-      "type": "checkbox",
-      "id": "exibir_titulo",
-      "label": "Exibir título",
-      "default": true
+    navigation: {
+      nextEl: '.coverflow-carousel .swiper-button-next',
+      prevEl: '.coverflow-carousel .swiper-button-prev',
     },
-    {
-      "type": "color",
-      "id": "cor_titulo",
-      "label": "Cor do título",
-      "default": "#ffffff"
+    pagination: {
+      el: '.coverflow-carousel .swiper-pagination',
+      clickable: true,
     },
-    {
-      "type": "select",
-      "id": "aspect_ratio",
-      "label": "Proporção da imagem",
-      "default": "landscape",
-      "options": [
-        { "value": "landscape", "label": "Paisagem" },
-        { "value": "square", "label": "Quadrado" },
-        { "value": "portrait", "label": "Retrato" },
-        { "value": "free", "label": "Livre" }
-      ]
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
     },
-    {
-      "type": "select",
-      "id": "tamanho_card",
-      "label": "Tamanho dos cards",
-      "default": "medio",
-      "options": [
-        { "value": "pequeno", "label": "Pequeno" },
-        { "value": "medio", "label": "Médio" },
-        { "value": "grande", "label": "Grande" },
-        { "value": "extra", "label": "Extra grande" }
-      ]
-    },
-    {
-      "type": "checkbox",
-      "id": "ativar_blur",
-      "label": "Ativar efeito Glassmorphism (blur)",
-      "default": true
-    },
-    {
-      "type": "color",
-      "id": "cor_fundo_card",
-      "label": "Cor de fundo dos cards",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "cor_borda",
-      "label": "Cor da borda dos cards",
-      "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "espessura_borda",
-      "label": "Espessura da borda (px)",
-      "min": 0,
-      "max": 10,
-      "step": 1,
-      "default": 2
-    },
-    {
-      "type": "range",
-      "id": "arredondamento",
-      "label": "Arredondamento dos cards (px)",
-      "min": 0,
-      "max": 50,
-      "step": 2,
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "padding_card",
-      "label": "Padding interno dos cards (px)",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "default": 30
-    },
-    {
-      "type": "range",
-      "id": "stretch",
-      "label": "Stretch (espaçamento lateral)",
-      "min": 0,
-      "max": 300,
-      "step": 10,
-      "default": 80
-    },
-    {
-      "type": "range",
-      "id": "rotate",
-      "label": "Rotate (graus de rotação)",
-      "min": 0,
-      "max": 90,
-      "step": 5,
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "depth",
-      "label": "Depth (profundidade 3D)",
-      "min": 0,
-      "max": 1000,
-      "step": 50,
-      "default": 300
-    },
-    {
-      "type": "range",
-      "id": "modifier",
-      "label": "Modifier (intensidade do efeito)",
-      "min": 0.1,
-      "max": 3,
-      "step": 0.1,
-      "default": 1
-    },
-    {
-      "type": "range",
-      "id": "slides_desktop",
-      "label": "Slides visíveis (desktop)",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 3
-    },
-    {
-      "type": "range",
-      "id": "slides_tablet",
-      "label": "Slides visíveis (tablet)",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 2
-    },
-    {
-      "type": "range",
-      "id": "slides_mobile",
-      "label": "Slides visíveis (mobile)",
-      "min": 1,
-      "max": 3,
-      "step": 1,
-      "default": 1
-    },
-    {
-      "type": "checkbox",
-      "id": "autoplay",
-      "label": "Ativar autoplay",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "autoplay_delay",
-      "label": "Autoplay delay (ms)",
-      "min": 1000,
-      "max": 9000,
-      "step": 500,
-      "default": 3000
-    },
-    {
-      "type": "checkbox",
-      "id": "navegacao",
-      "label": "Exibir botões de navegação",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "paginacao",
-      "label": "Exibir bolinhas de paginação",
-      "default": false
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+      },
+      768: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      },
     }
-  ],
-  "blocks": [
-    {
-      "type": "product",
-      "name": "Produto",
-      "settings": [
-        {
-          "type": "product",
-          "id": "produto",
-          "label": "Selecionar produto"
-        }
-      ]
-    },
-    {
-      "type": "image_link",
-      "name": "Imagem + Link",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "imagem",
-          "label": "Imagem"
-        },
-        {
-          "type": "text",
-          "id": "texto",
-          "label": "Texto abaixo da imagem",
-          "default": "Texto opcional"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link do card"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Coverflow Carousel",
-      "category": "Custom"
-    }
-  ]
-}
-{% endschema %}
+  });
+</script>{% schema %} { "name": "Coverflow 2", "settings": [ { "type": "text", "id": "titulo", "label": "Título da seção", "default": "Produtos em Destaque" }, { "type": "checkbox", "id": "exibir_titulo", "label": "Exibir título", "default": true }, { "type": "color", "id": "cor_titulo", "label": "Cor do título", "default": "#ffffff" }, { "type": "checkbox", "id": "navegacao", "label": "Exibir setas de navegação", "default": true }, { "type": "checkbox", "id": "paginacao", "label": "Exibir paginação", "default": true }, { "type": "checkbox", "id": "autoplay", "label": "Ativar autoplay", "default": true }, { "type": "range", "id": "autoplay_delay", "min": 1000, "max": 9000, "step": 500, "unit": "ms", "label": "Autoplay Delay", "default": 3000 } ], "blocks": [ { "type": "product", "name": "Produto", "settings": [ { "type": "product", "id": "produto", "label": "Produto" } ] }, { "type": "image_link", "name": "Imagem com link", "settings": [ { "type": "image_picker", "id": "imagem", "label": "Imagem" }, { "type": "url", "id": "link", "label": "Link" }, { "type": "text", "id": "texto", "label": "Texto opcional" } ] } ], "max_blocks": 12, "presets": [ { "name": "Coverflow 2", "category": "Destaque" } ] } {% endschema %}
+
