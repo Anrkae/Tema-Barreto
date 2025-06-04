@@ -9,6 +9,38 @@
  */
 {
   "sections": {
+    "carousel_coverflow_cViCqw": {
+      "type": "carousel-coverflow",
+      "blocks": {
+        "product_kTaFBq": {
+          "type": "product",
+          "settings": {
+            "produto": "kids-selecao-da-italia-ll-2024-36"
+          }
+        },
+        "product_Yay7wL": {
+          "type": "product",
+          "settings": {
+            "produto": "kids-selecao-da-italia-ll-2024-42"
+          }
+        },
+        "product_VgnLhX": {
+          "type": "product",
+          "settings": {
+            "produto": "kids-selecao-da-italia-ll-2024-43"
+          }
+        }
+      },
+      "block_order": [
+        "product_kTaFBq",
+        "product_Yay7wL",
+        "product_VgnLhX"
+      ],
+      "name": "Carrossel Coverflow",
+      "settings": {
+        "titulo": "Destaques"
+      }
+    },
     "coverflow_carousel_i3Xwpk": {
       "type": "coverflow-carousel",
       "blocks": {
@@ -512,6 +544,7 @@
     }
   },
   "order": [
+    "carousel_coverflow_cViCqw",
     "coverflow_carousel_i3Xwpk",
     "slideshow",
     "featured-collections",
