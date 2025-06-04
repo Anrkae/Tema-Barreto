@@ -9,42 +9,63 @@
  */
 {
   "sections": {
-    "carousel_coverflow_cViCqw": {
+    "carousel_coverflow_QrE7pi": {
       "type": "carousel-coverflow",
       "blocks": {
-        "product_kTaFBq": {
-          "type": "product",
+        "image_link_DzLnDP": {
+          "type": "image_link",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-36"
+            "imagem": "shopify://shop_images/1000204598.png",
+            "texto": "Texto opcional",
+            "link": ""
           }
         },
-        "product_Yay7wL": {
-          "type": "product",
+        "image_link_q986Jy": {
+          "type": "image_link",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-42"
+            "imagem": "shopify://shop_images/1000204594.png",
+            "texto": "Texto opcional",
+            "link": ""
           }
         },
-        "product_VgnLhX": {
-          "type": "product",
+        "image_link_fNBfVK": {
+          "type": "image_link",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-43"
+            "imagem": "shopify://shop_images/1000204596.png",
+            "texto": "Texto opcional",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "product_kTaFBq",
-        "product_Yay7wL",
-        "product_VgnLhX"
+        "image_link_DzLnDP",
+        "image_link_q986Jy",
+        "image_link_fNBfVK"
       ],
-      "name": "Carrossel Coverflow",
+      "name": "Coverflow Carousel",
       "settings": {
         "titulo": "Destaques",
+        "exibir_titulo": true,
+        "cor_titulo": "#ffffff",
+        "aspect_ratio": "landscape",
         "tamanho_card": "medio",
-        "stretch": 0,
+        "ativar_blur": true,
+        "cor_fundo_card": "#ffffff",
+        "cor_borda": "#ffffff",
+        "espessura_borda": 2,
+        "arredondamento": 20,
+        "padding_card": 30,
+        "stretch": 80,
         "rotate": 0,
-        "depth": 200,
+        "depth": 300,
+        "modifier": 1,
+        "slides_desktop": 3,
+        "slides_tablet": 2,
+        "slides_mobile": 1,
         "autoplay": true,
-        "autoplay_delay": 4500
+        "autoplay_delay": 3000,
+        "navegacao": true,
+        "paginacao": false
       }
     },
     "coverflow_carousel_i3Xwpk": {
@@ -551,7 +572,7 @@
     }
   },
   "order": [
-    "carousel_coverflow_cViCqw",
+    "carousel_coverflow_QrE7pi",
     "coverflow_carousel_i3Xwpk",
     "slideshow",
     "featured-collections",
