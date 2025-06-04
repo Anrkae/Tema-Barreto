@@ -45,7 +45,7 @@
       "name": "Coverflow Carousel",
       "settings": {
         "titulo": "Destaques",
-        "exibir_titulo": true,
+        "exibir_titulo": false,
         "cor_titulo": "#ffffff",
         "aspect_ratio": "landscape",
         "tamanho_card": "medio",
