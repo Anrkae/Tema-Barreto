@@ -58,7 +58,7 @@
         "stretch": 80,
         "rotate": 0,
         "depth": 300,
-        "modifier": 1,
+        "modifier": 2,
         "slides_desktop": 3,
         "slides_tablet": 2,
         "slides_mobile": 1,
