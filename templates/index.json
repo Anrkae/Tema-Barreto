@@ -80,65 +80,6 @@
         "slides_mobile": 2
       }
     },
-    "colecoes_Qw7w4U": {
-      "type": "colecoes",
-      "blocks": {
-        "collection_NBTcme": {
-          "type": "collection",
-          "settings": {
-            "collection": "brasileiros"
-          }
-        },
-        "collection_jieqef": {
-          "type": "collection",
-          "settings": {
-            "collection": "internacionais"
-          }
-        },
-        "collection_eBcj9B": {
-          "type": "collection",
-          "settings": {
-            "collection": "retro"
-          }
-        },
-        "collection_4cNdPD": {
-          "type": "collection",
-          "settings": {
-            "collection": "selecoes"
-          }
-        },
-        "collection_7FNHNA": {
-          "type": "collection",
-          "settings": {
-            "collection": "femininas"
-          }
-        },
-        "collection_6VyAig": {
-          "type": "collection",
-          "settings": {
-            "collection": "infantil"
-          }
-        }
-      },
-      "block_order": [
-        "collection_NBTcme",
-        "collection_jieqef",
-        "collection_eBcj9B",
-        "collection_4cNdPD",
-        "collection_7FNHNA",
-        "collection_6VyAig"
-      ],
-      "name": "Coleções Horizontal",
-      "settings": {
-        "title": "Nossas Coleções",
-        "card_size": "small",
-        "card_radius": 12,
-        "cards_desktop": 4,
-        "cards_tablet": 3,
-        "cards_mobile": 2,
-        "card_gap": 10
-      }
-    },
     "collection-list": {
       "type": "collection-list",
       "blocks": {
@@ -577,7 +518,6 @@
   },
   "order": [
     "carousel_coverflow_arGjgm",
-    "colecoes_Qw7w4U",
     "collection-list",
     "featured-collections",
     "image-with-text",
