@@ -16,8 +16,8 @@
           "type": "image_link",
           "settings": {
             "imagem": "shopify://shop_images/1000204598.png",
-            "texto": "Texto opcional",
-            "link": ""
+            "texto": "",
+            "link": "shopify://products/camisa-flamengo-25-26-home"
           }
         },
         "image_link_q986Jy": {
