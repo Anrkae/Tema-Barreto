@@ -60,7 +60,6 @@
         "blocks": {
           "message-1": {
             "type": "message",
-            "disabled": true,
             "settings": {
               "text": "Announce something here",
               "learn_more_text": "Learn more",
@@ -76,11 +75,11 @@
         ],
         "settings": {
           "announcement_bar_position": "non_sticky",
-          "announcement_text_size": "normal",
+          "announcement_text_size": "small",
           "autoplay": true,
           "cycle_speed": 5,
-          "background": "#f3ff34",
-          "text_color": "#282828",
+          "background": "#141414",
+          "text_color": "#7900d3",
           "button_background": "#282828",
           "button_text_color": "#ffffff"
         }
