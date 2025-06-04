@@ -9,73 +9,42 @@
  */
 {
   "sections": {
-    "carousel_coverflow_HTF9HQ": {
+    "carousel_coverflow_arGjgm": {
       "type": "carousel-coverflow",
       "blocks": {
-        "card_iG6tie": {
+        "card_nN6PpA": {
           "type": "card",
           "settings": {
-            "imagem": "shopify://shop_images/1000204598.png",
             "produto": "kids-selecao-da-italia-ll-2024-36",
-            "link_manual": "shopify://products/kids-selecao-da-italia-ll-2024-36",
-            "titulo_card": "Título"
+            "titulo_card": "Produto"
           }
         },
-        "card_GjxWnU": {
+        "card_8PcGdn": {
           "type": "card",
           "settings": {
             "produto": "kids-selecao-da-italia-ll-2024-42",
-            "link_manual": "",
-            "titulo_card": "Título"
+            "titulo_card": "Produto"
           }
         },
-        "card_8VKkzf": {
+        "card_3bwFpa": {
           "type": "card",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-43",
-            "link_manual": "",
-            "titulo_card": "Título"
-          }
-        },
-        "card_yhAFb7": {
-          "type": "card",
-          "settings": {
-            "produto": "camisa-182",
-            "link_manual": "",
-            "titulo_card": "Título"
-          }
-        },
-        "card_tVDTVB": {
-          "type": "card",
-          "settings": {
-            "produto": "camisa-128",
-            "link_manual": "",
-            "titulo_card": "Título"
-          }
-        },
-        "card_DEtrC8": {
-          "type": "card",
-          "settings": {
-            "produto": "camisa-alemanha-25-26-femino-away",
-            "link_manual": "",
-            "titulo_card": "Título"
+            "produto": "camisa-real-madrid-25-26-home-i-branco",
+            "titulo_card": "Produto"
           }
         }
       },
       "block_order": [
-        "card_iG6tie",
-        "card_GjxWnU",
-        "card_8VKkzf",
-        "card_yhAFb7",
-        "card_tVDTVB",
-        "card_DEtrC8"
+        "card_nN6PpA",
+        "card_8PcGdn",
+        "card_3bwFpa"
       ],
       "name": "Coverflow",
       "settings": {
         "titulo": "Destaques",
-        "mostrar_titulo_card": false,
-        "aspect_ratio": "4/5",
-        "rotate": 0,
+        "mostrar_titulo_card": true,
+        "aspect_ratio": "1/1",
+        "rotate": 20,
         "stretch": 100,
         "depth": 300,
         "ativar_blur_tras": true,
@@ -532,7 +501,7 @@
     }
   },
   "order": [
-    "carousel_coverflow_HTF9HQ",
+    "carousel_coverflow_arGjgm",
     "slideshow",
     "featured-collections",
     "image-with-text",
