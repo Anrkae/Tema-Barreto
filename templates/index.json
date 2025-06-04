@@ -70,7 +70,7 @@
         "depth": 200,
         "ativar_blur_tras": true,
         "blur_tras": 4,
-        "cor_fundo": "#cb3131",
+        "cor_fundo": "#ffffff",
         "borda_radius": 20,
         "ativar_sombra": true,
         "autoplay": true,
