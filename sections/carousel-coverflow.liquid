@@ -1,6 +1,6 @@
 {% schema %}
 {
-  "name": "Carrossel Coverflow",
+  "name": "Coverflow Carousel",
   "tag": "section",
   "settings": [
     {
@@ -10,6 +10,30 @@
       "default": "Destaques"
     },
     {
+      "type": "checkbox",
+      "id": "exibir_titulo",
+      "label": "Exibir título",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "cor_titulo",
+      "label": "Cor do título",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Proporção da imagem",
+      "default": "landscape",
+      "options": [
+        { "value": "landscape", "label": "Paisagem" },
+        { "value": "square", "label": "Quadrado" },
+        { "value": "portrait", "label": "Retrato" },
+        { "value": "free", "label": "Livre" }
+      ]
+    },
+    {
       "type": "select",
       "id": "tamanho_card",
       "label": "Tamanho dos cards",
@@ -17,15 +41,61 @@
       "options": [
         { "value": "pequeno", "label": "Pequeno" },
         { "value": "medio", "label": "Médio" },
-        { "value": "grande", "label": "Grande" }
+        { "value": "grande", "label": "Grande" },
+        { "value": "extra", "label": "Extra grande" }
       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "ativar_blur",
+      "label": "Ativar efeito Glassmorphism (blur)",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "cor_fundo_card",
+      "label": "Cor de fundo dos cards",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cor_borda",
+      "label": "Cor da borda dos cards",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "espessura_borda",
+      "label": "Espessura da borda (px)",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "arredondamento",
+      "label": "Arredondamento dos cards (px)",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_card",
+      "label": "Padding interno dos cards (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 30
     },
     {
       "type": "range",
       "id": "stretch",
       "label": "Stretch (espaçamento lateral)",
       "min": 0,
-      "max": 200,
+      "max": 300,
       "step": 10,
       "default": 80
     },
@@ -45,7 +115,43 @@
       "min": 0,
       "max": 1000,
       "step": 50,
-      "default": 200
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "modifier",
+      "label": "Modifier (intensidade do efeito)",
+      "min": 0.1,
+      "max": 3,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Slides visíveis (desktop)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "slides_tablet",
+      "label": "Slides visíveis (tablet)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "label": "Slides visíveis (mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
     },
     {
       "type": "checkbox",
@@ -61,6 +167,18 @@
       "max": 9000,
       "step": 500,
       "default": 3000
+    },
+    {
+      "type": "checkbox",
+      "id": "navegacao",
+      "label": "Exibir botões de navegação",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "paginacao",
+      "label": "Exibir bolinhas de paginação",
+      "default": false
     }
   ],
   "blocks": [
@@ -74,145 +192,35 @@
           "label": "Selecionar produto"
         }
       ]
+    },
+    {
+      "type": "image_link",
+      "name": "Imagem + Link",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "imagem",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "texto",
+          "label": "Texto abaixo da imagem",
+          "default": "Texto opcional"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link do card"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Carrossel Coverflow",
+      "name": "Coverflow Carousel",
       "category": "Custom"
     }
   ]
 }
 {% endschema %}
-
-<div class="coverflow-section page-width">
-  {% if section.settings.titulo != blank %}
-    <h2 class="section-title">{{ section.settings.titulo }}</h2>
-  {% endif %}
-
-  <div class="swiper">
-    <div class="swiper-wrapper">
-      {% for block in section.blocks %}
-        {% assign produto = block.settings.produto %}
-        {% if produto != blank %}
-          <div class="swiper-slide">
-            <a href="{{ produto.url }}">
-              <img 
-                src="{{ produto.featured_image | image_url: width: 600 }}" 
-                alt="{{ produto.title }}" 
-                class="card-img">
-            </a>
-            <p class="product-title">{{ produto.title }}</p>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-  </div>
-</div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<style>
-  .coverflow-section {
-    margin: 40px 0 60px;
-    text-align: center;
-  }
-
-  .swiper {
-    width: 70% !important;
-    max-width: 1400px !important;
-    margin: auto;
-  }
-
-  .swiper-slide {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.4s ease;
-  }
-
-  .swiper-slide:hover {
-    filter: contrast(1.07) saturate(1.1);
-  }
-
-  .swiper-slide-prev,
-  .swiper-slide-next {
-    opacity: 0.6;
-  }
-
-  .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) {
-    opacity: 0.2;
-  }
-
-  .card-img {
-    border-radius: 15px !important;
-    margin-bottom: 15px !important;
-    transition: transform 0.4s ease !important;
-  }
-
-  .card-img:hover {
-    transform: scale(1.1) translateY(-10px) !important;
-  }
-
-  .product-title {
-    color: white;
-    margin-top: 10px !important;
-    font-size: 1.1rem !important;
-  }
-
-  .swiper-button-next,
-  .swiper-button-prev {
-    color: white !important;
-  }
-
-  /* Tamanhos dos cards */
-  {% if section.settings.tamanho_card == 'pequeno' %}
-    .card-img { max-width: 250px !important; width: 100% !important; }
-  {% elsif section.settings.tamanho_card == 'medio' %}
-    .card-img { max-width: 350px !important; width: 100% !important; }
-  {% elsif section.settings.tamanho_card == 'grande' %}
-    .card-img { max-width: 500px !important; width: 100% !important; }
-  {% endif %}
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const swiper = new Swiper('.coverflow-section .swiper', {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      loop: true,
-
-      coverflowEffect: {
-        rotate: {{ section.settings.rotate }},
-        stretch: {{ section.settings.stretch }},
-        depth: {{ section.settings.depth }},
-        modifier: 1,
-        slideShadows: false,
-      },
-
-      navigation: {
-        nextEl: '.coverflow-section .swiper-button-next',
-        prevEl: '.coverflow-section .swiper-button-prev',
-      },
-
-      keyboard: { enabled: true },
-
-      {% if section.settings.autoplay %}
-      autoplay: {
-        delay: {{ section.settings.autoplay_delay }},
-        disableOnInteraction: false,
-      },
-      {% endif %}
-    });
-  });
-</script>
