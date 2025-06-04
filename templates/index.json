@@ -16,6 +16,7 @@
           "type": "card",
           "settings": {
             "produto": "kids-selecao-da-italia-ll-2024-36",
+            "link_produto": "",
             "titulo_card": "Título"
           }
         },
@@ -23,6 +24,7 @@
           "type": "card",
           "settings": {
             "produto": "kids-selecao-da-italia-ll-2024-42",
+            "link_produto": "",
             "titulo_card": "Título"
           }
         },
@@ -30,6 +32,7 @@
           "type": "card",
           "settings": {
             "produto": "kids-selecao-da-italia-ll-2024-43",
+            "link_produto": "",
             "titulo_card": "Título"
           }
         },
@@ -37,6 +40,7 @@
           "type": "card",
           "settings": {
             "produto": "camisa-182",
+            "link_produto": "",
             "titulo_card": "Título"
           }
         },
@@ -44,6 +48,15 @@
           "type": "card",
           "settings": {
             "produto": "camisa-128",
+            "link_produto": "",
+            "titulo_card": "Título"
+          }
+        },
+        "card_DEtrC8": {
+          "type": "card",
+          "settings": {
+            "produto": "camisa-alemanha-25-26-femino-away",
+            "link_produto": "",
             "titulo_card": "Título"
           }
         }
@@ -53,7 +66,8 @@
         "card_GjxWnU",
         "card_8VKkzf",
         "card_yhAFb7",
-        "card_tVDTVB"
+        "card_tVDTVB",
+        "card_DEtrC8"
       ],
       "name": "Coverflow",
       "settings": {
