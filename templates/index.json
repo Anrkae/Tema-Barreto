@@ -170,9 +170,7 @@
         "collection_tWda8G",
         "collection_z9JdER"
       ],
-      "custom_css": [
-        ".list-collections__item {max-width: 150px !important; max-height: 150px !important;}"
-      ],
+      "custom_css": [],
       "settings": {
         "reveal_on_scroll": false,
         "layout": "carousel",
