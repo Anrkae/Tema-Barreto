@@ -121,7 +121,7 @@
   }
 
   .swiper {
-    width: 80% !important;
+    width: 100% !important;
     max-width: 1400px !important;
     margin: auto;
   }
@@ -174,11 +174,11 @@
 
   /* Tamanhos dos cards */
   {% if section.settings.tamanho_card == 'pequeno' %}
-    .card-img { max-width: 250px !important; width: 100% !important; }
+    .card-img { max-width: 250px !important; width: 60% !important; }
   {% elsif section.settings.tamanho_card == 'medio' %}
-    .card-img { max-width: 350px !important; width: 100% !important; }
+    .card-img { max-width: 350px !important; width: 70% !important; }
   {% elsif section.settings.tamanho_card == 'grande' %}
-    .card-img { max-width: 500px !important; width: 100% !important; }
+    .card-img { max-width: 500px !important; width: 80% !important; }
   {% endif %}
 </style>
 
