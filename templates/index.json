@@ -80,6 +80,61 @@
         "slides_mobile": 2
       }
     },
+    "colecoes_e9WmkX": {
+      "type": "colecoes",
+      "blocks": {
+        "collection_block_F39VXH": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "brasileiros",
+            "title_override": ""
+          }
+        },
+        "collection_block_Xba7UC": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "internacionais",
+            "title_override": ""
+          }
+        },
+        "collection_block_UrUQCg": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "selecoes",
+            "title_override": ""
+          }
+        },
+        "collection_block_wEXj6q": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "retro",
+            "title_override": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_block_F39VXH",
+        "collection_block_Xba7UC",
+        "collection_block_UrUQCg",
+        "collection_block_wEXj6q"
+      ],
+      "name": "Grid Coleções",
+      "settings": {
+        "title": "Nossas Coleções",
+        "heading_alignment": "center",
+        "item_size": "medium",
+        "border_radius": 10,
+        "gap_size": 15,
+        "image_ratio": "1",
+        "show_title_overlay": true,
+        "show_title_always": false,
+        "text_color_static_title": "#333333",
+        "enable_hover_effect": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collection-list": {
       "type": "collection-list",
       "blocks": {
@@ -514,65 +569,11 @@
         "button_background": "rgba(0,0,0,0)",
         "button_text_color": "rgba(0,0,0,0)"
       }
-    },
-    "colecoes_e9WmkX": {
-      "type": "colecoes",
-      "blocks": {
-        "collection_block_F39VXH": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "",
-            "title_override": ""
-          }
-        },
-        "collection_block_Xba7UC": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "",
-            "title_override": ""
-          }
-        },
-        "collection_block_UrUQCg": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "",
-            "title_override": ""
-          }
-        },
-        "collection_block_wEXj6q": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "",
-            "title_override": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_block_F39VXH",
-        "collection_block_Xba7UC",
-        "collection_block_UrUQCg",
-        "collection_block_wEXj6q"
-      ],
-      "name": "Grid Coleções",
-      "settings": {
-        "title": "Nossas Coleções",
-        "heading_alignment": "center",
-        "item_size": "medium",
-        "border_radius": 10,
-        "gap_size": 15,
-        "image_ratio": "1",
-        "show_title_overlay": true,
-        "show_title_always": false,
-        "text_color_static_title": "#333333",
-        "enable_hover_effect": true,
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
     }
   },
   "order": [
     "carousel_coverflow_arGjgm",
+    "colecoes_e9WmkX",
     "collection-list",
     "featured-collections",
     "image-with-text",
@@ -582,7 +583,6 @@
     "timeline",
     "featured-product",
     "text-with-icons",
-    "newsletter",
-    "colecoes_e9WmkX"
+    "newsletter"
   ]
 }
