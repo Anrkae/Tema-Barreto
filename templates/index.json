@@ -87,13 +87,13 @@
           "type": "collection",
           "settings": {
             "collection": "brasileirao",
-            "subheading": "",
+            "subheading": "Brasileiros",
             "title": "",
             "link_text": "",
             "link_url": "",
             "text_color": "rgba(0,0,0,0)",
             "overlay_color": "#000000",
-            "overlay_opacity": 30
+            "overlay_opacity": 61
           }
         },
         "collection-2": {
