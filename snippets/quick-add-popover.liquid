@@ -1,0 +1,98 @@
+<div class="popover__content">
+  <div class="product-quick-view">
+    <div class="product-quick-view__media">
+      <img
+        src="{{ product.featured_image | image_url: width: 600 }}"
+        alt="{{ product.title | escape }}"
+        loading="lazy">
+    </div>
+
+    <div class="product-quick-view__info">
+      <h2 class="product-quick-view__title">{{ product.title }}</h2>
+      <div class="product-quick-view__price">
+        {% render 'price', product: product %}
+      </div>
+
+      {% form 'product', product, is: 'product-form' %}
+        {% if product.has_only_default_variant == false %}
+          <div class="product-quick-view__variants">
+            <label for="quick-view-variant-{{ product.id }}">Escolha uma opção:</label>
+            <select name="id" id="quick-view-variant-{{ product.id }}">
+              {% for variant in product.variants %}
+                {% if variant.available %}
+                  <option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+                {% else %}
+                  <option disabled>{{ variant.title }} - Esgotado</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        {% endif %}
+
+        <button type="submit" class="button button--primary">
+          Adicionar ao carrinho
+        </button>
+      {% endform %}
+
+      <div class="product-quick-view__description">
+        {{ product.description | strip_html | truncate: 150 }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .popover__content {
+    padding: 20px;
+    background: white;
+    max-width: 800px;
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .product-quick-view__media {
+    flex: 1 1 300px;
+  }
+
+  .product-quick-view__media img {
+    width: 100%;
+    border-radius: 15px;
+  }
+
+  .product-quick-view__info {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+  }
+
+  .product-quick-view__title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  .product-quick-view__price {
+    font-size: 1.4rem;
+    color: #e60023;
+    margin-bottom: 20px;
+  }
+
+  .product-quick-view__variants select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+  }
+
+  .product-quick-view__description {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+</style>
