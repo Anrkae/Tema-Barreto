@@ -122,15 +122,13 @@
         "collection_block_UrUQCg",
         "collection_block_wEXj6q"
       ],
-      "custom_css": [
-        ".custom-collection-grid__item-title {-webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%); mask-image: radial-gradient(circle, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%); }"
-      ],
+      "custom_css": [],
       "name": "Grid Coleções",
       "settings": {
         "title": "CATEGORIAS",
         "heading_alignment": "center",
         "item_size": "medium",
-        "border_radius": 100,
+        "border_radius": 50,
         "gap_size": 15,
         "image_ratio": "1",
         "show_title_overlay": true,
