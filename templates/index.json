@@ -120,7 +120,7 @@
       ],
       "name": "Grid Coleções",
       "settings": {
-        "title": "Nossas Coleções",
+        "title": "CATEGORIAS",
         "heading_alignment": "center",
         "item_size": "medium",
         "border_radius": 10,
@@ -128,8 +128,8 @@
         "image_ratio": "1",
         "show_title_overlay": true,
         "show_title_always": true,
-        "text_color_static_title": "#f2f2f2",
-        "enable_hover_effect": false,
+        "text_color_static_title": "#ffffff",
+        "enable_hover_effect": true,
         "padding_top": 36,
         "padding_bottom": 36
       }
