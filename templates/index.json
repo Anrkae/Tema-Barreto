@@ -12,43 +12,53 @@
     "carousel_coverflow_4WR4jH": {
       "type": "carousel-coverflow",
       "blocks": {
-        "product_EFaket": {
-          "type": "product",
+        "card_4CMqU6": {
+          "type": "card",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-36"
+            "imagem": "shopify://shop_images/1000204597.png",
+            "link_produto": "shopify://products/camisa-flamengo-25-26-home",
+            "titulo_card": ""
           }
         },
-        "product_rwtFN4": {
-          "type": "product",
+        "card_EQtcyB": {
+          "type": "card",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-42"
+            "imagem": "shopify://shop_images/1000204595.png",
+            "link_produto": "shopify://products/kids-selecao-da-italia-ll-2024-36",
+            "titulo_card": ""
           }
         },
-        "product_zHPY7A": {
-          "type": "product",
+        "card_TfkVWc": {
+          "type": "card",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-43"
+            "imagem": "shopify://shop_images/1000204596.png",
+            "link_produto": "shopify://products/camisa-128",
+            "titulo_card": "Man. City"
           }
         },
-        "product_3NLxda": {
-          "type": "product",
+        "card_yg9DjP": {
+          "type": "card",
           "settings": {
-            "produto": "camisa-182"
+            "imagem": "shopify://shop_images/1000204594.png",
+            "link_produto": "shopify://products/kit-infantil-palmeiras-25-26-home-verde",
+            "titulo_card": "Camisa Palmeiras"
           }
         },
-        "product_dEQbnY": {
-          "type": "product",
+        "card_xf7ytc": {
+          "type": "card",
           "settings": {
-            "produto": "camisa-america-do-mexico-25-26-special-edition"
+            "imagem": "shopify://shop_images/1000204598.png",
+            "link_produto": "",
+            "titulo_card": "Título do Produto"
           }
         }
       },
       "block_order": [
-        "product_EFaket",
-        "product_rwtFN4",
-        "product_zHPY7A",
-        "product_3NLxda",
-        "product_dEQbnY"
+        "card_4CMqU6",
+        "card_EQtcyB",
+        "card_TfkVWc",
+        "card_yg9DjP",
+        "card_xf7ytc"
       ],
       "name": "Carrossel Coverflow",
       "settings": {
@@ -58,7 +68,8 @@
         "rotate": 0,
         "depth": 200,
         "autoplay": true,
-        "autoplay_delay": 3000
+        "autoplay_delay": 3000,
+        "mostrar_titulo_card": true
       }
     },
     "coverflow_carousel_i3Xwpk": {
