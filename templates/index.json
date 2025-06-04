@@ -16,7 +16,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204597.png",
-            "link_produto": "shopify://products/camisa-flamengo-25-26-home",
+            "produto": "camisa-flamengo-25-26-home",
             "titulo_card": ""
           }
         },
@@ -24,7 +24,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204595.png",
-            "link_produto": "shopify://products/kids-selecao-da-italia-ll-2024-36",
+            "produto": "",
             "titulo_card": ""
           }
         },
@@ -32,7 +32,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204596.png",
-            "link_produto": "shopify://products/camisa-128",
+            "produto": "",
             "titulo_card": "Man. City"
           }
         },
@@ -40,7 +40,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204594.png",
-            "link_produto": "shopify://products/kit-infantil-palmeiras-25-26-home-verde",
+            "produto": "",
             "titulo_card": "Camisa Palmeiras"
           }
         },
@@ -48,7 +48,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204598.png",
-            "link_produto": "",
+            "produto": "",
             "titulo_card": "Título do Produto"
           }
         }
