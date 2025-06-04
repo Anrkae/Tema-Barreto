@@ -67,7 +67,7 @@
         "aspect_ratio": "4/5",
         "rotate": 0,
         "stretch": 20,
-        "depth": 400,
+        "depth": 300,
         "ativar_blur_tras": true,
         "blur_tras": 4,
         "cor_fundo": "#ffffff",
