@@ -35,8 +35,9 @@
       "type": "card",
       "name": "Card",
       "settings": [
-        { "type": "image_picker", "id": "imagem", "label": "Imagem" },
-        { "type": "product", "id": "produto", "label": "Produto" },
+        { "type": "product", "id": "produto", "label": "Produto (opcional)" },
+        { "type": "image_picker", "id": "imagem", "label": "Imagem (se não quiser usar a do produto)" },
+        { "type": "url", "id": "link_produto", "label": "Link manual (se não usar produto)" },
         { "type": "text", "id": "titulo_card", "label": "Título do card", "default": "Título" }
       ]
     }
@@ -58,30 +59,33 @@
   <div class="swiper">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
-        {% assign product = all_products[block.settings.produto] %}
         <div class="swiper-slide">
-          <button
-            type="button"
-            class="card-button"
-            data-product-url="/products/{{ product.handle }}">
-            <div class="card-wrapper">
-              {% if block.settings.imagem %}
-                <img 
-                  src="{{ block.settings.imagem | image_url: width: 800 }}" 
+
+          {%- if block.settings.produto != blank -%}
+            <button
+              type="button"
+              is="toggle-button"
+              aria-controls="product-template--{{ section.id }}__coverflow-{{ block.settings.produto.handle }}-popover"
+              aria-expanded="false"
+              class="card-button">
+              <div class="card-wrapper">
+                <img
+                  src="{% if block.settings.imagem != blank %}{{ block.settings.imagem | image_url: width: 800 }}{% else %}{{ block.settings.produto.featured_image | image_url: width: 800 }}{% endif %}"
                   alt="{{ block.settings.titulo_card | escape }}">
-              {% elsif product and product.featured_image %}
-                <img 
-                  src="{{ product.featured_image | img_url: '800x' }}" 
-                  alt="{{ product.title | escape }}">
-              {% endif %}
-            </div>
-          </button>
-          {% if section.settings.mostrar_titulo_card %}
-            {% if block.settings.titulo_card != blank %}
-              <p class="card-title">{{ block.settings.titulo_card }}</p>
-            {% elsif product %}
-              <p class="card-title">{{ product.title }}</p>
-            {% endif %}
+              </div>
+            </button>
+          {%- else -%}
+            <a href="{{ block.settings.link_produto }}" class="card-button">
+              <div class="card-wrapper">
+                <img
+                  src="{{ block.settings.imagem | image_url: width: 800 }}"
+                  alt="{{ block.settings.titulo_card | escape }}">
+              </div>
+            </a>
+          {%- endif -%}
+
+          {% if section.settings.mostrar_titulo_card and block.settings.titulo_card != blank %}
+            <p class="card-title">{{ block.settings.titulo_card }}</p>
           {% endif %}
         </div>
       {% endfor %}
@@ -90,6 +94,17 @@
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
   </div>
+
+  {%- comment -%} Renderizar os drawers dos produtos {%- endcomment -%}
+  {% for block in section.blocks %}
+    {% if block.settings.produto != blank %}
+      <div 
+        id="product-template--{{ section.id }}__coverflow-{{ block.settings.produto.handle }}-popover"
+        class="popover">
+        {% render 'product-popover', product: block.settings.produto %}
+      </div>
+    {% endif %}
+  {% endfor %}
 </div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
@@ -121,7 +136,6 @@
   .card-wrapper {
     width: 100%;
     aspect-ratio: {{ section.settings.aspect_ratio }};
-    background-color: {{ section.settings.cor_fundo }};
     background-color: {{ section.settings.cor_fundo | color_modify: 'alpha', 0.08 }};
     backdrop-filter: blur(8px);
     border-radius: {{ section.settings.borda_radius }}px;
@@ -153,7 +167,6 @@
     font-size: 1.1rem;
   }
 
-  /* Blur dos não ativos */
   .swiper-slide:not(.swiper-slide-active) {
     {% if section.settings.ativar_blur_tras %}
       filter: blur({{ section.settings.blur_tras }}px) brightness(0.7);
@@ -205,19 +218,6 @@
         768: { slidesPerView: {{ section.settings.slides_tablet }} },
         0: { slidesPerView: {{ section.settings.slides_mobile }} }
       }
-    });
-
-    // Drawer do Focal
-    document.querySelectorAll('.coverflow-section .card-button').forEach(button => {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-        const url = this.dataset.productUrl;
-        if (window.Shopify?.theme?.quickAddDrawer) {
-          window.Shopify.theme.quickAddDrawer.open(url);
-        } else {
-          window.location.href = url;
-        }
-      });
     });
   });
 </script>
