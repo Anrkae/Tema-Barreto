@@ -12,32 +12,53 @@
     "carousel_coverflow_arGjgm": {
       "type": "carousel-coverflow",
       "blocks": {
-        "card_nN6PpA": {
+        "card_KrmLa9": {
           "type": "card",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-36",
-            "titulo_card": "Produto"
+            "imagem": "shopify://shop_images/1000204595.png",
+            "produto": "",
+            "titulo_card": "Título"
           }
         },
-        "card_8PcGdn": {
+        "card_pLmVdC": {
           "type": "card",
           "settings": {
-            "produto": "kids-selecao-da-italia-ll-2024-42",
-            "titulo_card": "Produto"
+            "imagem": "shopify://shop_images/1000204597.png",
+            "produto": "",
+            "titulo_card": "Título"
           }
         },
-        "card_3bwFpa": {
+        "card_6cERKh": {
           "type": "card",
           "settings": {
-            "produto": "camisa-real-madrid-25-26-home-i-branco",
-            "titulo_card": "Produto"
+            "imagem": "shopify://shop_images/1000204596.png",
+            "produto": "",
+            "titulo_card": "Título"
+          }
+        },
+        "card_C7Y6Gp": {
+          "type": "card",
+          "settings": {
+            "imagem": "shopify://shop_images/1000204594.png",
+            "produto": "",
+            "titulo_card": "Título"
+          }
+        },
+        "card_dhRAhi": {
+          "type": "card",
+          "settings": {
+            "imagem": "shopify://shop_images/1000204598.png",
+            "produto": "",
+            "titulo_card": "Título"
           }
         }
       },
       "block_order": [
-        "card_nN6PpA",
-        "card_8PcGdn",
-        "card_3bwFpa"
+        "card_KrmLa9",
+        "card_pLmVdC",
+        "card_6cERKh",
+        "card_C7Y6Gp",
+        "card_dhRAhi"
       ],
       "name": "Coverflow",
       "settings": {
