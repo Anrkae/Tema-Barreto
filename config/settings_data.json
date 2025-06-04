@@ -139,8 +139,8 @@
           "text": {
             "type": "text",
             "settings": {
-              "title": "About our store",
-              "content": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme editor.</p>"
+              "title": "Melhor qualidade",
+              "content": "<p>Loja especializada em camisas de time com ou sem personalização. Garantindo a melhor qualidade possível!</p>"
             }
           },
           "links": {
@@ -151,9 +151,10 @@
           },
           "newsletter": {
             "type": "newsletter",
+            "disabled": true,
             "settings": {
               "title": "Newsletter",
-              "content": "<p>A short sentence describing what someone will receive by subscribing</p>"
+              "content": ""
             }
           },
           "social_media": {

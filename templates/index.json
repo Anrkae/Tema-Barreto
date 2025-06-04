@@ -453,8 +453,8 @@
           "settings": {
             "icon": "picto-box",
             "custom_icon_width": 50,
-            "title": "Free shipping",
-            "content": "<p>Free worldwide shipping and returns - customs and duties taxes included</p>"
+            "title": "Entrega gratuita",
+            "content": "<p>Receba seu manto em qualquer lugar do Brasil sem se preocupar com frete!</p>"
           }
         },
         "item-2": {
@@ -462,8 +462,8 @@
           "settings": {
             "icon": "picto-phone",
             "custom_icon_width": 50,
-            "title": "Customer service",
-            "content": "<p>We are available from monday to friday to answer your questions.</p>"
+            "title": "Atendimento Personalizado",
+            "content": "<p>Atendentes prontos 24h para suporte ao  cliente!</p>"
           }
         },
         "item-3": {
@@ -471,8 +471,8 @@
           "settings": {
             "icon": "picto-lock",
             "custom_icon_width": 50,
-            "title": "Secure payment",
-            "content": "<p>Your payment information is processed securely.</p>"
+            "title": "Pagamento seguro",
+            "content": "<p>Informações sobre pagamento tratadas com segurança!</p>"
           }
         },
         "item-4": {
@@ -480,8 +480,8 @@
           "settings": {
             "icon": "picto-email",
             "custom_icon_width": 50,
-            "title": "Contact us",
-            "content": "<p>Need to contact us ? Just send us an e-mail at info@yourstore.com</p>"
+            "title": "Contate-nos",
+            "content": "<p>Tem alguma dúvida ou sugestão? Entre em contato por email: contato@barretowear.com </p>"
           }
         }
       },
@@ -500,8 +500,8 @@
       "type": "newsletter",
       "settings": {
         "reveal_on_scroll": true,
-        "subheading": "Subscribe to our newsletter",
-        "content": "<p>Promotions, new products and sales. Directly to your inbox.</p>",
+        "subheading": "newsletter",
+        "content": "<p>Promoções, novos produtos e informações exclusivas diretamente no seu email</p>",
         "text_position": "right",
         "text_alignment": "left",
         "text_background": "rgba(0,0,0,0)",
