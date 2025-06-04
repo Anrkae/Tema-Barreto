@@ -69,7 +69,7 @@
         "stretch": 80,
         "depth": 200,
         "ativar_blur_tras": true,
-        "blur_tras": 2,
+        "blur_tras": 4,
         "autoplay": true,
         "autoplay_delay": 3000,
         "slides_desktop": 3,
