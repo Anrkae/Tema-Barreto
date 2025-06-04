@@ -94,7 +94,6 @@
             <span class="visually-hidden">{{ 'collection.product.quick_view' | t }}</span>
             {%- render 'icon' with quick_buy_icon_name -%}
           </button>
-          <h2> Testando </h2>
         </div>
 
         <quick-buy-popover id="product-{{ section.id }}-{{ block.id }}-{{ product.id }}-popover" href="{{ product.url }}{% if product_url_contains_query %}&{% else %}?{% endif %}view=quick-buy-popover" class="popover popover--quick-buy hidden-tablet-and-up"></quick-buy-popover>
