@@ -581,6 +581,77 @@
         "button_background": "rgba(0,0,0,0)",
         "button_text_color": "rgba(0,0,0,0)"
       }
+    },
+    "carousel_coverflow_pp67Fd": {
+      "type": "carousel-coverflow",
+      "blocks": {
+        "card_mUL3H3": {
+          "type": "card",
+          "settings": {
+            "imagem": "shopify://shop_images/1000204598.png",
+            "link_produto": "",
+            "titulo_card": "Título do Produto"
+          }
+        },
+        "card_piVGDn": {
+          "type": "card",
+          "settings": {
+            "imagem": "shopify://shop_images/1000204594.png",
+            "link_produto": "",
+            "titulo_card": "Título do Produto"
+          }
+        },
+        "card_wbxDez": {
+          "type": "card",
+          "settings": {
+            "imagem": "shopify://shop_images/1000204596.png",
+            "link_produto": "",
+            "titulo_card": "Título do Produto"
+          }
+        },
+        "card_eV9Mcr": {
+          "type": "card",
+          "settings": {
+            "imagem": "shopify://shop_images/1000204595.png",
+            "link_produto": "",
+            "titulo_card": "Título do Produto"
+          }
+        },
+        "card_M7Bmnn": {
+          "type": "card",
+          "settings": {
+            "imagem": "shopify://shop_images/1000204597.png",
+            "link_produto": "",
+            "titulo_card": "Título do Produto"
+          }
+        }
+      },
+      "block_order": [
+        "card_mUL3H3",
+        "card_piVGDn",
+        "card_wbxDez",
+        "card_eV9Mcr",
+        "card_M7Bmnn"
+      ],
+      "name": "Coverflow",
+      "settings": {
+        "titulo": "Destaques",
+        "tamanho_card": "medio",
+        "mostrar_titulo_card": true,
+        "stretch": 80,
+        "rotate": 20,
+        "depth": 300,
+        "autoplay": true,
+        "autoplay_delay": 3000,
+        "ativar_blur_tras": true,
+        "intensidade_blur_tras": 10,
+        "cor_fundo_card": "#ffffff",
+        "opacidade_fundo_card": 10,
+        "ativar_sombra": true,
+        "slides_desktop": 3,
+        "slides_tablet": 2,
+        "slides_mobile": 2
+      }
     }
   },
   "order": [
@@ -596,6 +667,7 @@
     "timeline",
     "featured-product",
     "text-with-icons",
-    "newsletter"
+    "newsletter",
+    "carousel_coverflow_pp67Fd"
   ]
 }
