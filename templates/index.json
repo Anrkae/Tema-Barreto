@@ -87,6 +87,7 @@
           "type": "collection_block",
           "settings": {
             "collection": "brasileiros",
+            "image": "shopify://shop_images/1000183487.png",
             "title_override": ""
           }
         },
@@ -94,6 +95,7 @@
           "type": "collection_block",
           "settings": {
             "collection": "internacionais",
+            "image": "shopify://shop_images/1000183488.png",
             "title_override": ""
           }
         },
@@ -109,6 +111,7 @@
           "type": "collection_block",
           "settings": {
             "collection": "retro",
+            "image": "shopify://shop_images/1000183485.png",
             "title_override": ""
           }
         }
