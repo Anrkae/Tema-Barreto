@@ -1,6 +1,134 @@
-{% schema %}
-  {
-    "name": "Section name",
-    "settings": []
+{%- assign gap_desktop = section.settings.card_gap -%}
+{%- assign cards_desktop = section.settings.cards_desktop -%}
+{%- assign gap_tablet = section.settings.card_gap -%}
+{%- assign cards_tablet = section.settings.cards_tablet -%}
+{%- assign gap_mobile = section.settings.card_gap -%}
+{%- assign cards_mobile = section.settings.cards_mobile -%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
+  #shopify-section-{{ section.id }} .colecoes-wrapper {
+    display: flex;
+    gap: {{ gap_desktop }}px;
+    padding-bottom: 10px;
+  }
+  #shopify-section-{{ section.id }} .colecao-card {
+    flex-shrink: 0;
+    width: calc((100vw - {{ gap_desktop | times: cards_desktop | minus: gap_desktop }}px) / {{ cards_desktop }});
+    box-sizing: border-box;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    #shopify-section-{{ section.id }} .colecao-card {
+      width: calc((100vw - {{ gap_tablet | times: cards_tablet | minus: gap_tablet }}px) / {{ cards_tablet }});
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    #shopify-section-{{ section.id }} .colecao-card {
+      width: calc((100vw - {{ gap_mobile | times: cards_mobile | minus: gap_mobile }}px) / {{ cards_mobile }});
+    }
+  }
+</style>
+
+<section id="shopify-section-{{ section.id }}" class="colecoes-section">
+  <div class="colecoes-wrapper">
+    {%- for block in section.blocks -%}
+      {%- assign collection = block.settings.collection -%}
+      <a href="{{ collection.url }}" class="colecao-card">
+        {% if block.settings.image %}
+          <img src="{{ block.settings.image | img_url: '600x600' }}" alt="{{ collection.title }}" loading="lazy" />
+        {% elsif collection.featured_image %}
+          <img src="{{ collection.featured_image | img_url: '600x600' }}" alt="{{ collection.title }}" loading="lazy" />
+        {% else %}
+          <div style="width: 100%; height: 150px; background: #eee; display: flex; align-items: center; justify-content: center;">No image</div>
+        {% endif %}
+        <p>{{ collection.title }}</p>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Coleções Horizontal",
+  "settings": [
+    {
+      "type": "range",
+      "id": "cards_desktop",
+      "label": "Cards por linha (Desktop)",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "cards_tablet",
+      "label": "Cards por linha (Tablet)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "cards_mobile",
+      "label": "Cards por linha (Mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Espaçamento entre cards (px)",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Coleção",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Coleção"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem personalizada"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Coleções Horizontal",
+      "category": "Collections",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}
