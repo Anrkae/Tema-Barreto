@@ -73,7 +73,7 @@
       "name": "Coverflow",
       "settings": {
         "titulo": "Destaques",
-        "mostrar_titulo_card": true,
+        "mostrar_titulo_card": false,
         "aspect_ratio": "4/5",
         "rotate": 0,
         "stretch": 100,
