@@ -40,7 +40,7 @@
       "settings": {
         "titulo": "Destaques",
         "tamanho_card": "grande",
-        "stretch": 80,
+        "stretch": 60,
         "rotate": 0,
         "depth": 200,
         "autoplay": true,
