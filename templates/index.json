@@ -68,7 +68,7 @@
         "rotate": 0,
         "stretch": 80,
         "depth": 200,
-        "ativar_blur_tras": false,
+        "ativar_blur_tras": true,
         "blur_tras": 10,
         "autoplay": true,
         "autoplay_delay": 3000,
