@@ -171,8 +171,7 @@
         "collection_z9JdER"
       ],
       "custom_css": [
-        "header {padding-top: 20px !important;}",
-        "section {padding-bottom: 50px !important;}"
+        "header {padding-top: 20px !important;}"
       ],
       "settings": {
         "reveal_on_scroll": false,
