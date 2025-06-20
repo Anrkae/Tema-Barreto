@@ -272,6 +272,36 @@
         "button_text_color": "rgba(0,0,0,0)"
       }
     },
+    "featured_collections_fLx4hw": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_QGD7B3": {
+          "type": "collection",
+          "settings": {
+            "collection": "temporada-2025-26",
+            "label": "",
+            "button_text": "",
+            "button_url": "shopify://collections/temporada-2025-26"
+          }
+        }
+      },
+      "block_order": [
+        "collection_QGD7B3"
+      ],
+      "settings": {
+        "subheading": "Lançamentos",
+        "title": "Temporada 2025/26",
+        "content": "",
+        "products_count": 8,
+        "products_per_row": 4,
+        "stack_products": false,
+        "show_cta": true,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
     "image-with-text": {
       "type": "image-with-text",
       "blocks": {
@@ -580,6 +610,7 @@
     "colecoes_e9WmkX",
     "collection-list",
     "featured-collections",
+    "featured_collections_fLx4hw",
     "image-with-text",
     "shop-the-look",
     "image-with-text-block",
