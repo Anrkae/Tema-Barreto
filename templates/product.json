@@ -41,6 +41,9 @@
         "quantity_selector",
         "buy_buttons"
       ],
+      "custom_css": [
+        ".product__media-image-wrapper {background-color: rgba(0, 0, 0, 0.2) !important;}"
+      ],
       "settings": {
         "show_vendor": true,
         "show_sku": false,
