@@ -507,28 +507,34 @@ IMPLEMENTATION NOTE: if during the iteration of the options we have found an opt
     const wrapper = document.getElementById("customization-fields");
     if (!wrapper) return;
 
-    function toggleVisibility() {
-      const selects = document.querySelectorAll('select[name*="option"], input[type="radio"]');
-      let show = false;
+    function checkPersonalization() {
+      const selectBoxes = document.querySelectorAll("select[name^='options'], input[type='radio']");
+      let found = false;
 
-      selects.forEach(el => {
+      selectBoxes.forEach(el => {
         const name = el.name?.toLowerCase();
-        const value = el.value?.toLowerCase();
+        const val = el.tagName === 'SELECT'
+          ? el.selectedOptions?.[0]?.text?.toLowerCase()
+          : el.value?.toLowerCase();
 
-        if (name && name.includes("personaliza") && value && value.includes("personalizar")) {
-          if ((el.tagName === 'SELECT' && el.value.toLowerCase().includes("personalizar")) ||
-              (el.type === "radio" && el.checked)) {
-            show = true;
-          }
+        if (name && name.includes("personaliza") && val && val.includes("personalizar")) {
+          if (el.type === "radio" && el.checked) found = true;
+          if (el.tagName === "SELECT") found = true;
         }
       });
 
-      wrapper.style.display = show ? "block" : "none";
+      wrapper.style.display = found ? "block" : "none";
     }
 
-    toggleVisibility();
-    document.querySelectorAll('select, input[type="radio"]').forEach(el => {
-      el.addEventListener("change", toggleVisibility);
+    // Inicializa e escuta mudanças
+    checkPersonalization();
+    document.querySelectorAll("select[name^='options'], input[type='radio']").forEach(el => {
+      el.addEventListener("change", checkPersonalization);
+    });
+
+    // Também ouve eventos emitidos pelo tema (caso use <variant-selects>)
+    document.addEventListener("variant:change", () => {
+      setTimeout(checkPersonalization, 50); // aguarda DOM atualizar
     });
   });
-               </script>
+</script>
