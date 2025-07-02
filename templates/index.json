@@ -437,6 +437,7 @@
         },
         "item-2": {
           "type": "item",
+          "disabled": true,
           "settings": {
             "label": "2010",
             "title": "Your heading",
@@ -447,6 +448,7 @@
         },
         "item-3": {
           "type": "item",
+          "disabled": true,
           "settings": {
             "label": "2020",
             "title": "Your heading",
