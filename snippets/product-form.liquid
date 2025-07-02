@@ -361,6 +361,16 @@
           </product-inventory>
         {%- endif -%}
 
+      <!-- PERSONALIZAÇÃO -->
+<div id="personalization-fields" style="display: none; margin-bottom: 1.5rem;">
+  <label for="custom-name" style="display: block; font-weight: bold;">Nome na camisa:</label>
+  <input id="custom-name" type="text" name="properties[Nome]" class="input" placeholder="Digite o nome">
+
+  <label for="custom-number" style="display: block; font-weight: bold; margin-top: 1rem;">Número:</label>
+  <input id="custom-number" type="text" name="properties[Número]" class="input" placeholder="Digite o número">
+</div>
+<!-- FIM PERSONALIZAÇÃO -->
+      
       {%- comment -%}
       ----------------------------------------------------------------------------------------------------------------
       BUY BUTTONS
