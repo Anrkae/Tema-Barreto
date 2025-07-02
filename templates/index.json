@@ -16,7 +16,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204595.png",
-            "produto": "",
+            "produto": "kids-selecao-da-italia-ll-2024-36",
             "titulo_card": "Título"
           }
         },
@@ -68,8 +68,6 @@
         "rotate": 0,
         "stretch": 10,
         "depth": 250,
-        "ativar_blur_tras": true,
-        "blur_tras": 3,
         "cor_fundo": "#ffffff",
         "borda_radius": 16,
         "ativar_sombra": true,
