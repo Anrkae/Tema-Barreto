@@ -37,7 +37,7 @@
     "text_font": "montserrat_n4",
     "text_font_size": 15,
     "currency_code_enabled": false,
-    "stagger_products_apparition": true,
+    "stagger_products_apparition": false,
     "round_color_swatches": false,
     "show_vendor": false,
     "show_secondary_image": true,
