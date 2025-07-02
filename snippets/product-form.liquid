@@ -501,3 +501,72 @@ IMPLEMENTATION NOTE: if during the iteration of the options we have found an opt
     </div>
   </popover-content>
 {%- endif -%}
+
+<script>
+  // Aguarda o DOM estar completamente carregado
+document.addEventListener('DOMContentLoaded', function() {
+  // Encontra o seletor da variante "Personalizar"
+  // Vamos procurar por um elemento 'select' ou 'input[type="radio"]'
+  // que esteja associado à opção 'Personalizar'.
+  // Para dropdowns, geralmente é um <select> cujo 'name' começa com 'option'
+  // e cujo 'aria-label' ou texto associado é 'Personalizar'.
+
+  // Uma forma robusta é procurar pelo elemento <select> ou botões
+  // dentro da div do seletor de variante que exiba 'Personalizar:'.
+  const customizationOptionSelector = document.querySelector('.product-form__option-name', el => el.textContent.includes('Personalizar'))
+                                      ? document.querySelector('.product-form__option-name', el => el.textContent.includes('Personalizar')).closest('.product-form__option-selector')
+                                      : null;
+
+
+  // Se o seletor da opção "Personalizar" for encontrado
+  if (customizationOptionSelector) {
+    const personalizationInput = customizationOptionSelector.querySelector('select, input[type="radio"]:checked');
+    const customizationFields = document.getElementById('customization-fields');
+
+    if (personalizationInput && customizationFields) {
+      const handlePersonalizationChange = () => {
+        let selectedValue;
+
+        // Verifica se é um select (dropdown) ou um conjunto de rádios
+        if (personalizationInput.tagName === 'SELECT') {
+          selectedValue = personalizationInput.value;
+        } else {
+          // Se for rádio, precisamos encontrar o rádio selecionado atual
+          const selectedRadio = customizationOptionSelector.querySelector('input[type="radio"]:checked');
+          selectedValue = selectedRadio ? selectedRadio.value : '';
+        }
+
+        // Se o valor selecionado for "Personalizada", mostra os campos. Caso contrário, esconde.
+        if (selectedValue === 'Personalizada') {
+          customizationFields.removeAttribute('hidden');
+          // Opcional: Adicionar o atributo 'required' se desejar que sejam obrigatórios apenas quando visíveis
+          document.getElementById('custom_name').setAttribute('required', 'true');
+          document.getElementById('custom_number').setAttribute('required', 'true');
+        } else {
+          customizationFields.setAttribute('hidden', 'true');
+          // Opcional: Remover o atributo 'required' quando ocultos
+          document.getElementById('custom_name').removeAttribute('required');
+          document.getElementById('custom_number').removeAttribute('required');
+          // Limpa os campos quando são ocultados
+          document.getElementById('custom_name').value = '';
+          document.getElementById('custom_number').value = '';
+        }
+      };
+
+      // Adiciona um listener para o evento 'change' (para selects e rádios)
+      if (personalizationInput.tagName === 'SELECT') {
+        personalizationInput.addEventListener('change', handlePersonalizationChange);
+      } else {
+        // Para rádios, os listeners precisam ser adicionados a cada rádio
+        customizationOptionSelector.querySelectorAll('input[type="radio"]').forEach(radio => {
+          radio.addEventListener('change', handlePersonalizationChange);
+        });
+      }
+
+
+      // Executa a função uma vez no carregamento da página para definir o estado inicial
+      handlePersonalizationChange();
+    }
+  }
+});
+</script>
