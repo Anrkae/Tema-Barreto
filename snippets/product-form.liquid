@@ -373,7 +373,7 @@
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
         {%- comment -%} Campos de personalização (visíveis só se "Personalizar" for selecionado) {%- endcomment -%}
-        <div id="customization-fields" style="display: none; margin-bottom: 20px;">
+        <div id="customization-fields" style="display: block; margin-bottom: 20px;">
           <div class="product-form__line-item-property">
             <label for="custom_name">Nome na camisa:</label>
             <input id="custom_name" type="text" name="properties[Nome personalizado]" class="input__field">
