@@ -143,6 +143,18 @@
               </div>
             {%- endfor -%}
 
+{% for tag in product.tags %}
+    {% if tag == 'Teste' %}
+      <div
+        class="Personalizar Nome e Número (+ R$20)"
+        id="aparecer"
+        style="width:100%;">
+        {% render "field_costumize2" %}
+      </div>
+    {% endif %}
+  {% endfor %}
+  <!-- End Script Custom -->
+          
             <noscript>
               <label class="input__block-label" for="product-select-{{ section.id }}-{{ product.id }}">{{ 'product.form.variant' | t }}</label>
 
