@@ -16,7 +16,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204595.png",
-            "produto": "kids-selecao-da-italia-ll-2024-36",
+            "produto": "",
             "titulo_card": "Título"
           }
         },
@@ -24,7 +24,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204597.png",
-            "produto": "",
+            "produto": "camisa-flamengo-25-26-home",
             "titulo_card": "Título"
           }
         },
@@ -32,7 +32,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204596.png",
-            "produto": "",
+            "produto": "camisa-manchester-city-1-2024-25",
             "titulo_card": "Título"
           }
         },
@@ -40,7 +40,7 @@
           "type": "card",
           "settings": {
             "imagem": "shopify://shop_images/1000204594.png",
-            "produto": "",
+            "produto": "camisa-palmeiras-1-24-25",
             "titulo_card": "Título"
           }
         },
