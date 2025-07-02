@@ -654,7 +654,7 @@
         "collection_jY93xH"
       ],
       "custom_css": [
-        ".list-collections--carousel .list-collections__item {flex: 0 0 100px; max-width: 150px; gap: 0 !important;}"
+        ".list-collections--carousel .list-collections__item {flex: 0 0 10px; max-width: 150px; margin-right: 10px !important;}"
       ],
       "name": "Collection list",
       "settings": {
