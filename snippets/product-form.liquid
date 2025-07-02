@@ -507,28 +507,26 @@ IMPLEMENTATION NOTE: if during the iteration of the options we have found an opt
     const wrapper = document.getElementById("customization-fields");
     if (!wrapper) return;
 
-    function toggleVisibility() {
-      const selects = document.querySelectorAll('select[name*="option"], input[type="radio"]');
-      let show = false;
+    function updateVisibility(selectedVariant) {
+      if (!selectedVariant) return;
 
-      selects.forEach(el => {
-        const name = el.name?.toLowerCase();
-        const value = el.value?.toLowerCase();
-
-        if (name && name.includes("personaliza") && value && value.includes("personalizar")) {
-          if ((el.tagName === 'SELECT' && el.value.toLowerCase().includes("personalizar")) ||
-              (el.type === "radio" && el.checked)) {
-            show = true;
-          }
-        }
-      });
+      // Encontra a opção de personalização e verifica se está marcada como "Personalizar"
+      const personalizacao = selectedVariant.options.find(opt => opt.toLowerCase().includes("personalizar"));
+      const show = personalizacao === "personalizar";
 
       wrapper.style.display = show ? "block" : "none";
     }
 
-    toggleVisibility();
-    document.querySelectorAll('select, input[type="radio"]').forEach(el => {
-      el.addEventListener("change", toggleVisibility);
+    const productForm = document.querySelector('product-form');
+    if (!productForm) return;
+
+    // Primeira verificação
+    const initialVariant = {{ product.selected_or_first_available_variant | json }};
+    updateVisibility(initialVariant);
+
+    // Atualiza quando o usuário muda a variante
+    document.addEventListener('variant:change', function (event) {
+      updateVisibility(event.detail.variant);
     });
   });
 </script>
