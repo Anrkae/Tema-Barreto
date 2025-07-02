@@ -281,13 +281,16 @@
           "settings": {
             "collection": "temporada-2025-26",
             "label": "",
-            "button_text": "Ver coleção",
+            "button_text": "",
             "button_url": "shopify://collections/temporada-2025-26"
           }
         }
       },
       "block_order": [
         "collection_QGD7B3"
+      ],
+      "custom_css": [
+        ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
       ],
       "settings": {
         "subheading": "Lançamentos",
@@ -416,6 +419,9 @@
       "block_order": [
         "testimonial-1"
       ],
+      "custom_css": [
+        ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
+      ],
       "settings": {
         "reveal_on_scroll": true,
         "subheading": "",
@@ -465,6 +471,9 @@
         "item-1",
         "item-2",
         "item-3"
+      ],
+      "custom_css": [
+        ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
       ],
       "settings": {
         "subheading": "Futebol é história",
@@ -521,6 +530,9 @@
         "quantity-selector",
         "buy-buttons",
         "button_UdxgfB"
+      ],
+      "custom_css": [
+        ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
       ],
       "settings": {
         "product": "camisa-real-madrid-25-26-home-i-branco",
@@ -587,6 +599,9 @@
         "item-2",
         "item-3",
         "item-4"
+      ],
+      "custom_css": [
+        ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
       ],
       "settings": {
         "background": "rgba(0,0,0,0)",
