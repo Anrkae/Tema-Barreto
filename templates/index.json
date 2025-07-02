@@ -197,6 +197,9 @@
       "block_order": [
         "collection-1"
       ],
+      "custom_css": [
+        "section {padding-top: 50px !important;}"
+      ],
       "settings": {
         "subheading": "Lançamentos",
         "title": "Mundial de clubes",
