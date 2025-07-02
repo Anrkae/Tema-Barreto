@@ -361,19 +361,20 @@
           </product-inventory>
         {%- endif -%}
 
-      {%- comment -%}
-      ----------------------------------------------------------------------------------------------------------------
-      BUY BUTTONS
-      ----------------------------------------------------------------------------------------------------------------
-      {%- endcomment -%}
-      {%- when 'buy_buttons' -%}
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------
+BUY BUTTONS
+----------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+{%- when 'buy_buttons' -%}
   {%- if request.page_type != 'password' -%}
     <div class="product-form__buy-buttons" {{ block.shopify_attributes }}>
       {%- form 'product', product, is: 'product-form', id: product_form_id -%}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
-        {%- comment -%} Campos de personalização (visíveis só se "Personalizar" for selecionado) {%- endcomment -%}
-        <div id="customization-fields" style="display: block; margin-bottom: 20px;">
+        {# Adicionei 'hidden' para que os campos comecem ocultos por padrão. O JS irá remover isso. #}
+        {# E adicionei o data-attribute para o JS identificar mais facilmente #}
+        <div id="customization-fields" class="customization-fields" style="margin-bottom: 20px;" hidden>
           <div class="product-form__line-item-property">
             <label for="custom_name">Nome na camisa:</label>
             <input id="custom_name" type="text" name="properties[Nome personalizado]" class="input__field">
@@ -404,7 +405,7 @@
               button--full"
             {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
           >
-            {%- if product.selected_or_first_available_variant.available -%}
+            {%- if product.selected.available -%} {# Usar product.selected para verificar disponibilidade da variante selecionada #}
               {%- if product.template_suffix == 'pre-order' -%}
                 {{ 'product.form.pre_order' | t }}
               {%- else -%}
@@ -429,6 +430,7 @@
       {%- endform -%}
     </div>
   {%- endif -%}
+
 
   {%- if template.suffix != 'quick-buy-popover' -%}
     <store-pickup form-id="{{ product_form_id }}" class="product-form__store-availability-container">
