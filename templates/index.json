@@ -653,6 +653,7 @@
         "collection_6Jg6R3",
         "collection_jY93xH"
       ],
+      "disabled": true,
       "custom_css": [
         ".list-collections--carousel .list-collections__item {flex: 0 0 150px; max-width: 150px;}"
       ],
