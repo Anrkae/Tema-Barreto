@@ -21,18 +21,9 @@
       "label": "Proporção do card",
       "default": "4/5",
       "options": [
-        {
-          "value": "1/1",
-          "label": "Quadrado (1:1)"
-        },
-        {
-          "value": "4/5",
-          "label": "Vertical (4:5)"
-        },
-        {
-          "value": "16/9",
-          "label": "Horizontal (16:9)"
-        }
+        { "value": "1/1", "label": "Quadrado (1:1)" },
+        { "value": "4/5", "label": "Vertical (4:5)" },
+        { "value": "16/9", "label": "Horizontal (16:9)" }
       ]
     },
     {
@@ -61,21 +52,6 @@
       "max": 1000,
       "step": 50,
       "default": 300
-    },
-    {
-      "type": "checkbox",
-      "id": "ativar_blur_tras",
-      "label": "Ativar blur nos cards de trás",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "blur_tras",
-      "label": "Intensidade do blur (px)",
-      "min": 0,
-      "max": 30,
-      "step": 1,
-      "default": 10
     },
     {
       "type": "color",
@@ -187,15 +163,9 @@
           {% if produto %}
             <a href="{{ produto.url }}" class="card-link" aria-label="Ver produto {{ produto.title }}">
               <div class="card-wrapper">
-                {% if block.settings.imagem %}
-                  <img 
-                    src="{{ block.settings.imagem | image_url: width: 800 }}" 
-                    alt="{{ block.settings.titulo_card | escape }}">
-                {% else %}
-                  <img 
-                    src="{{ produto.featured_image | img_url: '800x' }}" 
-                    alt="{{ produto.title }}">
-                {% endif %}
+                <img 
+                  src="{{ block.settings.imagem | default: produto.featured_image | image_url: width: 800 }}" 
+                  alt="{{ block.settings.titulo_card | default: produto.title | escape }}">
               </div>
             </a>
           {% else %}
@@ -226,60 +196,65 @@
     margin: 40px auto;
     text-align: center;
   }
+
   .swiper {
     width: 100%;
     max-width: 1400px;
   }
+
   .swiper-slide {
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: all 0.4s ease;
   }
+
   .card-link {
     display: block;
     width: 100%;
     text-decoration: none;
     cursor: pointer;
   }
+
   .card-wrapper {
     width: 100%;
     aspect-ratio: {{ section.settings.aspect_ratio }};
     background-color: {{ section.settings.cor_fundo | color_modify: 'alpha', 0.08 }};
-    backdrop-filter: blur(8px);
     border-radius: {{ section.settings.borda_radius }}px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.4s ease;
     {% if section.settings.ativar_sombra %}
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     {% endif %}
   }
+
   .card-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
   }
+
   .swiper-slide:hover .card-wrapper img {
     transform: scale(1.05);
   }
+
   .card-title {
     margin-top: 10px;
     color: white;
     font-size: 1.1rem;
   }
+
   .swiper-slide:not(.swiper-slide-active) {
-    {% if section.settings.ativar_blur_tras %}
-      filter: blur({{ section.settings.blur_tras }}px) brightness(0.7);
-    {% else %}
-      opacity: 0.5;
-    {% endif %}
+    opacity: 0.5;
+    filter: brightness(0.7);
     transform: scale(0.9);
   }
+
   .swiper-button-next,
   .swiper-button-prev {
     color: white;
@@ -289,7 +264,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     new Swiper('.coverflow-section .swiper', {
       effect: 'coverflow',
       grabCursor: true,
