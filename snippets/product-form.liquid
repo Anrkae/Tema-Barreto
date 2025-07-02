@@ -180,6 +180,8 @@
                 </div>
               {%- endif -%}
 
+  {% render 'personalization' %}
+
             {%- when 'checkbox' -%}
               <div class="product-form__line-item-property" {{ block.shopify_attributes }}>
                 <div class="checkbox-container">
