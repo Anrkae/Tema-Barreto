@@ -214,64 +214,6 @@
         "button_text_color": "rgba(0,0,0,0)"
       }
     },
-    "colecoes_e9WmkX": {
-      "type": "colecoes",
-      "blocks": {
-        "collection_block_F39VXH": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "brasileiros",
-            "image": "shopify://shop_images/1000183487.png",
-            "title_override": ""
-          }
-        },
-        "collection_block_Xba7UC": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "internacionais",
-            "image": "shopify://shop_images/1000183488.png",
-            "title_override": ""
-          }
-        },
-        "collection_block_UrUQCg": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "selecoes",
-            "image": "shopify://shop_images/1000183486.png",
-            "title_override": ""
-          }
-        },
-        "collection_block_wEXj6q": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "retro",
-            "image": "shopify://shop_images/1000183485.png",
-            "title_override": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_block_F39VXH",
-        "collection_block_Xba7UC",
-        "collection_block_UrUQCg",
-        "collection_block_wEXj6q"
-      ],
-      "custom_css": [],
-      "name": "Grid Coleções",
-      "settings": {
-        "title": "CATEGORIAS",
-        "heading_alignment": "center",
-        "image_ratio": "1",
-        "border_radius": 50,
-        "gap_size": 20,
-        "show_title_overlay": true,
-        "show_title_always": false,
-        "text_color_static_title": "#ffffff",
-        "enable_hover_effect": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "featured_collections_fLx4hw": {
       "type": "featured-collections",
       "blocks": {
@@ -711,7 +653,9 @@
         "collection_6Jg6R3",
         "collection_jY93xH"
       ],
-      "custom_css": [],
+      "custom_css": [
+        ".list-collections--carousel .list-collections__item {flex: 0 0 100px; max-width: 150px; gap: 0 !important;}"
+      ],
       "name": "Collection list",
       "settings": {
         "reveal_on_scroll": false,
@@ -727,7 +671,6 @@
     "carousel_coverflow_arGjgm",
     "collection-list",
     "featured-collections",
-    "colecoes_e9WmkX",
     "featured_collections_fLx4hw",
     "image-with-text",
     "shop-the-look",
