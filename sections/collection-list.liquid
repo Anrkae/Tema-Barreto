@@ -19,6 +19,18 @@
       {%- assign heading_color = section.settings.text_color -%}  
       {%- assign text_color = section.settings.text_color -%}  
     {%- endif -%}  
+
+    /* Ajuste de espaçamento para a grade de coleções */
+.shopify-section--collection-list .list-collections__item-list {
+    /* Altere os valores abaixo para o seu gosto */
+
+    --grid-desktop-horizontal-spacing: 30px; /* Espaçamento HORIZONTAL no computador */
+    --grid-desktop-vertical-spacing: 30px;   /* Espaçamento VERTICAL no computador */
+
+    --grid-mobile-horizontal-spacing: 16px;  /* Espaçamento HORIZONTAL no celular */
+    --grid-mobile-vertical-spacing: 16px;    /* Espaçamento VERTICAL no celular */
+}
+    
   
     --heading-color: {{ heading_color.red }}, {{ heading_color.green }}, {{ heading_color.blue }};  
     --text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};  
