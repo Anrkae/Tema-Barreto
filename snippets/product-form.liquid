@@ -482,3 +482,21 @@ IMPLEMENTATION NOTE: if during the iteration of the options we have found an opt
     </div>
   </popover-content>
 {%- endif -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const personalizationField = document.querySelector('#personalization-fields');
+    const selectEl = document.querySelector('select[name^="options"]');
+
+    function togglePersonalization() {
+      if (!selectEl || !personalizationField) return;
+      const selected = selectEl.options[selectEl.selectedIndex].text.toLowerCase();
+      personalizationField.style.display = selected.includes('personalizar') ? 'block' : 'none';
+    }
+
+    if (selectEl) {
+      togglePersonalization(); // Verifica no carregamento
+      selectEl.addEventListener('change', togglePersonalization); // Verifica quando muda
+    }
+  });
+</script>
