@@ -372,8 +372,6 @@ BUY BUTTONS
       {%- form 'product', product, is: 'product-form', id: product_form_id -%}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
-        {# Adicionei 'hidden' para que os campos comecem ocultos por padrão. O JS irá remover isso. #}
-        {# E adicionei o data-attribute para o JS identificar mais facilmente #}
         <div id="customization-fields" class="customization-fields" style="margin-bottom: 20px;" hidden>
           <div class="product-form__line-item-property">
             <label for="custom_name">Nome na camisa:</label>
