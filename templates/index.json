@@ -78,109 +78,6 @@
         "slides_mobile": 2
       }
     },
-    "collection-list": {
-      "type": "collection-list",
-      "blocks": {
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": "brasileirao",
-            "subheading": "Brasileiros",
-            "title": "",
-            "link_text": "",
-            "link_url": "",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 61
-          }
-        },
-        "collection-2": {
-          "type": "collection",
-          "settings": {
-            "collection": "internacionais",
-            "subheading": "",
-            "title": "",
-            "link_text": "",
-            "link_url": "",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 30
-          }
-        },
-        "collection_9mMfNc": {
-          "type": "collection",
-          "settings": {
-            "collection": "selecoes",
-            "subheading": "",
-            "title": "",
-            "link_text": "",
-            "link_url": "",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 30
-          }
-        },
-        "collection-3": {
-          "type": "collection",
-          "settings": {
-            "collection": "retro",
-            "subheading": "",
-            "title": "",
-            "link_text": "",
-            "link_url": "",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 30
-          }
-        },
-        "collection_tWda8G": {
-          "type": "collection",
-          "settings": {
-            "collection": "femininas",
-            "subheading": "",
-            "title": "",
-            "link_text": "",
-            "link_url": "",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 30
-          }
-        },
-        "collection_z9JdER": {
-          "type": "collection",
-          "settings": {
-            "collection": "infantil",
-            "subheading": "",
-            "title": "",
-            "link_text": "",
-            "link_url": "",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 30
-          }
-        }
-      },
-      "block_order": [
-        "collection-1",
-        "collection-2",
-        "collection_9mMfNc",
-        "collection-3",
-        "collection_tWda8G",
-        "collection_z9JdER"
-      ],
-      "disabled": true,
-      "custom_css": [
-        "header {padding-top: 20px !important;}"
-      ],
-      "settings": {
-        "reveal_on_scroll": false,
-        "layout": "carousel",
-        "subheading": "",
-        "title": "Coleções",
-        "background": "rgba(0,0,0,0)",
-        "text_color": "rgba(0,0,0,0)"
-      }
-    },
     "featured-collections": {
       "type": "featured-collections",
       "blocks": {
@@ -201,10 +98,10 @@
         ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
       ],
       "settings": {
-        "subheading": "Lançamentos",
+        "subheading": "",
         "title": "Mundial de clubes",
         "content": "",
-        "products_count": 8,
+        "products_count": 14,
         "products_per_row": 4,
         "stack_products": false,
         "show_cta": true,
@@ -670,7 +567,6 @@
   },
   "order": [
     "carousel_coverflow_arGjgm",
-    "collection-list",
     "featured-collections",
     "featured_collections_fLx4hw",
     "image-with-text",
