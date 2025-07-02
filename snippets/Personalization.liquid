@@ -1,0 +1,36 @@
+<div id="personalization-fields" style="display: none; margin-top: 1rem;">
+  <label for="personalization-name" style="display:block; font-weight:bold;">Nome na camisa:</label>
+  <input type="text" id="personalization-name" name="properties[Nome na camisa]" placeholder="Digite o nome" style="width: 100%; padding: 8px; margin-bottom: 1rem;" />
+
+  <label for="personalization-number" style="display:block; font-weight:bold;">Número na camisa:</label>
+  <input type="text" id="personalization-number" name="properties[Número na camisa]" placeholder="Ex: 10" style="width: 100%; padding: 8px;" />
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const personalizationFieldset = document.querySelector('#personalization-fields');
+
+    function updateVisibility() {
+      const variantSelect = document.querySelector('select[name^="options["]');
+      if (!variantSelect) return;
+
+      const selectedOption = variantSelect.value;
+      if (selectedOption.toLowerCase().includes('personalizar')) {
+        personalizationFieldset.style.display = 'block';
+      } else {
+        personalizationFieldset.style.display = 'none';
+        // Limpa os campos se esconder
+        document.querySelector('#personalization-name').value = '';
+        document.querySelector('#personalization-number').value = '';
+      }
+    }
+
+    const variantSelects = document.querySelectorAll('select[name^="options["]');
+    variantSelects.forEach(select => {
+      select.addEventListener('change', updateVisibility);
+    });
+
+    // Inicializa no carregamento
+    updateVisibility();
+  });
+</script>
