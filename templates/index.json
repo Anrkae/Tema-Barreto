@@ -261,10 +261,9 @@
       "settings": {
         "title": "CATEGORIAS",
         "heading_alignment": "center",
-        "item_size": "medium",
+        "image_ratio": "1",
         "border_radius": 50,
         "gap_size": 20,
-        "image_ratio": "1",
         "show_title_overlay": true,
         "show_title_always": false,
         "text_color_static_title": "#ffffff",
@@ -621,6 +620,107 @@
         "button_background": "rgba(0,0,0,0)",
         "button_text_color": "rgba(0,0,0,0)"
       }
+    },
+    "collection_list_TP36Pi": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_CV6WVi": {
+          "type": "collection",
+          "settings": {
+            "collection": "brasileiros",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "collection_jKrDLE": {
+          "type": "collection",
+          "settings": {
+            "collection": "internacionais",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "collection_MKMtj6": {
+          "type": "collection",
+          "settings": {
+            "collection": "selecoes",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "collection_LJ4pew": {
+          "type": "collection",
+          "settings": {
+            "collection": "retro",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "collection_6Jg6R3": {
+          "type": "collection",
+          "settings": {
+            "collection": "femininas",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "collection_jY93xH": {
+          "type": "collection",
+          "settings": {
+            "collection": "infantil",
+            "subheading": "",
+            "title": "",
+            "link_text": "",
+            "link_url": "",
+            "text_color": "rgba(0,0,0,0)",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "collection_CV6WVi",
+        "collection_jKrDLE",
+        "collection_MKMtj6",
+        "collection_LJ4pew",
+        "collection_6Jg6R3",
+        "collection_jY93xH"
+      ],
+      "custom_css": [],
+      "name": "Collection list",
+      "settings": {
+        "reveal_on_scroll": false,
+        "layout": "carousel",
+        "subheading": "Subheading",
+        "title": "Collection list",
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
     }
   },
   "order": [
@@ -636,6 +736,7 @@
     "timeline",
     "featured-product",
     "text-with-icons",
-    "newsletter"
+    "newsletter",
+    "collection_list_TP36Pi"
   ]
 }
