@@ -367,45 +367,74 @@
       ----------------------------------------------------------------------------------------------------------------
       {%- endcomment -%}
       {%- when 'buy_buttons' -%}
-        {%- if request.page_type != 'password' -%}
-          <div class="product-form__buy-buttons" {{ block.shopify_attributes }}>
-            {%- form 'product', product, is: 'product-form', id: product_form_id -%}
-              <input type="hidden" disabled name="id" value="{{ product.selected_or_first_available_variant.id }}">
+  {%- if request.page_type != 'password' -%}
+    <div class="product-form__buy-buttons" {{ block.shopify_attributes }}>
+      {%- form 'product', product, is: 'product-form', id: product_form_id -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
-              <product-payment-container form-id="{{ product_form_id }}" {% if update_url %}id="MainPaymentContainer"{% endif %} class="product-form__payment-container" {{ block.shopify_attributes }}>
-                <button id="AddToCart" type="submit" is="loader-button" {% unless block.settings.show_payment_button and template.suffix != 'quick-buy-popover' %}data-use-primary{% endunless %} data-product-add-to-cart-button data-button-content="{% if product.template_suffix == 'pre-order' %}{{ 'product.form.pre_order' | t | escape }}{% else %}{{ 'product.form.add_to_cart' | t | escape }}{% endif %}" class="product-form__add-button button {% unless product.selected_or_first_available_variant.available %}button--ternary{% else %}{% if block.settings.show_payment_button and template.suffix != 'quick-buy-popover' %}button--secondary{% else %}button--primary{% endif %}{% endunless %} button--full" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-                  {%- if product.selected_or_first_available_variant.available -%}
-                    {%- if product.template_suffix == 'pre-order' -%}
-                      {{- 'product.form.pre_order' | t -}}
-                    {%- else -%}
-                      {{- 'product.form.add_to_cart' | t -}}
-                    {%- endif -%}
-                  {%- else -%}
-                    {{- 'product.form.sold_out' | t -}}
-                  {%- endif -%}
-                </button>
-
-                {%- if block.settings.show_payment_button and template.suffix != 'quick-buy-popover' -%}
-                  {{ form | payment_button }}
-
-                  {%- unless product.selected_or_first_available_variant.available -%}
-                    <style>
-                      #shopify-section-{{ section.id }} .shopify-payment-button {
-                        display: none;
-                      }
-                    </style>
-                  {%- endunless -%}
-                {%- endif -%}
-              </product-payment-container>
-            {%- endform -%}
+        {%- comment -%} Campos de personalização (visíveis só se "Personalizar" for selecionado) {%- endcomment -%}
+        <div id="customization-fields" style="display: none; margin-bottom: 20px;">
+          <div class="product-form__line-item-property">
+            <label for="custom_name">Nome na camisa:</label>
+            <input id="custom_name" type="text" name="properties[Nome personalizado]" class="input__field">
           </div>
-        {%- endif -%}
+          <div class="product-form__line-item-property" style="margin-top: 1rem;">
+            <label for="custom_number">Número na camisa:</label>
+            <input id="custom_number" type="text" name="properties[Número personalizado]" class="input__field">
+          </div>
+        </div>
 
-        {%- if template.suffix != 'quick-buy-popover' -%}
-          <store-pickup form-id="{{ product_form_id }}" class="product-form__store-availability-container">
-            {%- render 'store-availability', product_variant: product.selected_or_first_available_variant -%}
-          </store-pickup>
-        {%- endif -%}
+        <product-payment-container form-id="{{ product_form_id }}" {% if update_url %}id="MainPaymentContainer"{% endif %} class="product-form__payment-container" {{ block.shopify_attributes }}>
+          <button
+            id="AddToCart"
+            type="submit"
+            is="loader-button"
+            {% unless block.settings.show_payment_button and template.suffix != 'quick-buy-popover' %}data-use-primary{% endunless %}
+            data-product-add-to-cart-button
+            data-button-content="{% if product.template_suffix == 'pre-order' %}{{ 'product.form.pre_order' | t | escape }}{% else %}{{ 'product.form.add_to_cart' | t | escape }}{% endif %}"
+            class="product-form__add-button button
+              {% unless product.selected_or_first_available_variant.available %}button--ternary
+              {% else %}
+                {% if block.settings.show_payment_button and template.suffix != 'quick-buy-popover' %}
+                  button--secondary
+                {% else %}
+                  button--primary
+                {% endif %}
+              {% endunless %}
+              button--full"
+            {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+          >
+            {%- if product.selected_or_first_available_variant.available -%}
+              {%- if product.template_suffix == 'pre-order' -%}
+                {{ 'product.form.pre_order' | t }}
+              {%- else -%}
+                {{ 'product.form.add_to_cart' | t }}
+              {%- endif -%}
+            {%- else -%}
+              {{ 'product.form.sold_out' | t }}
+            {%- endif -%}
+          </button>
+
+          {%- if block.settings.show_payment_button and template.suffix != 'quick-buy-popover' -%}
+            {{ form | payment_button }}
+            {%- unless product.selected_or_first_available_variant.available -%}
+              <style>
+                #shopify-section-{{ section.id }} .shopify-payment-button {
+                  display: none;
+                }
+              </style>
+            {%- endunless -%}
+          {%- endif -%}
+        </product-payment-container>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+
+  {%- if template.suffix != 'quick-buy-popover' -%}
+    <store-pickup form-id="{{ product_form_id }}" class="product-form__store-availability-container">
+      {%- render 'store-availability', product_variant: product.selected_or_first_available_variant -%}
+    </store-pickup>
+  {%- endif -%}
     {%- endcase -%}
   {%- endfor -%}
 
