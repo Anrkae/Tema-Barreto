@@ -1,281 +1,158 @@
 {% comment %}
-  ** Grade de Coleções Horizontal **
-  - Grade horizontal de coleções.
-  - Tamanho dos itens ajustável via schema (pequeno, médio, grande).
-  - Cada bloco carrega uma foto e uma coleção.
-  - Raio da borda ajustável.
-  - Sem barra de rolagem horizontal visível (mas rolável).
-  - Responsivo.
+  ** Grid de Coleções Horizontal Otimizado **
+  - Com rolagem horizontal fluida (scroll-snap).
+  - Hover opcional.
+  - Título sobreposto ou abaixo, configurável.
+  - Responsivo e leve.
+  - Usa proporção nativa com aspect-ratio.
 {% endcomment %}
 
-{%- liquid
-  assign section_padding_top = section.settings.padding_top
-  assign section_padding_bottom = section.settings.padding_bottom
-
-  assign item_size = section.settings.item_size
-  assign border_radius = section.settings.border_radius
-  assign gap_size = section.settings.gap_size
-
-  assign item_width_desktop = '200px'
-  assign item_width_tablet = '180px'
-  assign item_width_mobile = '150px'
-
-  if item_size == 'small'
-    assign item_width_desktop = '180px'
-    assign item_width_tablet = '150px'
-    assign item_width_mobile = '120px'
-  elsif item_size == 'large'
-    assign item_width_desktop = '300px'
-    assign item_width_tablet = '250px'
-    assign item_width_mobile = '200px'
-  endif
-
-  # Define a cor de fundo padrão ou a partir de uma nova configuração (exemplo)
-  # Se quiser adicionar uma configuração de cor de fundo, descomente a linha abaixo
-  # e adicione a configuração correspondente no schema.
-  # assign section_background_color = section.settings.section_background_color | default: 'transparent'
--%}
-
-<style>
-  .custom-collection-grid-section {
-    padding-top: {{ section_padding_top }}px;
-    padding-bottom: {{ section_padding_bottom }}px;
-    overflow: hidden; /* Para conter a grade e evitar scrollbars indesejadas no nível da seção */
-    /* background-color: {{ section_background_color }}; Descomente se adicionar a configuração de cor */
-  }
-
-  .custom-collection-grid__header {
-    margin-bottom: 30px;
-    text-align: {{ section.settings.heading_alignment }};
-  }
-
-  .custom-collection-grid__title {
-    font-size: 24px; /* Ajuste conforme seu tema */
-    margin: 0;
-    color: #F2F2F2;
-  }
-
-  .custom-collection-grid__scroll-wrapper {
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Para rolagem suave em iOS */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    padding-bottom: 20px; /* Espaço para a barra de rolagem "invisível" */
-    margin-bottom: -20px; /* Esconde a barra de rolagem */
-  }
-
-  .custom-collection-grid__scroll-wrapper::-webkit-scrollbar {
-    display: none; /* Safari e Chrome */
-  }
-
-  .custom-collection-grid__list {
-    display: inline-flex; /* Para que os itens fiquem em linha e o wrapper possa rolar */
-    list-style: none;
-    margin: 0;
-    padding: 0 2px; /* Pequeno padding para evitar corte de bordas */
-    gap: {{ gap_size }}px;
-  }
-
-  .custom-collection-grid__item {
-    background: transparent;
-    flex: 0 0 {{ item_width_desktop }}; /* Não encolher, não crescer, base no tamanho definido */
-    width: {{ item_width_desktop }};
-    position: relative;
-    border-radius: {{ border_radius }}px;
-    overflow: hidden; /* Garante que a imagem respeite o border-radius */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .custom-collection-grid__item:hover {
-    {% if section.settings.enable_hover_effect %}
-      transform: translateY(-5px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    {% endif %}
-  }
-
-  .custom-collection-grid__item-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    height: 100%;
-  }
-
-  .custom-collection-grid__image-wrapper {
-    position: relative;
-    padding: 5px;
-    padding-top: {{ section.settings.image_ratio | times: 100 }}%; /* Aspect ratio para a imagem */
-    background-color: transparent; /* Cor de fundo enquanto a imagem carrega ou se não houver imagem */
-    border-radius: inherit; /* Herda o border-radius do item */
-  }
-
-  .custom-collection-grid__image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
-    border-radius: inherit; /* Herda o border-radius do item */
-  }
-
-  .custom-collection-grid__item-title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: none; /* Fundo para o título */
-    color: #fff;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    padding: 10px;
-    text-align: center;
-    font-size: 16px;
-    border-bottom-left-radius: {{ border_radius }}px; /* Garante que o fundo respeite o raio */
-    border-bottom-right-radius: {{ border_radius }}px;
-    opacity: {% if section.settings.show_title_overlay %}1{% else %}0{% endif %};
-    transition: opacity 0.3s ease;
-  }
-
-  .custom-collection-grid__item:hover .custom-collection-grid__item-title {
-      opacity: 1;
-  }
-  
-  {% if section.settings.show_title_always %}
-  .custom-collection-grid__item-title {
-    opacity: 1;
-    position: static; /* Se for sempre visível, não precisa ser absoluto */
-    background: transparent;
-    color: {{ section.settings.text_color_static_title.hex | default: '#333333' }}; /* Cor do texto, default se não configurado */
-    padding: 10px 5px;
-    text-align: center;
-    font-size: 14px;
-    border-radius: 0; /* Não precisa de raio individual se for estático */
-  }
-  .custom-collection-grid__item-link { /* Ajusta para o título ficar abaixo */
-    display: flex;
-    flex-direction: column;
-  }
-  .custom-collection-grid__image-wrapper { /* Ajusta para o título ficar abaixo */
-    flex-grow: 1;
-  }
-  {% endif %}
-
-
-  /* Responsividade */
-  @media screen and (max-width: 1024px) {
-    .custom-collection-grid__item {
-      flex-basis: {{ item_width_tablet }};
-      width: {{ item_width_tablet }};
-    }
-  }
-
-  @media screen and (max-width: 749px) { /* Ponto de quebra comum da Shopify para mobile */
-    .custom-collection-grid__item {
-      flex-basis: {{ item_width_mobile }};
-      width: {{ item_width_mobile }};
-    }
-    .custom-collection-grid__title {
-      font-size: 20px;
-    }
-    .custom-collection-grid__item-title {
-      font-size: {% if section.settings.show_title_always %}13px{% else %}14px{% endif %};
-    }
-  }
-</style>
-
-<div class="custom-collection-grid-section">
+<div class="custom-collection-grid-section" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
   <div class="page-width">
     {% if section.settings.title != blank %}
-      <div class="custom-collection-grid__header">
+      <div class="custom-collection-grid__header" style="text-align: {{ section.settings.heading_alignment }};">
         <h2 class="custom-collection-grid__title">{{ section.settings.title | escape }}</h2>
       </div>
     {% endif %}
 
     <div class="custom-collection-grid__scroll-wrapper">
-      <ul class="custom-collection-grid__list">
+      <ul class="custom-collection-grid__list" style="gap: {{ section.settings.gap_size }}px;">
         {%- for block in section.blocks -%}
-          <li class="custom-collection-grid__item" {{ block.shopify_attributes }}>
-            {%- liquid
-              assign collection = block.settings.collection
-              assign image = block.settings.image
-              assign title_override = block.settings.title_override
+          {%- assign collection = block.settings.collection -%}
+          {%- assign image = block.settings.image | default: collection.image | default: collection.products.first.featured_image -%}
+          {%- assign title_override = block.settings.title_override -%}
+          {%- assign item_title = title_override | default: collection.title | default: 'Coleção' -%}
+          {%- assign collection_url = collection.url | default: '#' -%}
 
-              assign item_title = collection.title
-              if title_override != blank
-                assign item_title = title_override
-              elsif collection.title == blank
-                assign item_title = 'Collection' | t: 'sections.featured_collection.collection_title_fallback'
-              endif
-
-              assign collection_url = collection.url | default: '#'
-            -%}
+          <li class="custom-collection-grid__item" {{ block.shopify_attributes }} style="border-radius: {{ section.settings.border_radius }}px;">
             <a href="{{ collection_url }}" class="custom-collection-grid__item-link">
-              <div class="custom-collection-grid__image-wrapper">
-                {%- if image != blank -%}
+              <div class="custom-collection-grid__image-wrapper" style="aspect-ratio: {{ section.settings.image_ratio }};">
+                {% if image %}
                   {{ image | image_url: width: 600 | image_tag:
                     loading: 'lazy',
                     class: 'custom-collection-grid__image',
                     widths: '150, 200, 300, 400, 500, 600'
                   }}
-                {%- else -%}
-                  {%- if collection.image != blank -%}
-                     {{ collection.image | image_url: width: 600 | image_tag:
-                        loading: 'lazy',
-                        class: 'custom-collection-grid__image',
-                        widths: '150, 200, 300, 400, 500, 600'
-                      }}
-                  {%- elsif collection.products.first.featured_image != blank -%}
-                    {{ collection.products.first.featured_image | image_url: width: 600 | image_tag:
-                        loading: 'lazy',
-                        class: 'custom-collection-grid__image',
-                        widths: '150, 200, 300, 400, 500, 600'
-                      }}
-                  {%- else -%}
-                    {%- capture current -%}{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
-                    {{ 'collection-' | append: current | placeholder_svg_tag: 'custom-collection-grid__image placeholder' }}
-                  {%- endif -%}
-                {%- endif -%}
+                {% else %}
+                  {{ 'collection-apparel' | placeholder_svg_tag: 'custom-collection-grid__image placeholder' }}
+                {% endif %}
+
                 {% unless section.settings.show_title_always %}
-                  <div class="custom-collection-grid__item-title">
-                    {{ item_title }}
-                  </div>
+                  {% if section.settings.show_title_overlay %}
+                    <div class="custom-collection-grid__item-title overlay">
+                      {{ item_title }}
+                    </div>
+                  {% endif %}
                 {% endunless %}
               </div>
+
               {% if section.settings.show_title_always %}
-                <div class="custom-collection-grid__item-title">
+                <div class="custom-collection-grid__item-title static" style="color: {{ section.settings.text_color_static_title }}">
                   {{ item_title }}
                 </div>
               {% endif %}
             </a>
           </li>
         {%- endfor -%}
-
-        {% if section.blocks.size == 0 %}
-          {%- for i in (1..4) -%}
-            <li class="custom-collection-grid__item">
-              <a href="#" class="custom-collection-grid__item-link">
-                <div class="custom-collection-grid__image-wrapper">
-                  {%- capture current -%}{% cycle 1, 2, 3, 4 %}{%- endcapture -%}
-                  {{ 'collection-' | append: current | placeholder_svg_tag: 'custom-collection-grid__image placeholder' }}
-                  {% unless section.settings.show_title_always %}
-                    <div class="custom-collection-grid__item-title">
-                      {{ 'onboarding.collection_title' | t }}
-                    </div>
-                  {% endunless %}
-                </div>
-                {% if section.settings.show_title_always %}
-                  <div class="custom-collection-grid__item-title">
-                    {{ 'onboarding.collection_title' | t }}
-                  </div>
-                {% endif %}
-              </a>
-            </li>
-          {%- endfor -%}
-        {% endif %}
       </ul>
     </div>
   </div>
 </div>
+
+<style>
+  .custom-collection-grid__title {
+    font-size: 24px;
+    color: #F2F2F2;
+    margin-bottom: 24px;
+  }
+
+  .custom-collection-grid__scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -10px;
+    padding: 0 10px;
+  }
+
+  .custom-collection-grid__scroll-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .custom-collection-grid__list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    scroll-snap-type: x mandatory;
+  }
+
+  .custom-collection-grid__item {
+    flex: 0 0 auto;
+    width: auto;
+    scroll-snap-align: start;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent;
+  }
+
+  .custom-collection-grid__item:hover {
+    {% if section.settings.enable_hover_effect %}
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    {% endif %}
+  }
+
+  .custom-collection-grid__item-link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .custom-collection-grid__image-wrapper {
+    width: 100%;
+    position: relative;
+    background-color: #eee;
+    border-radius: inherit;
+  }
+
+  .custom-collection-grid__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    display: block;
+  }
+
+  .custom-collection-grid__item-title.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    padding: 8px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .custom-collection-grid__item-title.static {
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 4px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .custom-collection-grid__title {
+      font-size: 20px;
+    }
+
+    .custom-collection-grid__item-title.static {
+      font-size: 13px;
+    }
+  }
+</style>
 
 {% schema %}
 {
@@ -302,14 +179,16 @@
     },
     {
       "type": "select",
-      "id": "item_size",
-      "label": "Tamanho dos Itens",
+      "id": "image_ratio",
+      "label": "Proporção da Imagem",
       "options": [
-        { "value": "small", "label": "Pequeno" },
-        { "value": "medium", "label": "Médio" },
-        { "value": "large", "label": "Grande" }
+        { "value": "0.6666", "label": "Retrato (2:3)" },
+        { "value": "0.75", "label": "Retrato (3:4)" },
+        { "value": "1", "label": "Quadrado (1:1)" },
+        { "value": "1.3333", "label": "Paisagem (4:3)" },
+        { "value": "1.5", "label": "Paisagem (3:2)" }
       ],
-      "default": "medium"
+      "default": "1"
     },
     {
       "type": "range",
@@ -332,20 +211,6 @@
       "default": 15
     },
     {
-      "type": "select",
-      "id": "image_ratio",
-      "label": "Proporção da Imagem",
-      "options": [
-        { "value": "0.6666", "label": "Retrato (2:3)" },
-        { "value": "0.75", "label": "Retrato (3:4)" },
-        { "value": "1", "label": "Quadrado (1:1)" },
-        { "value": "1.3333", "label": "Paisagem (4:3)" },
-        { "value": "1.5", "label": "Paisagem (3:2)" }
-      ],
-      "default": "1",
-      "info": "Usado para manter a consistência da altura das imagens."
-    },
-    {
       "type": "header",
       "content": "Título do Item"
     },
@@ -353,8 +218,7 @@
       "type": "checkbox",
       "id": "show_title_overlay",
       "label": "Mostrar título sobre a imagem (ao passar o mouse)",
-      "default": true,
-      "info": "Se 'Mostrar título sempre' estiver ativo, esta opção é ignorada."
+      "default": true
     },
     {
       "type": "checkbox",
@@ -366,8 +230,7 @@
       "type": "color",
       "id": "text_color_static_title",
       "label": "Cor do Texto (título sempre visível)",
-      "default": "#333333",
-      "info": "Aplicável apenas se 'Mostrar título sempre' estiver ativo."
+      "default": "#333333"
     },
     {
       "type": "header",
@@ -418,14 +281,12 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Imagem Personalizada",
-          "info": "Opcional. Se não definida, usará a imagem da coleção ou do primeiro produto."
+          "label": "Imagem Personalizada"
         },
         {
           "type": "text",
           "id": "title_override",
-          "label": "Título Personalizado",
-          "info": "Opcional. Se não definido, usará o nome da coleção."
+          "label": "Título Personalizado"
         }
       ]
     }
