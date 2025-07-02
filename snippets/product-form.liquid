@@ -452,6 +452,41 @@
   {%- endif -%}
 </div>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const wrapper = document.getElementById("customization-fields");
+    if (!wrapper) return;
+
+    function checkPersonalization() {
+      const selectBoxes = document.querySelectorAll("select[name^='options'], input[type='radio']");
+      let found = false;
+
+      selectBoxes.forEach(el => {
+        const name = el.name?.toLowerCase();
+        const val = el.tagName === 'SELECT'
+          ? el.selectedOptions?.[0]?.text?.toLowerCase()
+          : el.value?.toLowerCase();
+
+        if (name && name.includes("personaliza") && val && val.includes("personalizar")) {
+          if (el.type === "radio" && el.checked) found = true;
+          if (el.tagName === "SELECT") found = true;
+        }
+      });
+
+      wrapper.style.display = found ? "block" : "none";
+    }
+
+    checkPersonalization();
+    document.querySelectorAll("select[name^='options'], input[type='radio']").forEach(el => {
+      el.addEventListener("change", checkPersonalization);
+    });
+
+    document.addEventListener("variant:change", () => {
+      setTimeout(checkPersonalization, 50);
+    });
+  });
+</script>
+
 {%- if template.suffix == 'quick-buy-drawer' -%}
   <div class="product-form__view-details">
     <a href="{{ product.url }}" class="link text--subdued">{{ 'product.general.view_details' | t }}</a>
