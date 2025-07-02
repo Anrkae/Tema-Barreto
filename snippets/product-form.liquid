@@ -501,3 +501,24 @@ IMPLEMENTATION NOTE: if during the iteration of the options we have found an opt
     </div>
   </popover-content>
 {%- endif -%}
+
+{% comment %}
+  Adicionando Eruda para depuração (REMOVER EM PRODUÇÃO)
+{% endcomment %}
+<script>
+  // Verifica se Eruda já foi carregado para evitar duplicação
+  if (!window.eruda) {
+    // Carrega o script do Eruda a partir de um CDN
+    var script = document.createElement('script');
+    script.src = "//cdn.jsdelivr.net/npm/eruda";
+    document.body.appendChild(script);
+
+    // Inicializa o Eruda quando o script for carregado
+    script.onload = function () {
+      eruda.init();
+      // Opcional: Adicionar um botão flutuante para mostrar/esconder
+      // eruda.get('console').config.set('displaySize', 50); // Exemplo: define o tamanho inicial do console
+    };
+  }
+</script>
+    
