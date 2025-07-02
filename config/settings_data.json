@@ -210,9 +210,9 @@
         "type": "mini-cart",
         "settings": {
           "show_order_note": true,
-          "show_checkout_button": true,
+          "show_checkout_button": false,
           "empty_button_link": "shopify://collections/all",
-          "show_recommendations": true,
+          "show_recommendations": false,
           "recommendations_title": "You may also like"
         }
       },
