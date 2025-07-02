@@ -501,3 +501,34 @@ IMPLEMENTATION NOTE: if during the iteration of the options we have found an opt
     </div>
   </popover-content>
 {%- endif -%}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const wrapper = document.getElementById("customization-fields");
+    if (!wrapper) return;
+
+    function toggleVisibility() {
+      const selects = document.querySelectorAll('select[name*="option"], input[type="radio"]');
+      let show = false;
+
+      selects.forEach(el => {
+        const name = el.name?.toLowerCase();
+        const value = el.value?.toLowerCase();
+
+        if (name && name.includes("personaliza") && value && value.includes("personalizar")) {
+          if ((el.tagName === 'SELECT' && el.value.toLowerCase().includes("personalizar")) ||
+              (el.type === "radio" && el.checked)) {
+            show = true;
+          }
+        }
+      });
+
+      wrapper.style.display = show ? "block" : "none";
+    }
+
+    toggleVisibility();
+    document.querySelectorAll('select, input[type="radio"]').forEach(el => {
+      el.addEventListener("change", toggleVisibility);
+    });
+  });
+</script>
