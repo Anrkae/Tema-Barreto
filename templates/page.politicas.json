@@ -11,10 +11,67 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "settings": {}
+      "settings": {
+        "show_title": true,
+        "page_width": "medium"
+      }
+    },
+    "faq_kjjCmP": {
+      "type": "faq",
+      "blocks": {
+        "category_9LJtgc": {
+          "type": "category",
+          "settings": {
+            "title": "Shipping"
+          }
+        },
+        "question_TymQ3n": {
+          "type": "question",
+          "settings": {
+            "title": "Do you ship overseas?",
+            "answer": "<p>Yes, we ship all over the world. Shipping costs will apply, and will be added at checkout. We run discounts and promotions all year, so stay tuned for exclusive deals.</p>"
+          }
+        },
+        "question_dc3cAK": {
+          "type": "question",
+          "settings": {
+            "title": "How long will it take to get my order?",
+            "answer": "<p>It depends on where you are. Orders processed here will take 5-7 business days to arrive. Overseas deliveries can take anywhere from 7-16 days. Delivery details will be provided in your confirmation email.</p>"
+          }
+        },
+        "category_dcf9kx": {
+          "type": "category",
+          "settings": {
+            "title": "Other"
+          }
+        },
+        "question_DJK9qD": {
+          "type": "question",
+          "settings": {
+            "title": "Any question?",
+            "answer": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_9LJtgc",
+        "question_TymQ3n",
+        "question_dc3cAK",
+        "category_dcf9kx",
+        "question_DJK9qD"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "show_navigation": false,
+        "title": "Troca e devolução",
+        "content": "<p>Nossa política de trocas visa garantir total segurança e satisfação com os produtos adquiridos em nossa loja. Todos os nossos produtos possuem garantia contra defeitos de fabricação, e também realizamos trocas de itens enviados incorretamente, ou seja, diferentes do que foi encomendado pelo cliente.<br/><br/><br/><strong>Produtos importados e devoluções:</strong> Nossos produtos são importados, por isso não realizamos devoluções. Caso o cliente deseje devolver o produto, o custo do frete ficará integralmente por conta do cliente e será necessário cumprir o prazo de 7 dias corridos após o recebimento para a solicitação de devolução.<br/><br/><br/><strong>Se você receber um produto com defeito de fabricação ou diferente do que foi encomendado, siga os passos abaixo para solicitar a troca:</strong></p><ul><li>Entre em contato conosco pelo WhatsApp (85) 99853-7355, informando o problema no prazo máximo de 3 dias após o recebimento do produto.</li><li>Envie fotos ou vídeos claros do defeito ou do item errado.<br/><br/></li></ul><p><strong>Atenção: Não realizamos trocas ou ressarcimentos após esse prazo.<br/><br/></strong></p><p><strong>Análise do caso: </strong>Nossa equipe analisará sua solicitação em até 3 dias úteis. Constatado o problema, entraremos em contato pelo WhatsApp, e você poderá escolher uma das seguintes opções:</p><ul><li>Receber o reembolso do valor pago;</li><li>Receber um novo produto idêntico ao encomendado;</li><li>Receber um produto de valor semelhante.</li></ul><p><strong><br/>Prazo para Resolução:</strong> O prazo máximo para resolvermos sua solicitação, seja com a troca do produto ou com o reembolso, é de até 7 dias corridos, contados a partir da data de confirmação do defeito ou erro no envio.<br/><br/></p><p><strong>Condições Especiais:</strong></p><ul><li><strong>Produtos personalizados (com nome e número): </strong>Não realizamos trocas de produtos personalizados.</li><li><strong>Tamanho inadequado:</strong> Não realizamos trocas de produtos que não sirvam no cliente devido à escolha errada de tamanho. Disponibilizamos as medidas aproximadas em centímetros para que a escolha do tamanho seja feita com precisão. Em caso de dúvidas, nossa equipe está à disposição para ajudar.</li></ul><p><strong>Direito do Consumidor:</strong> De acordo com o Código de Defesa do Consumidor (Artigo 18), não existe obrigação legal do lojista de realizar trocas por arrependimento quanto à cor, tamanho, modelo ou qualquer outra escolha pessoal. O direito assegurado ao consumidor é para trocas apenas em casos de produtos com defeito.<br/></p>",
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "faq_kjjCmP"
   ]
 }
