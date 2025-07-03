@@ -11,10 +11,25 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "settings": {}
+      "settings": {
+        "show_title": true,
+        "page_width": "medium"
+      }
+    },
+    "faq_3z3pd4": {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": {
+        "show_navigation": false,
+        "title": "Política de Entrega",
+        "content": "<p><strong>1. Frete Internacional</strong></p><p>Nesta opção, <strong>o cliente é responsável pelo pagamento das taxas alfandegárias assim que o pedido chegar ao Brasil</strong>. É importante estar ciente de que custos adicionais podem ser aplicados pelas autoridades aduaneiras locais.</p><p>⚠️ <strong>Atenção:</strong><br/><strong>Não nos responsabilizamos por atrasos ou devoluções causados pelo não pagamento ou pelo não acompanhamento da taxa de importação dentro do prazo estipulado pela Receita Federal</strong>. O cliente deve acompanhar o rastreamento e realizar o pagamento das taxas, quando necessário, nesta modalidade de frete.</p><h3>Frete Grátis</h3><p>O frete é <strong>totalmente gratuito</strong>.</p><h3>Código de Rastreamento</h3><p>Assim que seu pedido for despachado, você receberá o código de rastreamento por e-mail. Todos os pedidos podem ser monitorados <strong>em tempo real</strong>.</p><p> </p><p><strong>Rastreamento dos Pedidos:</strong><br/>Você pode acompanhar seu pedido por meio dos seguintes links:</p><ul><li><a href=\"https://global.cainiao.com/\">Global Cainiao</a></li><li><a href=\"https://rastreamento.correios.com.br/app/index.php\">Correios</a><br/><br/></li></ul><p><strong>Prazo para envio do código de rastreamento:</strong><br/>Os códigos de rastreamento geralmente levam de <strong>7 a 10 dias úteis </strong>para serem repassados do nosso centro de distribuição na China para você.</p><p><br/><strong>Importante:</strong> Em alguns casos, esse prazo pode ser <strong>levemente estendido devido a processos logísticos internacionais</strong>, especialmente em períodos de alta demanda.<br/><br/></p><p><strong>Recomendações Importantes:</strong><br/>Para evitar possíveis problemas de envio e alfândega, recomendamos que você realize pedidos com, no máximo, 8 unidades por CPF e endereço. Caso precise de um volume maior, sugerimos dividir os pedidos em pacotes com até 8 unidades. Isso pode minimizar atrasos e facilitar o processo de envio.<br/><br/></p><p><strong>Não nos responsabilizamos pelos seguintes casos:</strong></p><ul><li>Endereço de entrega preenchido de forma incompleta ou incorreta, impedindo a entrega.</li><li>Retenção do pedido na alfândega brasileira por motivos fora de nosso controle.</li><li>Não retirada do pedido na agência dos Correios, resultando na devolução do item.</li></ul><p> </p><p><strong>Prazos de Entrega:</strong><br/>Os prazos variam conforme a transportadora e a sua localização. Alguns clientes recebem seus produtos em até 15 dias úteis, enquanto outros podem levar de 20 a 30 dias úteis para a entrega.</p><p> </p><p><strong>Atenção:</strong><br/>Não nos responsabilizamos por eventuais <strong>atrasos causados por fatores externos</strong>, como <strong>greves dos Correios, greves de fiscais da Receita Federal, retenções fiscais</strong>, entre outros imprevistos que estejam fora do nosso controle.</p>",
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "faq_3z3pd4"
   ]
 }
