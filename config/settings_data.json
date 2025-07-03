@@ -129,6 +129,9 @@
         "block_order": [
           "mega_menu_p3Y3zW"
         ],
+        "custom_css": [
+          ".container {padding: 0 20px !important;}"
+        ],
         "settings": {
           "enable_sticky_header": true,
           "logo": "shopify://shop_images/1000211682.png",
