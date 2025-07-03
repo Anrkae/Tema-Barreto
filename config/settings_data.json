@@ -188,7 +188,7 @@
           "social_media"
         ],
         "settings": {
-          "show_payment_icons": true,
+          "show_payment_icons": false,
           "show_country_selector": true,
           "show_locale_selector": true,
           "show_cookie_bar": false,
