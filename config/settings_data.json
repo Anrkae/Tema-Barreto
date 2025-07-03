@@ -720,7 +720,8 @@
     "custom_css": [
       ":root {--cor-gradiente-radial-1: rgba(114, 9, 183, 0.15); --cor-gradiente-radial-2: rgba(114, 9, 183, 0.1);}",
       "body {background: radial-gradient( circle at top left, var(--cor-gradiente-radial-1), transparent 50% ), radial-gradient( circle at bottom right, var(--cor-gradiente-radial-2), transparent 50% ), #141414 !important; background-repeat: no-repeat !important; background-attachment: fixed !important; -webkit-user-select: none; -ms-user-select: none; user-select: none;}",
-      ".header {background-color: rgba(0, 0, 0, 0.8) !important; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important; backdrop-filter: blur(10px) !important;}"
+      ".header {background-color: rgba(0, 0, 0, 0.8) !important; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important; backdrop-filter: blur(10px) !important;}",
+      ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
     ]
   }
 }
