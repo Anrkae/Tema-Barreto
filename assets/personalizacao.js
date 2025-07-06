@@ -2,13 +2,12 @@ function iniciarObservadorComboBox() {
   const customizationFields = document.getElementById("customization-fields");
 
   if (!customizationFields) {
-    console.log('[Personalização] Campos não encontrados. Tentando novamente...');
-    return setTimeout(iniciarObservadorComboBox, 200);
+    console.log('[Personalização] Campos de personalização não existem neste produto. Encerrando.');
+    return; // Produto sem campos de personalização: não faz nada.
   }
 
-  // Busca o bloco de Personalização especificamente
+  // Busca os blocos de opções do produto
   const blocos = document.querySelectorAll('.product-form__option-selector');
-
   let valorSelecionado = null;
 
   blocos.forEach(bloco => {
@@ -18,9 +17,11 @@ function iniciarObservadorComboBox() {
     }
   });
 
+  // Se a opção “Personalizar” não existir, não faz nada
   if (!valorSelecionado) {
-    console.log('[Personalização] Campo "Personalizar" não encontrado. Tentando novamente...');
-    return setTimeout(iniciarObservadorComboBox, 200);
+    console.log('[Personalização] Produto sem opção de personalização. Encerrando.');
+    customizationFields.style.display = 'none'; // Garante que fique oculto, caso esteja no HTML
+    return;
   }
 
   function verificarPersonalizacao(texto) {
@@ -43,7 +44,7 @@ function iniciarObservadorComboBox() {
   // Rodar ao carregar
   verificarPersonalizacao(valorSelecionado.textContent);
 
-  // Observar mudanças no span que mostra o valor selecionado
+  // Observar mudanças no valor selecionado
   const observer = new MutationObserver(() => {
     verificarPersonalizacao(valorSelecionado.textContent);
   });
