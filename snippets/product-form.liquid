@@ -144,8 +144,10 @@
                     </div>      
                 {%- endcase -%}
               </div>
-              teste
             {%- endfor -%}
+
+          {% render 'personalizacao-camisa' %}
+          
           
             <noscript>
               <label class="input__block-label" for="product-select-{{ section.id }}-{{ product.id }}">{{ 'product.form.variant' | t }}</label>
