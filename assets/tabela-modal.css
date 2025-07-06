@@ -27,7 +27,7 @@
 }
 .modal-tabela__conteudo {
   position: relative;
-  background: #2C2C2C;
+  background: #2C2C2C !important;
   padding: 1.5rem;
   max-width: 500px;
   width: 90%;
