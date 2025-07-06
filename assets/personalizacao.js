@@ -1,8 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
+function iniciarObservadorPersonalizacao() {
   const valorSelecionado = document.querySelector('.select__selected-value');
   const customizationFields = document.getElementById("customization-fields");
 
-  if (!valorSelecionado || !customizationFields) return;
+  if (!valorSelecionado || !customizationFields) {
+    // Se ainda não existe no DOM, tenta novamente em 200ms
+    return setTimeout(iniciarObservadorPersonalizacao, 200);
+  }
 
   function verificarPersonalizacao(texto) {
     const valor = texto?.toLowerCase() || '';
@@ -21,12 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
   verificarPersonalizacao(valorSelecionado.textContent);
 
   // Observar mudanças no span com o valor selecionado
-  const observer = new MutationObserver((mutations) => {
-    for (const m of mutations) {
-      if (m.type === "childList" || m.type === "characterData") {
-        verificarPersonalizacao(valorSelecionado.textContent);
-      }
-    }
+  const observer = new MutationObserver(() => {
+    verificarPersonalizacao(valorSelecionado.textContent);
   });
 
   observer.observe(valorSelecionado, {
@@ -34,4 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     characterData: true,
     subtree: true
   });
-});
+}
+
+// Inicia o processo quando o DOM estiver carregado
+document.addEventListener("DOMContentLoaded", iniciarObservadorPersonalizacao);
