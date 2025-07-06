@@ -1,16 +1,14 @@
 function iniciarObservadorComboBox(context = document) {
-  // Seletores mais genéricos para pegar os campos pelos nomes, pois IDs podem variar
   const customizationFields = context.querySelector('#customization-fields');
   const form = context.querySelector('form[action^="/cart"]');
   const nomeInput = context.querySelector('input[name="properties[Nome personalizado]"]');
   const numeroInput = context.querySelector('input[name="properties[Número personalizado]"]');
 
   if (!customizationFields) {
-    console.log('[Personalização] Campos de personalização não existem neste produto. Encerrando.');
+    console.log('[Personalização] Campos não encontrados no contexto.');
     return;
   }
 
-  // Injeta estilo uma vez (no documento global)
   if (!document.getElementById('customizacao-style')) {
     const style = document.createElement("style");
     style.id = 'customizacao-style';
@@ -54,7 +52,7 @@ function iniciarObservadorComboBox(context = document) {
   });
 
   if (!valorSelecionado) {
-    console.log('[Personalização] Produto sem opção de personalização. Encerrando.');
+    console.log('[Personalização] Produto sem opção de personalização no contexto.');
     customizationFields.style.display = 'none';
     return;
   }
@@ -69,7 +67,7 @@ function iniciarObservadorComboBox(context = document) {
 
   function verificarPersonalizacao(texto) {
     const valor = texto?.toLowerCase().trim() || '';
-    console.log('[Personalização] Valor selecionado (PERSONALIZAR):', valor);
+    console.log('[Personalização] Valor selecionado:', valor);
 
     if (valor.includes('personalizar') || valor.includes('personalizada')) {
       customizationFields.style.display = 'block';
@@ -77,7 +75,7 @@ function iniciarObservadorComboBox(context = document) {
         customizationFields.classList.add('visible');
         numeroInput?.setAttribute('required', 'required');
         console.log('[Personalização] Campos exibidos ✅');
-      }, 1000); // Delay na exibição
+      }, 1000);
     } else {
       customizationFields.classList.remove('visible');
       setTimeout(() => {
@@ -100,8 +98,6 @@ function iniciarObservadorComboBox(context = document) {
     subtree: true
   });
 
-  console.log('[Personalização] Observador iniciado!');
-
   if (form && numeroInput) {
     form.addEventListener('submit', function (e) {
       if (customizationFields.classList.contains('visible')) {
@@ -113,6 +109,8 @@ function iniciarObservadorComboBox(context = document) {
       }
     });
   }
+
+  console.log('[Personalização] Observador iniciado no contexto.');
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -122,16 +120,22 @@ document.addEventListener("DOMContentLoaded", () => {
     mutations.forEach(mutation => {
       mutation.addedNodes.forEach(node => {
         if (node.nodeType === 1 && node.tagName === "QUICK-BUY-DRAWER") {
+          console.log('[Quick View] Drawer detectado');
           const drawer = node;
-          const innerObserver = new MutationObserver(() => {
-            const customization = drawer.querySelector("#customization-fields");
-            if (customization) {
-              console.log('[Quick View] Campos detectados no drawer, iniciando observador...');
+
+          // Observa até o dropdown de personalização aparecer
+          const dropdownObserver = new MutationObserver((mutations2, obs) => {
+            const hasPersonalizarDropdown = drawer.querySelector('.product-form__option-name') &&
+              drawer.querySelector('.product-form__option-name').textContent.toLowerCase().includes('personalizar');
+
+            if (hasPersonalizarDropdown) {
+              console.log('[Quick View] Dropdown de personalização encontrado');
               iniciarObservadorComboBox(drawer);
-              innerObserver.disconnect();
+              obs.disconnect();
             }
           });
-          innerObserver.observe(drawer, { childList: true, subtree: true });
+
+          dropdownObserver.observe(drawer, { childList: true, subtree: true });
         }
       });
     });
