@@ -9,7 +9,6 @@ function iniciarObservadorComboBox() {
     return;
   }
 
-  // Injeta CSS para animação e shake
   const style = document.createElement("style");
   style.innerHTML = `
     #customization-fields {
@@ -73,14 +72,14 @@ function iniciarObservadorComboBox() {
         customizationFields.classList.add('visible');
         numeroInput?.setAttribute('required', 'required');
         console.log('[Personalização] Campos exibidos ✅');
-      }); // Delay para animar a entrada
+      });
     } else {
       customizationFields.classList.remove('visible');
       setTimeout(() => {
         customizationFields.style.display = 'none';
         limparCampos();
         console.log('[Personalização] Campos ocultos ❌');
-      }, 200); // Aguarda o fim da animação para esconder e limpar
+      }, 200);
     }
   }
 
