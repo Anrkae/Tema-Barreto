@@ -137,6 +137,8 @@
                         </select>
                       </combo-box>
 
+                      teste
+
                       <button type="button" is="toggle-button" class="select" aria-expanded="false" aria-haspopup="listbox" aria-controls="{{ option_id }}-combo-box">
                         <span id="{{ option_id }}-value" class="select__selected-value">{{ option.selected_value }}</span>
                         {%- render 'icon' with 'chevron' -%}
@@ -370,7 +372,6 @@
       ----------------------------------------------------------------------------------------------------------------
       {%- endcomment -%}
       {%- when 'buy_buttons' -%}
-      teste 
   {%- if request.page_type != 'password' -%}
     <div class="product-form__buy-buttons" {{ block.shopify_attributes }}>
       {%- form 'product', product, is: 'product-form', id: product_form_id -%}
