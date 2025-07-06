@@ -1,22 +1,25 @@
-// assets/personalizacao.js
 document.addEventListener("DOMContentLoaded", function () {
-  const selectEl = document.querySelector('form select[name="id"]');
-  const personalizationDiv = document.getElementById("personalizacao-camisa");
+  const selectVariante = document.querySelector('select[name="id"]');
+  const camposPersonalizacao = document.getElementById("personalizacao-camisa");
 
-  if (!selectEl || !personalizationDiv) return;
+  if (!selectVariante || !camposPersonalizacao) return;
 
-  function verificarPersonalizacao() {
-    const selectedText = selectEl.options[selectEl.selectedIndex].textContent.toLowerCase();
+  function exibirCamposSeForPersonalizavel() {
+    const selectedText = selectVariante.options[selectVariante.selectedIndex].textContent.toLowerCase();
 
+    // Exemplo: exibe os campos apenas se o nome da variante contiver "personalizar"
     if (selectedText.includes("personalizar")) {
-      personalizationDiv.style.display = "block";
+      camposPersonalizacao.style.display = "block";
     } else {
-      personalizationDiv.style.display = "none";
+      camposPersonalizacao.style.display = "none";
       document.getElementById("custom-name").value = "";
       document.getElementById("custom-number").value = "";
     }
   }
 
-  verificarPersonalizacao();
-  selectEl.addEventListener("change", verificarPersonalizacao);
+  // Rodar ao carregar
+  exibirCamposSeForPersonalizavel();
+
+  // Rodar sempre que a variante mudar
+  selectVariante.addEventListener("change", exibirCamposSeForPersonalizavel);
 });
