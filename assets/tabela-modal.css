@@ -1,5 +1,6 @@
 .btn-tabela {
-  width: auto-flow;
+  width: fit-content;
+  display: inline-block;
   margin-top: 1rem;
   padding: 10px 16px;
   background-color: #222;
