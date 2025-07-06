@@ -9,6 +9,7 @@ function iniciarObservadorComboBox() {
     return;
   }
 
+  // Injeta CSS para animação e shake
   const style = document.createElement("style");
   style.innerHTML = `
     #customization-fields {
@@ -72,13 +73,14 @@ function iniciarObservadorComboBox() {
         customizationFields.classList.add('visible');
         numeroInput?.setAttribute('required', 'required');
         console.log('[Personalização] Campos exibidos ✅');
-      }, 1000);
+      }, 1000); // Delay para animar a entrada
+    } else {
       customizationFields.classList.remove('visible');
       setTimeout(() => {
         customizationFields.style.display = 'none';
         limparCampos();
         console.log('[Personalização] Campos ocultos ❌');
-      }, 400);
+      }, 400); // Aguarda o fim da animação para esconder e limpar
     }
   }
 
@@ -102,7 +104,7 @@ function iniciarObservadorComboBox() {
         if (!numeroInput.value.trim()) {
           e.preventDefault();
           numeroInput.classList.add('shake');
-          setTimeout(() => numeroInput.classList.remove('shake'), 900);
+          setTimeout(() => numeroInput.classList.remove('shake'), 500);
         }
       }
     });
