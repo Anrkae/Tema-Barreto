@@ -721,6 +721,8 @@
     }
   },
   "platform_customizations": {
-    "custom_css": []
+    "custom_css": [
+      ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
+    ]
   }
 }
