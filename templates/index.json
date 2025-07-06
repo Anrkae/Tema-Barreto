@@ -97,7 +97,7 @@
       "custom_css": [
         ".product-item {padding: 12px !important; background: rgba(255, 255, 255, 0.05) !important; border-radius: 18px;}",
         ".container {background: none !important;}",
-        ".section__color-wrapper {background: rgba(0, 0, 0, 1) !important;}"
+        ".section__color-wrapper {background: rgba(0, 0, 0, 0.35) !important;}"
       ],
       "settings": {
         "subheading": "",
