@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const priceElement = document.querySelector('.price__regular, .price'); // adapta conforme seu tema
+  const priceElement = document.querySelector('.price-list');
   const customizationFields = document.getElementById("customization-fields");
   const variantSelect = document.querySelector('select[name="id"]');
 
   if (!priceElement || !customizationFields || !variantSelect) return;
 
   function toggleCustomizationFields() {
-    const selectedText = variantSelect.options[variantSelect.selectedIndex].textContent.toLowerCase();
+    const selectedOption = variantSelect.options[variantSelect.selectedIndex];
+    const selectedText = selectedOption ? selectedOption.textContent.toLowerCase() : "";
 
     if (selectedText.includes("personalizar") || selectedText.includes("personalizada")) {
       customizationFields.style.display = "block";
@@ -17,10 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Roda ao carregar
+  // Executa ao carregar
   toggleCustomizationFields();
 
-  // Observa mudanças no preço
+  // Observa mudanças no bloco de preço (gatilho confiável do Focal)
   const observer = new MutationObserver(() => {
     toggleCustomizationFields();
   });
