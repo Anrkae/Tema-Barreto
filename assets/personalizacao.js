@@ -1,32 +1,35 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const priceElement = document.querySelector('.price-list');
+  const valorSelecionado = document.querySelector('.select__selected-value');
   const customizationFields = document.getElementById("customization-fields");
-  const variantSelect = document.querySelector('select[name="id"]');
 
-  if (!priceElement || !customizationFields || !variantSelect) return;
+  if (!valorSelecionado || !customizationFields) return;
 
-  function toggleCustomizationFields() {
-    const selectedOption = variantSelect.options[variantSelect.selectedIndex];
-    const selectedText = selectedOption ? selectedOption.textContent.toLowerCase() : "";
-
-    if (selectedText.includes("personalizar") || selectedText.includes("personalizada")) {
+  function verificarPersonalizacao(texto) {
+    const valor = texto?.toLowerCase() || '';
+    if (valor.includes("personalizar") || valor.includes("personalizada")) {
       customizationFields.style.display = "block";
     } else {
       customizationFields.style.display = "none";
-      document.getElementById("custom_name").value = "";
-      document.getElementById("custom_number").value = "";
+      const nome = document.getElementById("custom_name");
+      const numero = document.getElementById("custom_number");
+      if (nome) nome.value = "";
+      if (numero) numero.value = "";
     }
   }
 
-  // Executa ao carregar
-  toggleCustomizationFields();
+  // Rodar ao carregar
+  verificarPersonalizacao(valorSelecionado.textContent);
 
-  // Observa mudanças no bloco de preço (gatilho confiável do Focal)
-  const observer = new MutationObserver(() => {
-    toggleCustomizationFields();
+  // Observar mudanças no span com o valor selecionado
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.type === "childList" || m.type === "characterData") {
+        verificarPersonalizacao(valorSelecionado.textContent);
+      }
+    }
   });
 
-  observer.observe(priceElement, {
+  observer.observe(valorSelecionado, {
     childList: true,
     characterData: true,
     subtree: true
