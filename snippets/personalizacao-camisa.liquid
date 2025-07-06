@@ -1,8 +1,17 @@
-<!-- snippets/personalizacao-camisa.liquid -->
-<div id="personalizacao-camisa" style="display: block; margin-top: 16px;">
-  <label for="custom-name">Nome na camisa:</label>
-  <input type="text" id="custom-name" name="properties[Nome na camisa]" placeholder="Ex: F. BARRETO" class="input">
+{%- assign show_customization_fields_on_load = false -%}
+        {%- if product.selected_or_first_available_variant.title contains 'Personalizar' or product.selected_or_first_available_variant.title contains 'Personalizada' -%}
+          {%- assign show_customization_fields_on_load = true -%}
+        {%- endif -%}
 
-  <label for="custom-number" style="margin-top:10px;">Número na camisa:</label>
-  <input type="text" id="custom-number" name="properties[Número na camisa]" placeholder="Ex: 10" class="input">
-</div>
+        {%- if product.options contains 'Personalizar' and show_customization_fields_on_load -%}
+          <div id="customization-fields" class="customization-fields" style="margin-bottom: 20px;">
+            <div class="product-form__line-item-property">
+              <label for="custom_name">Nome na camisa:</label>
+              <input id="custom_name" type="text" name="properties[Nome personalizado]" class="input__field">
+            </div>
+            <div class="product-form__line-item-property" style="margin-top: 1rem;">
+              <label for="custom_number">Número na camisa:</label>
+              <input id="custom_number" type="text" name="properties[Número personalizado]" class="input__field">
+            </div>
+          </div>
+        {%- endif -%}
