@@ -3,7 +3,7 @@ function iniciarObservadorComboBox() {
 
   if (!customizationFields) {
     console.log('[Personalização] Campos de personalização não existem neste produto. Encerrando.');
-    return; // Produto sem campos de personalização: não faz nada.
+    return;
   }
 
   const blocos = document.querySelectorAll('.product-form__option-selector');
