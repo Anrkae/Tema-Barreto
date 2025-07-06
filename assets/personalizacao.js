@@ -9,7 +9,6 @@ function iniciarObservadorComboBox() {
     return;
   }
 
-  // Injeta CSS para animação e shake
   const style = document.createElement("style");
   style.innerHTML = `
     #customization-fields {
