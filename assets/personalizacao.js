@@ -6,16 +6,26 @@ function iniciarObservadorComboBox() {
     return setTimeout(iniciarObservadorComboBox, 200);
   }
 
-  const valorSelecionado = document.querySelector('.select__selected-value');
+  // Busca o bloco de Personalização especificamente
+  const blocos = document.querySelectorAll('.product-form__option-selector');
+
+  let valorSelecionado = null;
+
+  blocos.forEach(bloco => {
+    const nome = bloco.querySelector('.product-form__option-name');
+    if (nome && nome.textContent.trim().toLowerCase().includes('personalizar')) {
+      valorSelecionado = bloco.querySelector('.select__selected-value');
+    }
+  });
 
   if (!valorSelecionado) {
-    console.log('[Personalização] .select__selected-value ainda não está no DOM. Repetindo...');
+    console.log('[Personalização] Campo "Personalizar" não encontrado. Tentando novamente...');
     return setTimeout(iniciarObservadorComboBox, 200);
   }
 
   function verificarPersonalizacao(texto) {
     const valor = texto?.toLowerCase().trim() || '';
-    console.log('[Personalização] Valor selecionado:', valor);
+    console.log('[Personalização] Valor selecionado (PERSONALIZAR):', valor);
 
     if (valor.includes('personalizar') || valor.includes('personalizada')) {
       customizationFields.style.display = 'block';
