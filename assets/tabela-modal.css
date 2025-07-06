@@ -1,7 +1,7 @@
 .btn-tabela {
   margin-top: 1rem;
   padding: 10px 16px;
-  background-color: #222 !important;
+  background-color: #222;
   color: #fff;
   font-size: 0.9rem;
   border: none;
@@ -27,7 +27,7 @@
 }
 .modal-tabela__conteudo {
   position: relative;
-  background: #fff;
+  background: #2C2C2C;
   padding: 1.5rem;
   max-width: 500px;
   width: 90%;
