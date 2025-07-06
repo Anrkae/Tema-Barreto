@@ -1,10 +1,42 @@
 function iniciarObservadorComboBox() {
   const customizationFields = document.getElementById("customization-fields");
+  const form = document.querySelector('form[action^="/cart"]');
+  const numeroInput = document.getElementById("custom_number");
 
   if (!customizationFields) {
     console.log('[Personalização] Campos de personalização não existem neste produto. Encerrando.');
     return;
   }
+
+  // Injeta CSS para animação e shake
+  const style = document.createElement("style");
+  style.innerHTML = `
+    #customization-fields {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
+      transition-delay: 1s;
+    }
+    #customization-fields.visible {
+      opacity: 1;
+      max-height: 200px;
+      transform: translateY(0);
+    }
+    .input__field.shake {
+      animation: shake 0.4s ease;
+      border-color: #e53935;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+      100% { transform: translateX(0); }
+    }
+  `;
+  document.head.appendChild(style);
 
   const blocos = document.querySelectorAll('.product-form__option-selector');
   let valorSelecionado = null;
@@ -18,7 +50,7 @@ function iniciarObservadorComboBox() {
 
   if (!valorSelecionado) {
     console.log('[Personalização] Produto sem opção de personalização. Encerrando.');
-    customizationFields.style.display = 'none'; // Garante que fique oculto, caso esteja no HTML
+    customizationFields.style.display = 'none';
     return;
   }
 
@@ -27,14 +59,19 @@ function iniciarObservadorComboBox() {
     console.log('[Personalização] Valor selecionado (PERSONALIZAR):', valor);
 
     if (valor.includes('personalizar') || valor.includes('personalizada')) {
+      customizationFields.classList.add('visible');
       customizationFields.style.display = 'block';
+      numeroInput?.setAttribute('required', 'required');
       console.log('[Personalização] Campos exibidos ✅');
     } else {
-      customizationFields.style.display = 'none';
+      customizationFields.classList.remove('visible');
+      setTimeout(() => customizationFields.style.display = 'none', 400); // espera animação
       const nome = document.getElementById("custom_name");
-      const numero = document.getElementById("custom_number");
       if (nome) nome.value = "";
-      if (numero) numero.value = "";
+      if (numeroInput) {
+        numeroInput.value = "";
+        numeroInput.removeAttribute('required');
+      }
       console.log('[Personalização] Campos ocultos ❌');
     }
   }
@@ -52,6 +89,19 @@ function iniciarObservadorComboBox() {
   });
 
   console.log('[Personalização] Observador iniciado!');
+
+  // Evita envio se campo número estiver vazio
+  if (form && numeroInput) {
+    form.addEventListener('submit', function (e) {
+      if (customizationFields.classList.contains('visible')) {
+        if (!numeroInput.value.trim()) {
+          e.preventDefault();
+          numeroInput.classList.add('shake');
+          setTimeout(() => numeroInput.classList.remove('shake'), 500);
+        }
+      }
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", iniciarObservadorComboBox);
