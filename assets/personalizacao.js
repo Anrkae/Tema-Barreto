@@ -72,7 +72,7 @@ function iniciarObservadorComboBox() {
         customizationFields.classList.add('visible');
         numeroInput?.setAttribute('required', 'required');
         console.log('[Personalização] Campos exibidos ✅');
-      }, 400);
+      }, 1000);
       customizationFields.classList.remove('visible');
       setTimeout(() => {
         customizationFields.style.display = 'none';
