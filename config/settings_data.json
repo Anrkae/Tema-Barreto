@@ -41,7 +41,7 @@
     "round_color_swatches": false,
     "show_vendor": false,
     "show_secondary_image": true,
-    "product_add_to_cart": true,
+    "product_add_to_cart": false,
     "show_product_rating": false,
     "discount_mode": "percentage",
     "product_color_display": "count",
