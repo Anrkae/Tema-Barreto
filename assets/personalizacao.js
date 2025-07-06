@@ -6,7 +6,6 @@ function iniciarObservadorComboBox() {
     return; // Produto sem campos de personalização: não faz nada.
   }
 
-  // Busca os blocos de opções do produto
   const blocos = document.querySelectorAll('.product-form__option-selector');
   let valorSelecionado = null;
 
@@ -17,7 +16,6 @@ function iniciarObservadorComboBox() {
     }
   });
 
-  // Se a opção “Personalizar” não existir, não faz nada
   if (!valorSelecionado) {
     console.log('[Personalização] Produto sem opção de personalização. Encerrando.');
     customizationFields.style.display = 'none'; // Garante que fique oculto, caso esteja no HTML
@@ -41,10 +39,8 @@ function iniciarObservadorComboBox() {
     }
   }
 
-  // Rodar ao carregar
   verificarPersonalizacao(valorSelecionado.textContent);
 
-  // Observar mudanças no valor selecionado
   const observer = new MutationObserver(() => {
     verificarPersonalizacao(valorSelecionado.textContent);
   });
