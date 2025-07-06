@@ -24,6 +24,8 @@
           {%- assign size_chart_page = block.settings.size_chart_page -%}
           {%- assign found_size_option = false -%}
 
+          <h2> Teste </h2>
+
           <product-variants handle="{{ product.handle }}" form-id="{{ product_form_id }}" {% if update_url %}update-url{% endif %} {% if block.settings.hide_sold_out_variants %}hide-sold-out-variants{% endif %} class="product-form__variants" {{ block.shopify_attributes }}>
             {%- for option in product.options_with_values -%}
               {%- assign option_downcase = option.name | downcase -%}
