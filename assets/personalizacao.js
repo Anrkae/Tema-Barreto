@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const variantSelect = document.querySelector('select[name="id"]');
+  const priceElement = document.querySelector('.price__regular, .price'); // adapta conforme seu tema
   const customizationFields = document.getElementById("customization-fields");
+  const variantSelect = document.querySelector('select[name="id"]');
 
-  if (!variantSelect || !customizationFields) return;
+  if (!priceElement || !customizationFields || !variantSelect) return;
 
-  // Função que exibe ou oculta os campos
   function toggleCustomizationFields() {
     const selectedText = variantSelect.options[variantSelect.selectedIndex].textContent.toLowerCase();
+
     if (selectedText.includes("personalizar") || selectedText.includes("personalizada")) {
       customizationFields.style.display = "block";
     } else {
@@ -16,18 +17,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Observa mudanças no select para garantir que qualquer update seja capturado
-  const observer = new MutationObserver(toggleCustomizationFields);
+  // Roda ao carregar
+  toggleCustomizationFields();
 
-  observer.observe(variantSelect, {
-    childList: true,
-    subtree: true,
-    characterData: true,
+  // Observa mudanças no preço
+  const observer = new MutationObserver(() => {
+    toggleCustomizationFields();
   });
 
-  // Garante que funcione se for trocado manualmente também
-  variantSelect.addEventListener("change", toggleCustomizationFields);
-
-  // Verifica ao carregar
-  toggleCustomizationFields();
+  observer.observe(priceElement, {
+    childList: true,
+    characterData: true,
+    subtree: true
+  });
 });
