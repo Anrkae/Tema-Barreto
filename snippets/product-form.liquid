@@ -492,7 +492,7 @@ IMPLEMENTATION NOTE: if during the iteration of the options we have found an opt
   </popover-content>
 {%- endif -%}
 
-{{ 'personalizacao.js' | asset_url | script_tag }}
+<script src="{{ 'personalizacao.js' | asset_url }}" defer></script>
 
 <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 <script>
