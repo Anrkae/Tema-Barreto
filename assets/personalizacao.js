@@ -1,48 +1,44 @@
-function iniciarObservadorComboBox(context = document) {
-  const customizationFields = context.getElementById("customization-fields");
-  const form = context.querySelector('form[action^="/cart"]');
-  const nomeInput = context.getElementById("custom_name");
-  const numeroInput = context.getElementById("custom_number");
+function iniciarObservadorComboBox() {
+  const customizationFields = document.getElementById("customization-fields");
+  const form = document.querySelector('form[action^="/cart"]');
+  const nomeInput = document.getElementById("custom_name");
+  const numeroInput = document.getElementById("custom_number");
 
   if (!customizationFields) {
     console.log('[Personalização] Campos de personalização não existem neste produto. Encerrando.');
     return;
   }
 
-  // Só injeta o estilo uma vez (no contexto global)
-  if (!document.getElementById('customizacao-style')) {
-    const style = document.createElement("style");
-    style.id = 'customizacao-style';
-    style.innerHTML = `
-      #customization-fields {
-        opacity: 0;
-        max-height: 0;
-        overflow: hidden;
-        transform: translateY(-10px);
-        transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
-        transition-delay: 1s;
-      }
-      #customization-fields.visible {
-        opacity: 1;
-        max-height: 200px;
-        transform: translateY(0);
-      }
-      .input__field.shake {
-        animation: shake 0.4s ease;
-        border-color: #e53935;
-      }
-      @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        50% { transform: translateX(5px); }
-        75% { transform: translateX(-3px); }
-        100% { transform: translateX(0); }
-      }
-    `;
-    document.head.appendChild(style);
-  }
+  const style = document.createElement("style");
+  style.innerHTML = `
+    #customization-fields {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
+      transition-delay: 1s;
+    }
+    #customization-fields.visible {
+      opacity: 1;
+      max-height: 200px;
+      transform: translateY(0);
+    }
+    .input__field.shake {
+      animation: shake 0.4s ease;
+      border-color: #e53935;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+      100% { transform: translateX(0); }
+    }
+  `;
+  document.head.appendChild(style);
 
-  const blocos = context.querySelectorAll('.product-form__option-selector');
+  const blocos = document.querySelectorAll('.product-form__option-selector');
   let valorSelecionado = null;
 
   blocos.forEach(bloco => {
@@ -76,7 +72,7 @@ function iniciarObservadorComboBox(context = document) {
         customizationFields.classList.add('visible');
         numeroInput?.setAttribute('required', 'required');
         console.log('[Personalização] Campos exibidos ✅');
-      }, 1000); // Delay na exibição
+      });
     } else {
       customizationFields.classList.remove('visible');
       setTimeout(() => {
@@ -114,26 +110,4 @@ function iniciarObservadorComboBox(context = document) {
   }
 }
 
-// Ativa na página normal
-document.addEventListener("DOMContentLoaded", () => {
-  iniciarObservadorComboBox();
-
-  // Ativa para "olhada rápida"
-  const observerQuickView = new MutationObserver((mutations) => {
-    mutations.forEach(mutation => {
-      mutation.addedNodes.forEach(node => {
-        if (
-          node.nodeType === 1 &&
-          node.matches('[id^="product-template"][id$="-popover"]')
-        ) {
-          console.log('[Quick View] Modal detectado:', node);
-          setTimeout(() => {
-            iniciarObservadorComboBox(node);
-          }, 300);
-        }
-      });
-    });
-  });
-
-  observerQuickView.observe(document.body, { childList: true, subtree: true });
-});
+document.addEventListener("DOMContentLoaded", iniciarObservadorComboBox);
