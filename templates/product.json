@@ -12,18 +12,19 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {}
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
             "hide_sold_out_variants": false,
-            "selector_mode": "dropdown",
+            "selector_mode": "block",
             "color_mode": "color",
             "size_chart_page": ""
           }
-        },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -37,8 +38,8 @@
         }
       },
       "block_order": [
-        "variant_picker",
         "quantity_selector",
+        "variant_picker",
         "buy_buttons"
       ],
       "custom_css": [
