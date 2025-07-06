@@ -263,7 +263,11 @@
       {%- endif -%}
     </div>
 
-    testa
+    <div class="product-item__cta-wrapper">
+  <a href="{{ product.url }}" class="product-item__cta button button--primary">
+    Comprar
+  </a>
+</div>
 
     {%- if product.available and reduced_content or show_cta -%}
       <div class="product-item__cta-wrapper">
