@@ -95,7 +95,9 @@
         "collection-1"
       ],
       "custom_css": [
-        ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
+        ".product-item {padding: 12px !important; background: rgba(0, 0, 0, 0.25) !important; border-radius: 18px;}",
+        ".container {background: none !important;}",
+        ".section__color-wrapper {background: none !important;}"
       ],
       "settings": {
         "subheading": "",
