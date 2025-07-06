@@ -16,6 +16,32 @@
 
       {%- comment -%}
       ----------------------------------------------------------------------------------------------------------------
+      QUANTITY SELECTOR
+      ----------------------------------------------------------------------------------------------------------------
+      {%- endcomment -%}
+      {%- when 'quantity_selector' -%}
+        {%- if request.page_type != 'password' and product.available -%}
+          <div class="product-form__quantity" {{ block.shopify_attributes }}>
+            <span class="product-form__quantity-label">{{ 'product.form.quantity' | t }}:</span>
+
+            <quantity-selector class="quantity-selector">
+              <button type="button" class="quantity-selector__button">
+                <span class="visually-hidden">{{ 'cart.general.decrease_quantity' | t }}</span>
+                {%- render 'icon' with 'minus-big' -%}
+              </button>
+
+              <input type="text" form="{{ product_form_id }}" is="input-number" class="quantity-selector__input" inputmode="numeric" name="quantity" autocomplete="off" min="1" value="1" size="2" aria-label="{{ 'product.form.quantity' | t | escape }}">
+
+              <button type="button" class="quantity-selector__button">
+                <span class="visually-hidden">{{ 'cart.general.increase_quantity' | t }}</span>
+                {%- render 'icon' with 'plus-big' -%}
+              </button>
+            </quantity-selector>
+          </div>
+        {%- endif -%}
+      
+      {%- comment -%}
+      ----------------------------------------------------------------------------------------------------------------
       VARIANT PICKER BLOCK TYPE
       ----------------------------------------------------------------------------------------------------------------
       {%- endcomment -%}
@@ -255,32 +281,6 @@
         {% if block.settings.liquid != blank %}
           <div class="product-form__custom-liquid" {{ block.shopify_attributes }}>
             {{- block.settings.liquid -}}
-          </div>
-        {%- endif -%}
-
-      {%- comment -%}
-      ----------------------------------------------------------------------------------------------------------------
-      QUANTITY SELECTOR
-      ----------------------------------------------------------------------------------------------------------------
-      {%- endcomment -%}
-      {%- when 'quantity_selector' -%}
-        {%- if request.page_type != 'password' and product.available -%}
-          <div class="product-form__quantity" {{ block.shopify_attributes }}>
-            <span class="product-form__quantity-label">{{ 'product.form.quantity' | t }}:</span>
-
-            <quantity-selector class="quantity-selector">
-              <button type="button" class="quantity-selector__button">
-                <span class="visually-hidden">{{ 'cart.general.decrease_quantity' | t }}</span>
-                {%- render 'icon' with 'minus-big' -%}
-              </button>
-
-              <input type="text" form="{{ product_form_id }}" is="input-number" class="quantity-selector__input" inputmode="numeric" name="quantity" autocomplete="off" min="1" value="1" size="2" aria-label="{{ 'product.form.quantity' | t | escape }}">
-
-              <button type="button" class="quantity-selector__button">
-                <span class="visually-hidden">{{ 'cart.general.increase_quantity' | t }}</span>
-                {%- render 'icon' with 'plus-big' -%}
-              </button>
-            </quantity-selector>
           </div>
         {%- endif -%}
 
