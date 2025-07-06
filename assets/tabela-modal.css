@@ -1,5 +1,5 @@
 .btn-tabela {
-  width: 100px;
+  width: 250px;
   margin-top: 1rem;
   padding: 10px 16px;
   background-color: #222;
@@ -45,6 +45,21 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
+}
+/* Remove o azul claro de foco ao clicar */
+button:focus {
+  outline: none;
+}
+
+/* Remove o highlight ao clicar com mouse */
+button::-moz-focus-inner {
+  border: 0;
+}
+
+/* Evita seleção azul ao clicar */
+button, .modal-tabela__conteudo {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 .modal-tabela * {
   outline: none !important;
