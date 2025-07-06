@@ -1,88 +1,57 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const customizationWrapper = document.getElementById('customization-fields');
-  const customNumberInput = document.getElementById('custom_number');
-  const form = document.querySelector('form[action^="/cart"]');
-  let selectObserverStarted = false;
+function iniciarObservadorComboBox() {
+  const customizationFields = document.getElementById("customization-fields");
 
-  // Injeta o CSS no <head>
-  const estilo = document.createElement('style');
-  estilo.innerHTML = `
-    #customization-fields {
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transform: translateY(-10px);
-      transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
-      transition-delay: 1s;
-    }
-    #customization-fields.visible {
-      opacity: 1;
-      max-height: 200px;
-      transform: translateY(0);
-    }
-    .input__field.shake {
-      animation: shake 0.4s ease;
-      border-color: #e53935;
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-3px); }
-      100% { transform: translateX(0); }
-    }
-  `;
-  document.head.appendChild(estilo);
-
-  const mostrarCampos = () => {
-    customizationWrapper?.classList.add('visible');
-    customNumberInput?.setAttribute('required', 'required');
-  };
-
-  const esconderCampos = () => {
-    customizationWrapper?.classList.remove('visible');
-    customNumberInput?.removeAttribute('required');
-  };
-
-  const verificarValor = () => {
-    const select = document.querySelector('select[aria-label="Personalizar"], select[aria-label="Personalização"]');
-    const valor = select?.value?.trim().toLowerCase();
-
-    if (valor === 'personalizar') {
-      mostrarCampos();
-    } else {
-      esconderCampos();
-    }
-  };
-
-  const iniciarObservador = () => {
-    if (selectObserverStarted) return;
-    selectObserverStarted = true;
-
-    const wrapper = document.querySelector('.product-form__option-selector');
-    if (!wrapper) return console.log('[Personalização] Wrapper não encontrado');
-
-    const observer = new MutationObserver(() => {
-      verificarValor();
-    });
-
-    observer.observe(wrapper, { childList: true, subtree: true });
-    verificarValor();
-    console.log('[Personalização] Observador iniciado!');
-  };
-
-  iniciarObservador();
-
-  // Validação extra no envio do formulário
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      if (customizationWrapper?.classList.contains('visible')) {
-        if (!customNumberInput.value.trim()) {
-          e.preventDefault();
-          customNumberInput.classList.add('shake');
-          setTimeout(() => customNumberInput.classList.remove('shake'), 500);
-        }
-      }
-    });
+  if (!customizationFields) {
+    console.log('[Personalização] Campos de personalização não existem neste produto. Encerrando.');
+    return;
   }
-});
+
+  const blocos = document.querySelectorAll('.product-form__option-selector');
+  let valorSelecionado = null;
+
+  blocos.forEach(bloco => {
+    const nome = bloco.querySelector('.product-form__option-name');
+    if (nome && nome.textContent.trim().toLowerCase().includes('personalizar')) {
+      valorSelecionado = bloco.querySelector('.select__selected-value');
+    }
+  });
+
+  if (!valorSelecionado) {
+    console.log('[Personalização] Produto sem opção de personalização. Encerrando.');
+    customizationFields.style.display = 'none'; // Garante que fique oculto, caso esteja no HTML
+    return;
+  }
+
+  function verificarPersonalizacao(texto) {
+    const valor = texto?.toLowerCase().trim() || '';
+    console.log('[Personalização] Valor selecionado (PERSONALIZAR):', valor);
+
+    if (valor.includes('personalizar') || valor.includes('personalizada')) {
+      customizationFields.style.display = 'block';
+      console.log('[Personalização] Campos exibidos ✅');
+    } else {
+      customizationFields.style.display = 'none';
+      const nome = document.getElementById("custom_name");
+      const numero = document.getElementById("custom_number");
+      if (nome) nome.value = "";
+      if (numero) numero.value = "";
+      console.log('[Personalização] Campos ocultos ❌');
+    }
+  }
+
+  verificarPersonalizacao(valorSelecionado.textContent);
+
+  const observer = new MutationObserver(() => {
+    verificarPersonalizacao(valorSelecionado.textContent);
+  });
+
+  observer.observe(valorSelecionado, {
+    childList: true,
+    characterData: true,
+    subtree: true
+  });
+
+  console.log('[Personalização] Observador iniciado!');
+}
+
+document.addEventListener("DOMContentLoaded", iniciarObservadorComboBox);
