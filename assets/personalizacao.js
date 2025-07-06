@@ -104,7 +104,7 @@ function iniciarObservadorComboBox() {
         if (!numeroInput.value.trim()) {
           e.preventDefault();
           numeroInput.classList.add('shake');
-          setTimeout(() => numeroInput.classList.remove('shake'), 500);
+          setTimeout(() => numeroInput.classList.remove('shake'), 900);
         }
       }
     });
