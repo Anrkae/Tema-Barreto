@@ -1,6 +1,7 @@
 function iniciarObservadorComboBox() {
   const customizationFields = document.getElementById("customization-fields");
   const form = document.querySelector('form[action^="/cart"]');
+  const nomeInput = document.getElementById("custom_name");
   const numeroInput = document.getElementById("custom_number");
 
   if (!customizationFields) {
@@ -54,25 +55,32 @@ function iniciarObservadorComboBox() {
     return;
   }
 
+  function limparCampos() {
+    if (nomeInput) nomeInput.value = "";
+    if (numeroInput) {
+      numeroInput.value = "";
+      numeroInput.removeAttribute('required');
+    }
+  }
+
   function verificarPersonalizacao(texto) {
     const valor = texto?.toLowerCase().trim() || '';
     console.log('[Personalização] Valor selecionado (PERSONALIZAR):', valor);
 
     if (valor.includes('personalizar') || valor.includes('personalizada')) {
-      customizationFields.classList.add('visible');
       customizationFields.style.display = 'block';
-      numeroInput?.setAttribute('required', 'required');
-      console.log('[Personalização] Campos exibidos ✅');
+      setTimeout(() => {
+        customizationFields.classList.add('visible');
+        numeroInput?.setAttribute('required', 'required');
+        console.log('[Personalização] Campos exibidos ✅');
+      }, 1000); // Delay para animar a entrada
     } else {
       customizationFields.classList.remove('visible');
-      setTimeout(() => customizationFields.style.display = 'none', 400); // espera animação
-      const nome = document.getElementById("custom_name");
-      if (nome) nome.value = "";
-      if (numeroInput) {
-        numeroInput.value = "";
-        numeroInput.removeAttribute('required');
-      }
-      console.log('[Personalização] Campos ocultos ❌');
+      setTimeout(() => {
+        customizationFields.style.display = 'none';
+        limparCampos();
+        console.log('[Personalização] Campos ocultos ❌');
+      }, 400); // Aguarda o fim da animação para esconder e limpar
     }
   }
 
@@ -90,7 +98,6 @@ function iniciarObservadorComboBox() {
 
   console.log('[Personalização] Observador iniciado!');
 
-  // Evita envio se campo número estiver vazio
   if (form && numeroInput) {
     form.addEventListener('submit', function (e) {
       if (customizationFields.classList.contains('visible')) {
