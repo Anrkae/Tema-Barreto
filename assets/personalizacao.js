@@ -80,7 +80,7 @@ function iniciarObservadorComboBox() {
         customizationFields.style.display = 'none';
         limparCampos();
         console.log('[Personalização] Campos ocultos ❌');
-      }, 400); // Aguarda o fim da animação para esconder e limpar
+      }, 200); // Aguarda o fim da animação para esconder e limpar
     }
   }
 
