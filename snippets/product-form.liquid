@@ -59,9 +59,7 @@
                     <button type="button" is="toggle-button" class="product-form__option-link link text--subdued hidden-tablet-and-up" aria-controls="product-{{ section.id }}-{{ product.id }}-size-chart-popover" aria-expanded="false">{{ 'product.general.size_chart' | t }}</button>
                   {%- endif -%}
                 </div>
-
-              <h2> Teste </h2>
-
+                
                 {%- case selector_type -%}
                   {%- when 'variant_image' -%}
                     <div class="variant-swatch-list">
@@ -83,6 +81,9 @@
                         {%- endfor -%}
                       {%- endfor -%}
                     </div>
+
+                <h2> Teste </h2>
+                
 
                   {%- when 'color' -%}
                     <div class="color-swatch-list">
