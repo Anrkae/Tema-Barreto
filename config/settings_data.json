@@ -289,7 +289,14 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "13987313001505098986": {
+        "type": "shopify://apps/cozy-antitheft/blocks/Cozy_Antitheft_Script_1.0.0/a34a1874-f183-4394-8a9a-1e3f3275f1a7",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Carbon": {
