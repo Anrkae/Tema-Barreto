@@ -1700,7 +1700,7 @@ p + .button-group,
 
 .section {
   display: block;
-  margin: var(--vertical-breather) 0;
+  margin: 0;
 }
 
 .section--tight {
@@ -1721,8 +1721,8 @@ p + .button-group,
 }
 
 .section__color-wrapper {
+  background: rgba(0, 0, 0, 0.3);
   display: flow-root; /* Modern clearfix */
-  background: rgb(var(--section-background, var(--background)));
 }
 
 .section__color-wrapper--boxed {
