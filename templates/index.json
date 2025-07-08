@@ -178,6 +178,9 @@
         "item-1",
         "item-2"
       ],
+      "custom_css": [
+        ".container {box-shadow: none !important;}"
+      ],
       "settings": {
         "reveal_on_scroll": true,
         "background_type": "full_width",
