@@ -1476,6 +1476,12 @@ p + .button-group,
   --container-outer-margin: 0px; /* Inside a container only the gutter remains as margin */
 }
 
+.container {
+  background: none !important;
+  padding-top: 16px !important;
+  padding-bottom: 25px !important;
+}
+
 .container--small {
   max-width: 930px;
 }
