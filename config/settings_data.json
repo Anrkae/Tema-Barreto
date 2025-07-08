@@ -723,7 +723,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-      "body {background-color: #0d0d0d; background-image: radial-gradient( circle at top left, rgba(114, 9, 183, 0.25) 0%, transparent 45% ), radial-gradient( circle at bottom right, rgba(114, 9, 183, 0.2) 0%, transparent 60% ); background-repeat: no-repeat; background-attachment: fixed; background-size: cover; -webkit-tap-highlight-color: transparent; outline: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}",
+      "body {}",
       ".container {background: none !important; padding-top: 16px !important; padding-bottom: 25px !important;}",
       ".section__color-wrapper {background: rgba(0, 0, 0, 0.25) !important;}",
       "section {margin: 0px !important;}"
