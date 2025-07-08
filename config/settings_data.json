@@ -722,11 +722,6 @@
     }
   },
   "platform_customizations": {
-    "custom_css": [
-      "body {}",
-      ".container {background: none !important; padding-top: 16px !important; padding-bottom: 25px !important;}",
-      ".section__color-wrapper {background: rgba(0, 0, 0, 0.3) !important;}",
-      "section {margin: 0px !important;}"
-    ]
+    "custom_css": []
   }
 }
