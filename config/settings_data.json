@@ -82,11 +82,23 @@
               "button_text": "",
               "button_link": ""
             }
+          },
+          "message_X8pTBc": {
+            "type": "message",
+            "settings": {
+              "text": "LEVE 3, PAGUE DUAS!!",
+              "learn_more_text": "Ao adicionar três mantos ao carrinho, um sai 100% gratuito!",
+              "title": "",
+              "content": "",
+              "button_text": "",
+              "button_link": ""
+            }
           }
         },
         "block_order": [
           "message_RxCQkV",
-          "message-1"
+          "message-1",
+          "message_X8pTBc"
         ],
         "settings": {
           "announcement_bar_position": "non_sticky",
