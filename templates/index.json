@@ -569,6 +569,7 @@
     },
     "hero_parallax_VfUpPj": {
       "type": "hero-parallax",
+      "disabled": true,
       "name": "Hero Parallax",
       "settings": {
         "background_image": "shopify://shop_images/1000229737.png",
