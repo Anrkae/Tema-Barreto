@@ -566,6 +566,17 @@
         "background": "rgba(0,0,0,0)",
         "text_color": "rgba(0,0,0,0)"
       }
+    },
+    "hero_parallax_VfUpPj": {
+      "type": "hero-parallax",
+      "name": "Hero Parallax",
+      "settings": {
+        "background_image": "shopify://shop_images/1000229737.png",
+        "title": "Pra cima!",
+        "subtitle": "Camisas exclusivas com até 20% off",
+        "button_link": "",
+        "button_text": "Ver camisas"
+      }
     }
   },
   "order": [
@@ -580,6 +591,7 @@
     "featured-product",
     "text-with-icons",
     "newsletter",
-    "collection_list_TP36Pi"
+    "collection_list_TP36Pi",
+    "hero_parallax_VfUpPj"
   ]
 }
