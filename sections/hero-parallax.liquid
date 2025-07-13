@@ -41,10 +41,12 @@
 {% endschema %}
 
 <section class="hero-parallax-section">
-  <div 
-    class="hero-parallax-bg" 
-    style="background-image: url({{ section.settings.background_image | img_url: 'master' }});">
-  </div>
+  {% if section.settings.background_image %}
+    <div 
+      class="hero-parallax-bg" 
+      style="background-image: url({{ section.settings.background_image | image_url: width: 2000 }});">
+    </div>
+  {% endif %}
 
   <div class="hero-parallax-content">
     <h1>{{ section.settings.title }}</h1>
@@ -65,6 +67,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #000; /* fallback */
 }
 
 .hero-parallax-bg {
@@ -72,12 +75,13 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 120%;
+  height: 130%;
   background-size: cover;
   background-position: center;
-  will-change: transform;
-  transform: translateY(0);
   z-index: 1;
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 
 .hero-parallax-content {
@@ -86,9 +90,9 @@
   text-align: center;
   padding: 2rem;
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: #fff;
   max-width: 90%;
 }
@@ -121,11 +125,13 @@
 </style>
 
 <script>
-  document.addEventListener("scroll", function () {
+  document.addEventListener("DOMContentLoaded", () => {
     const bg = document.querySelector('.hero-parallax-bg');
-    if (bg) {
-      const scrollY = window.scrollY;
-      bg.style.transform = `translateY(${scrollY * 0.3}px)`;
-    }
+    if (!bg) return;
+
+    window.addEventListener("scroll", () => {
+      const offset = window.scrollY;
+      bg.style.transform = `translateY(${offset * 0.3}px)`;
+    });
   });
 </script>
