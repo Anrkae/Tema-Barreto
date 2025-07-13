@@ -582,16 +582,18 @@
     },
     "hero_parallax_WnK6aq": {
       "type": "hero-parallax",
-      "disabled": true,
       "name": "Carrossel Tilt",
       "settings": {
         "img1": "shopify://shop_images/0a9edeae_06ad2a57-b9b9-4cb6-bdff-2777038f6148.jpg",
+        "bg1": "shopify://shop_images/b5775ea3_f76fe4c0-43f3-4564-a064-51a3cf5df728.jpg",
         "title1": "Camisa Seleção 1",
         "link1": "",
-        "img2": "shopify://shop_images/90c8268e_49b67fe0-0d6a-4a55-a685-87b41c9a52f0.jpg",
+        "img2": "shopify://shop_images/3848e6ee_cc194ea4-ea6f-486b-ad2f-ae91c5c555dc.jpg",
+        "bg2": "shopify://shop_images/0ead3095_a400b49f-5f09-49b2-bc96-8e9a57494d23.jpg",
         "title2": "Camisa Seleção 2",
         "link2": "",
-        "img3": "shopify://shop_images/99415643_7c59b419-6143-44cc-a296-0ec42b0903ce.jpg",
+        "img3": "shopify://shop_images/3a2842d3_7ca9b291-66a0-49c4-ac32-06fea5378a81.jpg",
+        "bg3": "shopify://shop_images/cedccb7e_38c2d2ed-658f-4c85-9f9e-705c5afe6ed1.jpg",
         "title3": "Camisa Seleção 3",
         "link3": ""
       }
