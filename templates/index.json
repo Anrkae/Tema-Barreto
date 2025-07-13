@@ -581,6 +581,7 @@
     },
     "hero_parallax_KtJVUC": {
       "type": "hero-parallax",
+      "disabled": true,
       "name": "Hero Parallax GSAP",
       "settings": {
         "background_image": "shopify://shop_images/1000229737.png",
