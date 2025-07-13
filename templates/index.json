@@ -572,23 +572,27 @@
       "disabled": true,
       "name": "Hero Parallax",
       "settings": {
-        "background_image": "shopify://shop_images/1000229737.png",
-        "title": "Pra cima!",
-        "subtitle": "Camisas exclusivas com até 20% off",
-        "button_link": "",
-        "button_text": "Ver camisas"
+        "title1": "Camisa Seleção 1",
+        "link1": "",
+        "title2": "Camisa Seleção 2",
+        "link2": "",
+        "title3": "Camisa Seleção 3",
+        "link3": ""
       }
     },
-    "hero_parallax_KtJVUC": {
+    "hero_parallax_WnK6aq": {
       "type": "hero-parallax",
-      "disabled": true,
-      "name": "Hero Parallax GSAP",
+      "name": "Carrossel Tilt",
       "settings": {
-        "background_image": "shopify://shop_images/1000229737.png",
-        "title": "Coleção 2025 chegou!",
-        "subtitle": "Camisas exclusivas com até 20% off",
-        "button_link": "",
-        "button_text": "Ver camisas"
+        "img1": "shopify://shop_images/0a9edeae_06ad2a57-b9b9-4cb6-bdff-2777038f6148.jpg",
+        "title1": "Camisa Seleção 1",
+        "link1": "",
+        "img2": "shopify://shop_images/90c8268e_49b67fe0-0d6a-4a55-a685-87b41c9a52f0.jpg",
+        "title2": "Camisa Seleção 2",
+        "link2": "",
+        "img3": "shopify://shop_images/99415643_7c59b419-6143-44cc-a296-0ec42b0903ce.jpg",
+        "title3": "Camisa Seleção 3",
+        "link3": ""
       }
     }
   },
@@ -606,6 +610,6 @@
     "newsletter",
     "collection_list_TP36Pi",
     "hero_parallax_VfUpPj",
-    "hero_parallax_KtJVUC"
+    "hero_parallax_WnK6aq"
   ]
 }
