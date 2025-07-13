@@ -567,10 +567,10 @@
         "text_color": "rgba(0,0,0,0)"
       }
     },
-    "hero_parallax_m9UKgp": {
+    "hero_parallax_tnNxcb": {
       "type": "hero-parallax",
       "blocks": {
-        "card_PkLBEx": {
+        "card_HYphAd": {
           "type": "card",
           "settings": {
             "bg_image": "shopify://shop_images/1000229737.png",
@@ -579,25 +579,33 @@
             "link": ""
           }
         },
-        "card_GG7ytx": {
+        "card_pmQpxW": {
           "type": "card",
           "settings": {
-            "bg_image": "shopify://shop_images/b5775ea3_f76fe4c0-43f3-4564-a064-51a3cf5df728.jpg",
-            "card_image": "shopify://shop_images/1000204596.png",
+            "bg_image": "shopify://shop_images/2d5073cf_91418011-e2bd-4075-97e4-47f944d7eda9.jpg",
+            "card_image": "shopify://shop_images/1000204595.png",
+            "title": "Camisa Oficial",
+            "link": ""
+          }
+        },
+        "card_KeHUpf": {
+          "type": "card",
+          "settings": {
+            "bg_image": "shopify://shop_images/8a78d76c_b9943b4f-11bf-4e1a-baea-e4ea3c3f7a4f.jpg",
+            "card_image": "shopify://shop_images/1000204598.png",
             "title": "Camisa Oficial",
             "link": ""
           }
         }
       },
       "block_order": [
-        "card_PkLBEx",
-        "card_GG7ytx"
+        "card_HYphAd",
+        "card_pmQpxW",
+        "card_KeHUpf"
       ],
-      "disabled": true,
       "name": "Carrossel Parallax",
       "settings": {
-        "section_title": "Coleção em destaque",
-        "section_height": 75
+        "section_height": 70
       }
     }
   },
@@ -614,6 +622,6 @@
     "text-with-icons",
     "newsletter",
     "collection_list_TP36Pi",
-    "hero_parallax_m9UKgp"
+    "hero_parallax_tnNxcb"
   ]
 }
