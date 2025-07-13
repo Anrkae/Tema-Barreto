@@ -1,6 +1,6 @@
 {% schema %}
 {
-  "name": "Hero Parallax",
+  "name": "Hero Parallax GSAP",
   "settings": [
     {
       "type": "image_picker",
@@ -33,14 +33,14 @@
   ],
   "presets": [
     {
-      "name": "Hero Parallax",
+      "name": "Hero Parallax GSAP",
       "category": "Custom"
     }
   ]
 }
 {% endschema %}
 
-<section class="hero-parallax-section">
+<section class="hero-parallax-wrapper" data-gsap-parallax>
   {% if section.settings.background_image %}
     <div 
       class="hero-parallax-bg" 
@@ -60,14 +60,14 @@
 </section>
 
 <style>
-.hero-parallax-section {
+.hero-parallax-wrapper {
   position: relative;
   height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000; /* fallback */
+  background: #000;
 }
 
 .hero-parallax-bg {
@@ -79,8 +79,6 @@
   background-size: cover;
   background-position: center;
   z-index: 1;
-  transform: translateY(0);
-  transition: transform 0.1s ease-out;
   will-change: transform;
 }
 
@@ -89,12 +87,13 @@
   z-index: 2;
   text-align: center;
   padding: 2rem;
-  border-radius: 1rem;
+  color: #fff;
+  max-width: 90%;
+  margin-top: 20vh;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: #fff;
-  max-width: 90%;
+  border-radius: 1rem;
 }
 
 .hero-parallax-content h1 {
@@ -125,13 +124,21 @@
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const bg = document.querySelector('.hero-parallax-bg');
-    if (!bg) return;
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
 
-    window.addEventListener("scroll", () => {
-      const offset = window.scrollY;
-      bg.style.transform = `translateY(${offset * 0.3}px)`;
+    const section = document.querySelector('[data-gsap-parallax]');
+    const bg = section.querySelector('.hero-parallax-bg');
+
+    gsap.to(bg, {
+      yPercent: 20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
     });
   });
 </script>
