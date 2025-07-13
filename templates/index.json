@@ -582,6 +582,7 @@
     },
     "hero_parallax_WnK6aq": {
       "type": "hero-parallax",
+      "disabled": true,
       "name": "Carrossel Tilt",
       "settings": {
         "img1": "shopify://shop_images/0a9edeae_06ad2a57-b9b9-4cb6-bdff-2777038f6148.jpg",
