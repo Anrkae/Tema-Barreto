@@ -128,7 +128,7 @@
 .tilt-carousel {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 90vh; /* altura levemente reduzida */
   overflow: hidden;
   background: #000;
   display: flex;
@@ -144,7 +144,6 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  filter: blur(10px) brightness(0.5);
   transition: background-image 1s ease-in-out;
   z-index: 0;
 }
@@ -167,18 +166,18 @@
 }
 
 .card {
-  flex: 0 0 85%;
-  scroll-snap-align: center;
-  background: rgba(255, 255, 255, 0.08);
+  flex: 0 0 85% !important;
+  scroll-snap-align: center !important;
+  background: rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 1.5rem;
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 2rem;
+  border-radius: 1.5rem !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  padding: 2rem !important;
   text-align: center;
   color: white;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3) !important;
+  transition: transform 0.3s ease !important;
 }
 
 .card-glass {
@@ -210,10 +209,10 @@
 }
 </style>
 
-<!-- Tilt.js para efeito 3D (inclinação responsiva) -->
+<!-- Tilt.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
 
-<!-- ScrollTrigger opcional (parallax background) -->
+<!-- GSAP + ScrollTrigger -->
 <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
@@ -247,10 +246,10 @@
 
     observeScroll();
 
-    // Parallax do fundo suave (apenas visual)
+    // Parallax mais visível no fundo
     if (window.ScrollTrigger && window.gsap) {
       gsap.to(bg, {
-        y: -50,
+        y: -120, // antes era -50
         ease: "none",
         scrollTrigger: {
           trigger: carousel,
