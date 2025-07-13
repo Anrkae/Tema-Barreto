@@ -1,123 +1,83 @@
 {% schema %}
 {
-  "name": "Carrossel Tilt",
+  "name": "Carrossel Parallax",
+  "max_blocks": 10,
   "settings": [
     {
-      "type": "header",
-      "content": "Card 1"
-    },
-    {
-      "type": "image_picker",
-      "id": "img1",
-      "label": "Imagem do Card 1 (PNG)"
-    },
-    {
-      "type": "image_picker",
-      "id": "bg1",
-      "label": "Imagem de Fundo 1"
-    },
-    {
       "type": "text",
-      "id": "title1",
-      "label": "Título Card 1",
-      "default": "Camisa Seleção 1"
+      "id": "section_title",
+      "label": "Título da seção",
+      "default": "Coleção em destaque"
     },
     {
-      "type": "url",
-      "id": "link1",
-      "label": "Link Card 1"
-    },
-
+      "type": "range",
+      "id": "section_height",
+      "label": "Altura da seção (vh)",
+      "min": 60,
+      "max": 100,
+      "step": 5,
+      "default": 90
+    }
+  ],
+  "blocks": [
     {
-      "type": "header",
-      "content": "Card 2"
-    },
-    {
-      "type": "image_picker",
-      "id": "img2",
-      "label": "Imagem do Card 2 (PNG)"
-    },
-    {
-      "type": "image_picker",
-      "id": "bg2",
-      "label": "Imagem de Fundo 2"
-    },
-    {
-      "type": "text",
-      "id": "title2",
-      "label": "Título Card 2",
-      "default": "Camisa Seleção 2"
-    },
-    {
-      "type": "url",
-      "id": "link2",
-      "label": "Link Card 2"
-    },
-
-    {
-      "type": "header",
-      "content": "Card 3"
-    },
-    {
-      "type": "image_picker",
-      "id": "img3",
-      "label": "Imagem do Card 3 (PNG)"
-    },
-    {
-      "type": "image_picker",
-      "id": "bg3",
-      "label": "Imagem de Fundo 3"
-    },
-    {
-      "type": "text",
-      "id": "title3",
-      "label": "Título Card 3",
-      "default": "Camisa Seleção 3"
-    },
-    {
-      "type": "url",
-      "id": "link3",
-      "label": "Link Card 3"
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Imagem de fundo"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Imagem do card (camisa PNG)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título do card",
+          "default": "Camisa Oficial"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link do botão"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Carrossel Tilt",
+      "name": "Carrossel Parallax",
       "category": "Custom"
     }
   ]
 }
 {% endschema %}
 
-<section class="tilt-carousel">
+<section class="parallax-carousel" style="height: {{ section.settings.section_height }}vh">
   <div class="carousel-background" id="carouselBg"></div>
 
   <div class="carousel-wrapper" id="carousel">
-    {% for i in (1..3) %}
-      {% capture img_key %}img{{ i }}{% endcapture %}
-      {% capture bg_key %}bg{{ i }}{% endcapture %}
-      {% capture title_key %}title{{ i }}{% endcapture %}
-      {% capture link_key %}link{{ i }}{% endcapture %}
-
-      {% assign img = section.settings[img_key] %}
-      {% assign bg = section.settings[bg_key] %}
-      {% assign title = section.settings[title_key] %}
-      {% assign link = section.settings[link_key] %}
-
+    {% for block in section.blocks %}
+      {% assign bg = block.settings.bg_image %}
+      {% assign img = block.settings.card_image %}
       <div class="card" 
         data-tilt 
-        data-tilt-max="6" 
+        data-tilt-max="10" 
         data-tilt-speed="400" 
-        data-tilt-glare="true"
+        data-tilt-glare="false"
         data-tilt-gyroscope="true"
         data-bg="{{ bg | image_url: width: 1600 }}">
         
         <div class="card-glass">
           {% if img %}
-            <img src="{{ img | image_url: width: 600 }}" alt="Camisa {{ i }}" class="shirt-img" loading="lazy">
+            <img src="{{ img | image_url: width: 600 }}" alt="Camisa" class="shirt-img" loading="lazy">
           {% endif %}
-          <h2>{{ title }}</h2>
-          <a href="{{ link }}" class="btn-card">Ver Produto</a>
+          <h2>{{ block.settings.title }}</h2>
+          <a href="{{ block.settings.link }}" class="btn-card">Ver Produto</a>
         </div>
       </div>
     {% endfor %}
@@ -125,10 +85,9 @@
 </section>
 
 <style>
-.tilt-carousel {
+.parallax-carousel {
   position: relative;
   width: 100%;
-  height: 90vh; /* altura levemente reduzida */
   overflow: hidden;
   background: #000;
   display: flex;
@@ -144,7 +103,7 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  transition: background-image 1s ease-in-out;
+  transition: background-image 0.7s ease-in-out;
   z-index: 0;
 }
 
@@ -155,28 +114,27 @@
   flex-direction: row;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 2rem;
   gap: 2rem;
+  padding: 2rem;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
-
 .carousel-wrapper::-webkit-scrollbar {
   display: none;
 }
 
 .card {
   flex: 0 0 85% !important;
-  scroll-snap-align: center !important;
+  scroll-snap-align: center;
   background: rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 1.5rem !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
   padding: 2rem !important;
   text-align: center;
   color: white;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4) !important;
   transition: transform 0.3s ease !important;
 }
 
@@ -203,7 +161,6 @@
   text-decoration: none;
   transition: background 0.3s;
 }
-
 .btn-card:hover {
   background: #7c3aed;
 }
@@ -212,7 +169,7 @@
 <!-- Tilt.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
 
-<!-- GSAP + ScrollTrigger -->
+<!-- GSAP ScrollTrigger para Parallax -->
 <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
@@ -246,10 +203,9 @@
 
     observeScroll();
 
-    // Parallax mais visível no fundo
     if (window.ScrollTrigger && window.gsap) {
       gsap.to(bg, {
-        y: -120, // antes era -50
+        y: -150, // Parallax mais visível
         ease: "none",
         scrollTrigger: {
           trigger: carousel,
