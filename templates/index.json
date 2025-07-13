@@ -590,6 +590,7 @@
         },
         "card_KeHUpf": {
           "type": "card",
+          "disabled": true,
           "settings": {
             "bg_image": "shopify://shop_images/8a78d76c_b9943b4f-11bf-4e1a-baea-e4ea3c3f7a4f.jpg",
             "card_image": "shopify://shop_images/1000204598.png",
