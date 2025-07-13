@@ -1,144 +1,211 @@
 {% schema %}
 {
-  "name": "Hero Parallax GSAP",
+  "name": "Carrossel Tilt",
   "settings": [
     {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
       "type": "image_picker",
-      "id": "background_image",
-      "label": "Imagem de fundo"
+      "id": "img1",
+      "label": "Imagem do Card 1"
     },
     {
       "type": "text",
-      "id": "title",
-      "label": "Título",
-      "default": "Coleção 2025 chegou!"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtítulo",
-      "default": "Camisas exclusivas com até 20% off"
+      "id": "title1",
+      "label": "Título Card 1",
+      "default": "Camisa Seleção 1"
     },
     {
       "type": "url",
-      "id": "button_link",
-      "label": "Link do botão"
+      "id": "link1",
+      "label": "Link Card 1"
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "img2",
+      "label": "Imagem do Card 2"
     },
     {
       "type": "text",
-      "id": "button_text",
-      "label": "Texto do botão",
-      "default": "Ver camisas"
+      "id": "title2",
+      "label": "Título Card 2",
+      "default": "Camisa Seleção 2"
+    },
+    {
+      "type": "url",
+      "id": "link2",
+      "label": "Link Card 2"
+    },
+    {
+      "type": "header",
+      "content": "Card 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "img3",
+      "label": "Imagem do Card 3"
+    },
+    {
+      "type": "text",
+      "id": "title3",
+      "label": "Título Card 3",
+      "default": "Camisa Seleção 3"
+    },
+    {
+      "type": "url",
+      "id": "link3",
+      "label": "Link Card 3"
     }
   ],
   "presets": [
     {
-      "name": "Hero Parallax GSAP",
+      "name": "Carrossel Tilt",
       "category": "Custom"
     }
   ]
 }
 {% endschema %}
 
-<section class="hero-parallax-wrapper" data-gsap-parallax>
-  {% if section.settings.background_image %}
-    <div 
-      class="hero-parallax-bg" 
-      style="background-image: url({{ section.settings.background_image | image_url: width: 2000 }});">
-    </div>
-  {% endif %}
+<section class="tilt-carousel">
+  <div class="carousel-background" id="carouselBg"></div>
 
-  <div class="hero-parallax-content">
-    <h1>{{ section.settings.title }}</h1>
-    <p>{{ section.settings.subtitle }}</p>
-    {% if section.settings.button_link %}
-      <a href="{{ section.settings.button_link }}" class="hero-parallax-btn">
-        {{ section.settings.button_text }}
-      </a>
-    {% endif %}
+  <div class="carousel-wrapper" id="carousel">
+    {% for i in (1..3) %}
+      {% capture img_key %}img{{ i }}{% endcapture %}
+      {% capture title_key %}title{{ i }}{% endcapture %}
+      {% capture link_key %}link{{ i }}{% endcapture %}
+
+      {% assign img = section.settings[img_key] %}
+      {% assign title = section.settings[title_key] %}
+      {% assign link = section.settings[link_key] %}
+
+      <div class="card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-bg="{{ img | image_url: width: 2000 }}">
+        <div class="card-glass">
+          {% if img %}
+            <img src="{{ img | image_url: width: 600 }}" alt="Camisa {{ i }}" class="shirt-img">
+          {% endif %}
+          <h2>{{ title }}</h2>
+          <a href="{{ link }}" class="btn-card">Ver Produto</a>
+        </div>
+      </div>
+    {% endfor %}
   </div>
 </section>
 
 <style>
-.hero-parallax-wrapper {
+.tilt-carousel {
   position: relative;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
 }
 
-.hero-parallax-bg {
+.carousel-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 130%;
+  height: 100%;
   background-size: cover;
   background-position: center;
-  z-index: 1;
-  will-change: transform;
+  transition: background-image 0.8s ease-in-out;
+  z-index: 0;
 }
 
-.hero-parallax-content {
+.carousel-wrapper {
   position: relative;
   z-index: 2;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 2rem;
   padding: 2rem;
-  color: #fff;
-  max-width: 90%;
-  margin-top: 20vh;
-  background: rgba(255, 255, 255, 0.08);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.card {
+  flex: 0 0 80%;
+  scroll-snap-align: center;
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 1rem;
-}
-
-.hero-parallax-content h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.hero-parallax-content p {
-  font-size: 1.1rem;
-  margin-bottom: 1.2rem;
-}
-
-.hero-parallax-btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: #8b5cf6;
-  border-radius: 999px;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  text-align: center;
   color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.card-glass {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.shirt-img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.btn-card {
+  background: #8b5cf6;
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.3s ease;
+  transition: background 0.3s;
 }
 
-.hero-parallax-btn:hover {
+.btn-card:hover {
   background: #7c3aed;
 }
 </style>
 
+<!-- Tilt.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+    const carousel = document.getElementById('carousel');
+    const bg = document.getElementById('carouselBg');
+    const cards = carousel.querySelectorAll('.card');
 
-    const section = document.querySelector('[data-gsap-parallax]');
-    const bg = section.querySelector('.hero-parallax-bg');
+    const updateBg = (img) => {
+      bg.style.backgroundImage = `url(${img})`;
+    }
 
-    gsap.to(bg, {
-      yPercent: 20,
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "bottom top",
-        scrub: true
-      }
-    });
+    const observeScroll = () => {
+      let observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            const img = card.dataset.bg;
+            updateBg(img);
+          }
+        });
+      }, {
+        root: carousel,
+        threshold: 0.5
+      });
+
+      cards.forEach(card => observer.observe(card));
+    }
+
+    observeScroll();
   });
 </script>
