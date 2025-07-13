@@ -578,6 +578,17 @@
         "button_link": "",
         "button_text": "Ver camisas"
       }
+    },
+    "hero_parallax_KtJVUC": {
+      "type": "hero-parallax",
+      "name": "Hero Parallax GSAP",
+      "settings": {
+        "background_image": "shopify://shop_images/1000229737.png",
+        "title": "Coleção 2025 chegou!",
+        "subtitle": "Camisas exclusivas com até 20% off",
+        "button_link": "",
+        "button_text": "Ver camisas"
+      }
     }
   },
   "order": [
@@ -593,6 +604,7 @@
     "text-with-icons",
     "newsletter",
     "collection_list_TP36Pi",
-    "hero_parallax_VfUpPj"
+    "hero_parallax_VfUpPj",
+    "hero_parallax_KtJVUC"
   ]
 }
