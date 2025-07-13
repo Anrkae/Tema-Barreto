@@ -573,29 +573,26 @@
         "card_HYphAd": {
           "type": "card",
           "settings": {
-            "bg_image": "shopify://shop_images/1000229737.png",
-            "card_image": "shopify://shop_images/1000204597.png",
-            "title": "Camisa Oficial",
-            "link": ""
+            "imagem": "shopify://shop_images/1000229737.png",
+            "produto": "kids-selecao-da-italia-ll-2024-36",
+            "titulo_card": "Título"
           }
         },
         "card_pmQpxW": {
           "type": "card",
           "settings": {
-            "bg_image": "shopify://shop_images/2d5073cf_91418011-e2bd-4075-97e4-47f944d7eda9.jpg",
-            "card_image": "shopify://shop_images/1000204595.png",
-            "title": "Camisa Oficial",
-            "link": ""
+            "imagem": "shopify://shop_images/0a9edeae_06ad2a57-b9b9-4cb6-bdff-2777038f6148.jpg",
+            "produto": "kids-selecao-da-italia-ll-2024-42",
+            "titulo_card": "Título"
           }
         },
         "card_KeHUpf": {
           "type": "card",
           "disabled": true,
           "settings": {
-            "bg_image": "shopify://shop_images/8a78d76c_b9943b4f-11bf-4e1a-baea-e4ea3c3f7a4f.jpg",
-            "card_image": "shopify://shop_images/1000204598.png",
-            "title": "Camisa Oficial",
-            "link": ""
+            "imagem": "shopify://shop_images/766464c6_9d652585-026a-4551-8673-00f4c56c89f6.jpg",
+            "produto": "camisa-128",
+            "titulo_card": "Título"
           }
         }
       },
@@ -606,14 +603,20 @@
       ],
       "name": "Carrossel Parallax",
       "settings": {
-        "section_height": 70
-      }
-    },
-    "hero_parallax_nHNUxf": {
-      "type": "hero-parallax",
-      "name": "Carrossel Parallax",
-      "settings": {
-        "section_height": 90
+        "titulo": "Destaques",
+        "mostrar_titulo_card": true,
+        "aspect_ratio": "4/5",
+        "rotate": 20,
+        "stretch": 100,
+        "depth": 300,
+        "cor_fundo": "#ffffff",
+        "borda_radius": 20,
+        "ativar_sombra": true,
+        "autoplay": true,
+        "autoplay_delay": 3000,
+        "slides_desktop": 3,
+        "slides_tablet": 2,
+        "slides_mobile": 3
       }
     }
   },
@@ -630,7 +633,6 @@
     "text-with-icons",
     "newsletter",
     "collection_list_TP36Pi",
-    "hero_parallax_tnNxcb",
-    "hero_parallax_nHNUxf"
+    "hero_parallax_tnNxcb"
   ]
 }
