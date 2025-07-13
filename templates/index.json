@@ -566,6 +566,38 @@
         "background": "rgba(0,0,0,0)",
         "text_color": "rgba(0,0,0,0)"
       }
+    },
+    "hero_parallax_m9UKgp": {
+      "type": "hero-parallax",
+      "blocks": {
+        "card_PkLBEx": {
+          "type": "card",
+          "settings": {
+            "bg_image": "shopify://shop_images/1000229737.png",
+            "card_image": "shopify://shop_images/1000204597.png",
+            "title": "Camisa Oficial",
+            "link": ""
+          }
+        },
+        "card_GG7ytx": {
+          "type": "card",
+          "settings": {
+            "bg_image": "shopify://shop_images/b5775ea3_f76fe4c0-43f3-4564-a064-51a3cf5df728.jpg",
+            "card_image": "shopify://shop_images/1000204596.png",
+            "title": "Camisa Oficial",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_PkLBEx",
+        "card_GG7ytx"
+      ],
+      "name": "Carrossel Parallax",
+      "settings": {
+        "section_title": "Coleção em destaque",
+        "section_height": 90
+      }
     }
   },
   "order": [
@@ -580,6 +612,7 @@
     "featured-product",
     "text-with-icons",
     "newsletter",
-    "collection_list_TP36Pi"
+    "collection_list_TP36Pi",
+    "hero_parallax_m9UKgp"
   ]
 }
