@@ -608,6 +608,13 @@
       "settings": {
         "section_height": 70
       }
+    },
+    "hero_parallax_nHNUxf": {
+      "type": "hero-parallax",
+      "name": "Carrossel Parallax",
+      "settings": {
+        "section_height": 90
+      }
     }
   },
   "order": [
@@ -623,6 +630,7 @@
     "text-with-icons",
     "newsletter",
     "collection_list_TP36Pi",
-    "hero_parallax_tnNxcb"
+    "hero_parallax_tnNxcb",
+    "hero_parallax_nHNUxf"
   ]
 }
