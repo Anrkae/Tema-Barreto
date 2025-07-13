@@ -72,17 +72,6 @@
               "button_link": ""
             }
           },
-          "message-1": {
-            "type": "message",
-            "settings": {
-              "text": "FRETE GRÁTIS PARA TODO BRASIL!!",
-              "learn_more_text": "Frete grátis para qualquer parte do país! E o melhor... 99% das entregas sem taxação alfandegária!!",
-              "title": "",
-              "content": "",
-              "button_text": "",
-              "button_link": ""
-            }
-          },
           "message_X8pTBc": {
             "type": "message",
             "settings": {
@@ -93,12 +82,23 @@
               "button_text": "",
               "button_link": ""
             }
+          },
+          "message-1": {
+            "type": "message",
+            "settings": {
+              "text": "FRETE GRÁTIS PARA TODO BRASIL!!",
+              "learn_more_text": "Frete grátis para qualquer parte do país! E o melhor... 99% das entregas sem taxação alfandegária!!",
+              "title": "",
+              "content": "",
+              "button_text": "",
+              "button_link": ""
+            }
           }
         },
         "block_order": [
           "message_RxCQkV",
-          "message-1",
-          "message_X8pTBc"
+          "message_X8pTBc",
+          "message-1"
         ],
         "settings": {
           "announcement_bar_position": "sticky",
