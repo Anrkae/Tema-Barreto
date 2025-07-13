@@ -593,6 +593,7 @@
         "card_PkLBEx",
         "card_GG7ytx"
       ],
+      "disabled": true,
       "name": "Carrossel Parallax",
       "settings": {
         "section_title": "Coleção em destaque",
