@@ -94,9 +94,7 @@
       "block_order": [
         "collection-1"
       ],
-      "custom_css": [
-        ".product-item {padding: 12px !important; background: rgba(255, 255, 255, 0.05) !important; border-radius: 18px;}"
-      ],
+      "custom_css": [],
       "settings": {
         "subheading": "",
         "title": "Mundial de clubes",
