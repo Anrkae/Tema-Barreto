@@ -373,12 +373,13 @@
         "button_UdxgfB"
       ],
       "custom_css": [
-        ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
+        ".container {padding-top: 16px !important; padding-bottom: 25px !important;}",
+        ".product__media-image-wrapper {background: rgba(255, 255, 255, 0.03) !important;}"
       ],
       "settings": {
-        "product": "camisa-real-madrid-25-26-home-i-branco",
+        "product": "camisa-flamengo-casual-us-pack",
         "subheading": "Novo manto",
-        "title": "Hala madrid!",
+        "title": "US PACK!",
         "show_vendor": false,
         "show_sku": false,
         "show_taxes_included": false,
