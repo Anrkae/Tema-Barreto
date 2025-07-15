@@ -44,6 +44,7 @@
     "show_secondary_image": true,
     "product_add_to_cart": false,
     "show_product_rating": false,
+    "show_discount": false,
     "discount_mode": "percentage",
     "product_color_display": "count",
     "product_image_size": "natural",
