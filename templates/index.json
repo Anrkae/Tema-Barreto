@@ -125,9 +125,7 @@
       "block_order": [
         "collection_QGD7B3"
       ],
-      "custom_css": [
-        ".product-item {padding: 12px !important; background: rgba(0, 0, 0, 0.25) !important; border-radius: 18px;}"
-      ],
+      "custom_css": [],
       "settings": {
         "subheading": "Lançamentos",
         "title": "Temporada 2025/26",
