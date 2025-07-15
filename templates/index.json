@@ -377,9 +377,9 @@
         ".product__media-image-wrapper {background: rgba(255, 255, 255, 0.03) !important;}"
       ],
       "settings": {
-        "product": "camisa-flamengo-casual-us-pack",
-        "subheading": "Novo manto",
-        "title": "US PACK!",
+        "product": "camisa-182",
+        "subheading": "Champions",
+        "title": "London blues!",
         "show_vendor": false,
         "show_sku": false,
         "show_taxes_included": false,
