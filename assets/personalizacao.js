@@ -5,10 +5,13 @@ function iniciarObservadorComboBox() {
   const numeroInput = document.getElementById("custom_number");
 
   if (!customizationFields) {
-    console.log('[Personalização] Campos de personalização não existem neste produto. Encerrando.');
+    console.log('[Personalização] Campos não existem. Encerrando.');
     return;
   }
 
+  /* =========================
+     CSS DINÂMICO
+  ========================= */
   const style = document.createElement("style");
   style.innerHTML = `
     #customization-fields {
@@ -17,7 +20,7 @@ function iniciarObservadorComboBox() {
       overflow: hidden;
       transform: translateY(-10px);
       transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
-      transition-delay: 1s;
+      transition-delay: 0.2s;
     }
     #customization-fields.visible {
       opacity: 1;
@@ -38,33 +41,20 @@ function iniciarObservadorComboBox() {
   `;
   document.head.appendChild(style);
 
-  const blocos = document.querySelectorAll('.product-form__option-selector');
-  let valorSelecionado = null;
-
-  blocos.forEach(bloco => {
-    const nome = bloco.querySelector('.product-form__option-name');
-    if (nome && nome.textContent.trim().toLowerCase().includes('personalizar')) {
-      valorSelecionado = bloco.querySelector('.select__selected-value');
-    }
-  });
-
-  if (!valorSelecionado) {
-    console.log('[Personalização] Produto sem opção de personalização. Encerrando.');
-    customizationFields.style.display = 'none';
-    return;
-  }
-
+  /* =========================
+     FUNÇÕES UTILITÁRIAS
+  ========================= */
   function limparCampos() {
     if (nomeInput) nomeInput.value = "";
     if (numeroInput) {
       numeroInput.value = "";
-      numeroInput.removeAttribute('required');
+      numeroInput.removeAttribute("required");
     }
   }
 
   function verificarPersonalizacao(texto) {
     const valor = texto?.toLowerCase().trim() || '';
-    console.log('[Personalização] Valor selecionado (PERSONALIZAR):', valor);
+    console.log('[Personalização] Valor detectado:', valor);
 
     if (valor.includes('personalizar') || valor.includes('personalizada')) {
       customizationFields.style.display = 'block';
@@ -83,20 +73,83 @@ function iniciarObservadorComboBox() {
     }
   }
 
-  verificarPersonalizacao(valorSelecionado.textContent);
+  /* =========================
+     IDENTIFICA BLOCO PERSONALIZAR
+  ========================= */
+  const blocos = document.querySelectorAll('.product-form__option-selector');
+  let valorDropdown = null;
 
-  const observer = new MutationObserver(() => {
-    verificarPersonalizacao(valorSelecionado.textContent);
+  blocos.forEach(bloco => {
+    const nome = bloco.querySelector('.product-form__option-name');
+    if (!nome) return;
+
+    if (nome.textContent.toLowerCase().includes('personalizar')) {
+
+      /* =========================
+         DROPDOWN
+      ========================= */
+      valorDropdown = bloco.querySelector('.select__selected-value');
+      if (valorDropdown) {
+        verificarPersonalizacao(valorDropdown.textContent);
+
+        const observerDropdown = new MutationObserver(() => {
+          verificarPersonalizacao(valorDropdown.textContent);
+        });
+
+        observerDropdown.observe(valorDropdown, {
+          childList: true,
+          characterData: true,
+          subtree: true
+        });
+
+        console.log('[Personalização] Observando DROPDOWN');
+      }
+
+      /* =========================
+         BLOCK (CLICK / CHANGE)
+      ========================= */
+      const opcoesBlock = bloco.querySelectorAll(
+        'button, label, input[type="radio"], .option-value'
+      );
+
+      opcoesBlock.forEach(opcao => {
+        const handler = () => {
+          const texto =
+            opcao.textContent ||
+            opcao.value ||
+            opcao.getAttribute('data-value') ||
+            '';
+
+          verificarPersonalizacao(texto);
+        };
+
+        opcao.addEventListener('click', handler);
+        opcao.addEventListener('change', handler);
+      });
+
+      /* =========================
+         BLOCK (CLASSE ATIVA – FALLBACK)
+      ========================= */
+      const observerBlock = new MutationObserver(() => {
+        const ativo = bloco.querySelector('.active, .is-selected, [aria-checked="true"]');
+        if (ativo) {
+          verificarPersonalizacao(ativo.textContent);
+        }
+      });
+
+      observerBlock.observe(bloco, {
+        attributes: true,
+        subtree: true,
+        attributeFilter: ['class', 'aria-checked']
+      });
+
+      console.log('[Personalização] Observando BLOCK');
+    }
   });
 
-  observer.observe(valorSelecionado, {
-    childList: true,
-    characterData: true,
-    subtree: true
-  });
-
-  console.log('[Personalização] Observador iniciado!');
-
+  /* =========================
+     VALIDAÇÃO NO SUBMIT
+  ========================= */
   if (form && numeroInput) {
     form.addEventListener('submit', function (e) {
       if (customizationFields.classList.contains('visible')) {
@@ -108,6 +161,8 @@ function iniciarObservadorComboBox() {
       }
     });
   }
+
+  console.log('[Personalização] Sistema híbrido iniciado 🚀');
 }
 
 document.addEventListener("DOMContentLoaded", iniciarObservadorComboBox);
