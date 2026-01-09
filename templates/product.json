@@ -21,7 +21,7 @@
           "type": "variant_picker",
           "settings": {
             "hide_sold_out_variants": false,
-            "selector_mode": "dropdown",
+            "selector_mode": "block",
             "color_mode": "color",
             "size_chart_page": ""
           }
