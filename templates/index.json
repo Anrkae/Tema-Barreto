@@ -72,7 +72,8 @@
         "image_fQctHg": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/11284.png",
+            "image": "shopify://shop_images/13841.png",
+            "mobile_image": "shopify://shop_images/13834.png",
             "text_position": "middle_center",
             "subheading": "",
             "title": "",
