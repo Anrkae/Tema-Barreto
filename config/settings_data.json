@@ -64,6 +64,7 @@
         "blocks": {
           "message_RxCQkV": {
             "type": "message",
+            "disabled": true,
             "settings": {
               "text": "10% OFF USANDO O CUPOM \"BRASIL10\"!",
               "learn_more_text": "Adicione o cupom no carrinho e receba 10% de desconto na sua compra!",
@@ -75,6 +76,7 @@
           },
           "message_X8pTBc": {
             "type": "message",
+            "disabled": true,
             "settings": {
               "text": "LEVE 3, PAGUE 2!!",
               "learn_more_text": "Ao adicionar três mantos ao carrinho, um sai 100% gratuito!",
@@ -86,6 +88,7 @@
           },
           "message-1": {
             "type": "message",
+            "disabled": true,
             "settings": {
               "text": "FRETE GRÁTIS PARA TODO BRASIL!!",
               "learn_more_text": "Frete grátis para qualquer parte do país! E o melhor... 99% das entregas sem taxação alfandegária!!",
