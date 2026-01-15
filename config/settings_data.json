@@ -32,7 +32,7 @@
     "product_custom_label_2_background": "#f3ff34",
     "product_in_stock_text_color": "#2e9e7b",
     "product_low_stock_text_color": "#de2a2a",
-    "heading_font": "montserrat_n4",
+    "heading_font": "bebas_neue_n4",
     "heading_font_size": "medium",
     "heading_text_transform": "uppercase",
     "text_font": "montserrat_n4",
@@ -149,7 +149,6 @@
         ],
         "settings": {
           "enable_sticky_header": true,
-          "logo": "shopify://shop_images/1000211682.png",
           "logo_max_width": 140,
           "mobile_logo_max_width": 90,
           "navigation_menu": "main-menu",
@@ -302,14 +301,7 @@
         }
       }
     },
-    "content_for_index": [],
-    "blocks": {
-      "13987313001505098986": {
-        "type": "shopify://apps/cozy-antitheft/blocks/Cozy_Antitheft_Script_1.0.0/a34a1874-f183-4394-8a9a-1e3f3275f1a7",
-        "disabled": false,
-        "settings": {}
-      }
-    }
+    "content_for_index": []
   },
   "presets": {
     "Carbon": {
