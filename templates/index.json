@@ -133,14 +133,14 @@
         "image_3QtKLc"
       ],
       "custom_css": [
-        ".slideshow__progress-bar {display: none !important;}"
+        ".slideshow__progress-bar {opacity: 0 !important;}"
       ],
       "name": "Slideshow",
       "settings": {
         "section_height": "auto",
         "transition_type": "sweep",
         "autoplay": true,
-        "cycle_speed": 5,
+        "cycle_speed": 4,
         "background": "rgba(0,0,0,0)"
       }
     },
