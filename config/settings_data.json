@@ -153,7 +153,7 @@
           "mobile_logo_max_width": 90,
           "navigation_menu": "main-menu",
           "sidebar_navigation_menu": "",
-          "header_layout": "logo_center_search_open",
+          "header_layout": "logo_left_navigation_center",
           "show_icons": false,
           "reduce_desktop_padding": true,
           "show_locale_selector": true,
