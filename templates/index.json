@@ -135,7 +135,7 @@
       "name": "Slideshow",
       "settings": {
         "section_height": "auto",
-        "transition_type": "reveal",
+        "transition_type": "sweep",
         "autoplay": true,
         "cycle_speed": 5,
         "background": "rgba(0,0,0,0)"
