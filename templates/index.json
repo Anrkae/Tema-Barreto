@@ -132,6 +132,9 @@
         "image_bwy3dV",
         "image_3QtKLc"
       ],
+      "custom_css": [
+        ".slideshow__progress-bar {display: none !important;}"
+      ],
       "name": "Slideshow",
       "settings": {
         "section_height": "auto",
