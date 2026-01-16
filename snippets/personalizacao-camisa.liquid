@@ -10,62 +10,59 @@
 <style>
   .floating-group {
     position: relative !important;
-    margin-bottom: 15px !important;
-    display: block !important;
+    margin-bottom: 20px !important;
+    margin-top: 10px !important; /* Espaço para o label não cortar o conteúdo de cima */
   }
 
-  /* O Input: Aumentamos o padding-top para dar espaço ao label quando ele subir */
   .floating-group .input__field {
     width: 100% !important;
-    height: 55px !important; /* Um pouco mais alto para acomodar o texto + label */
-    padding: 20px 12px 6px 12px !important; /* Padding maior no topo */
-    border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Borda semi-transparente para combinar com gradientes */
-    border-radius: 6px !important;
-    background: rgba(255, 255, 255, 0.1) !important; /* Fundo sutil para o input */
-    color: #fff !important; /* Cor do texto digitado */
+    padding: 12px 14px !important;
+    height: 50px !important;
+    border: 2px solid rgba(255, 255, 255, 0.4) !important; /* Borda semi-transparente */
+    border-radius: 12px !important;
+    background: transparent !important;
+    color: #fff !important; /* Ajuste para branco se o fundo for escuro */
     font-size: 16px !important;
     outline: none !important;
-    transition: border-color 0.2s !important;
   }
 
-  /* O Label: Começa centralizado verticalmente */
   .floating-group label {
     position: absolute !important;
     left: 12px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    color: rgba(255, 255, 255, 0.7) !important;
+    padding: 0 6px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
     font-size: 16px !important;
-    transition: all 0.2s ease-out !important;
     pointer-events: none !important;
-    margin: 0 !important;
-    background: transparent !important; /* Sem cor de fundo para não quebrar o gradiente */
+    transition: all 0.2s ease-out !important;
+    
+    /* EFEITO PARA GRADIENTES: */
+    background: rgba(255, 255, 255, 0.1) !important; /* Um "véu" bem clarinho */
+    backdrop-filter: blur(8px) !important; /* Desfoca o gradiente atrás do texto */
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-radius: 2px !important;
   }
 
-  /* ESTADO ATIVO: Quando focado ou com texto, o label sobe para o topo INTERNO */
+  /* ESTADO ATIVO: Quando focado ou preenchido */
   .floating-group .input__field:focus + label,
   .floating-group .input__field:not(:placeholder-shown) + label {
-    top: 14px !important; /* Move para o topo do container */
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
+    top: 0 !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
     color: #fff !important;
-    opacity: 0.9 !important;
+    transform: translateY(-50%) !important;
+    /* Aumentamos um pouco a opacidade do fundo no topo */
+    background: rgba(0, 0, 0, 0.2) !important; 
   }
 
-  /* Esconde o placeholder padrão para não encavalar com o label */
+  /* Placeholder some para não bater no label */
   .floating-group .input__field::placeholder {
     color: transparent !important;
   }
   
-  /* Mostra o placeholder apenas quando focado para servir de guia */
   .floating-group .input__field:focus::placeholder {
     color: rgba(255, 255, 255, 0.4) !important;
-  }
-
-  .floating-group .input__field:focus {
-    border-color: #fff !important; /* Realce na borda ao focar */
   }
 </style>
 
@@ -78,7 +75,7 @@
     <label for="custom_name">Nome</label>
   </div>
 
-  <div class="product-form__line-item-property floating-group" style="margin-top: 1rem !important;">
+  <div class="product-form__line-item-property floating-group" style="margin-top: 1.5rem !important;">
     <input id="custom_number" type="text" placeholder="Ex: 10" name="properties[Número personalizado]" class="input__field">
     <label for="custom_number">Número</label>
   </div>
