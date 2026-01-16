@@ -8,66 +8,64 @@
 {%- endif -%}
 
 <style>
-  /* Container para posicionamento relativo */
   .floating-group {
     position: relative !important;
-    margin-bottom: 20px !important;
-    margin-top: 10px !important;
+    margin-bottom: 15px !important;
+    display: block !important;
   }
 
-  /* O Input - Forçando altura, borda e espaçamento */
+  /* O Input: Aumentamos o padding-top para dar espaço ao label quando ele subir */
   .floating-group .input__field {
     width: 100% !important;
-    padding: 12px 14px !important;
-    height: 50px !important;
-    border: 1px solid #ccc !important;
-    border-radius: 12px !important;
-    background: transparent !important;
-    outline: none !important;
+    height: 55px !important; /* Um pouco mais alto para acomodar o texto + label */
+    padding: 20px 12px 6px 12px !important; /* Padding maior no topo */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Borda semi-transparente para combinar com gradientes */
+    border-radius: 6px !important;
+    background: rgba(255, 255, 255, 0.1) !important; /* Fundo sutil para o input */
+    color: #fff !important; /* Cor do texto digitado */
     font-size: 16px !important;
-    box-shadow: none !important; /* Remove sombras padrão do tema */
-    color: #333 !important;
+    outline: none !important;
+    transition: border-color 0.2s !important;
   }
 
-  /* O Label (Texto que flutua) */
+  /* O Label: Começa centralizado verticalmente */
   .floating-group label {
     position: absolute !important;
-    left: 10px !important;
+    left: 12px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    background-color: #fff !important; /* Deve ser a cor de fundo do seu site para cobrir a linha */
-    padding: 0 6px !important;
-    color: #666 !important;
+    color: rgba(255, 255, 255, 0.7) !important;
     font-size: 16px !important;
-    pointer-events: none !important; /* Permite clicar através do label */
-    transition: 0.2s ease all !important;
-    z-index: 10 !important;
+    transition: all 0.2s ease-out !important;
+    pointer-events: none !important;
     margin: 0 !important;
-    line-height: 1 !important;
-    font-weight: normal !important;
+    background: transparent !important; /* Sem cor de fundo para não quebrar o gradiente */
   }
 
-  /* ESTADO ATIVO: Quando focado ou quando tem texto digitado */
+  /* ESTADO ATIVO: Quando focado ou com texto, o label sobe para o topo INTERNO */
   .floating-group .input__field:focus + label,
   .floating-group .input__field:not(:placeholder-shown) + label {
-    top: 0 !important;
-    transform: translateY(-50%) scale(0.9) !important; /* Sobe para a linha */
-    color: #000 !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    z-index: 11 !important;
+    top: 14px !important; /* Move para o topo do container */
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: #fff !important;
+    opacity: 0.9 !important;
   }
 
-  /* Placeholder nativo: Escondido até focar */
+  /* Esconde o placeholder padrão para não encavalar com o label */
   .floating-group .input__field::placeholder {
     color: transparent !important;
-    opacity: 0 !important;
   }
   
-  /* Placeholder nativo: Mostra quando foca */
+  /* Mostra o placeholder apenas quando focado para servir de guia */
   .floating-group .input__field:focus::placeholder {
-    color: #ccc !important;
-    opacity: 1 !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  .floating-group .input__field:focus {
+    border-color: #fff !important; /* Realce na borda ao focar */
   }
 </style>
 
@@ -80,13 +78,13 @@
     <label for="custom_name">Nome</label>
   </div>
 
-  <div class="product-form__line-item-property floating-group">
+  <div class="product-form__line-item-property floating-group" style="margin-top: 1rem !important;">
     <input id="custom_number" type="text" placeholder="Ex: 10" name="properties[Número personalizado]" class="input__field">
     <label for="custom_number">Número</label>
   </div>
 
   <div id="aviso" style="margin-top: 8px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
-    <label style="margin: 0 !important;"> ⓘ Valor da personalização: R$18,00 </label>
+    <label style="color: #fff !important;"> ⓘ Valor da personalização: R$18,00 </label>
   </div>
 
 </div>
