@@ -11,58 +11,70 @@
   .floating-group {
     position: relative !important;
     margin-bottom: 20px !important;
-    margin-top: 10px !important; /* Espaço para o label não cortar o conteúdo de cima */
+    margin-top: 15px !important;
   }
 
   .floating-group .input__field {
     width: 100% !important;
     padding: 12px 14px !important;
     height: 50px !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important; /* Borda semi-transparente */
-    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 4px !important;
     background: transparent !important;
-    color: #fff !important; /* Ajuste para branco se o fundo for escuro */
+    color: #fff !important;
     font-size: 16px !important;
     outline: none !important;
+    box-sizing: border-box !important;
   }
 
+  /* ESTADO INICIAL DO LABEL (Dentro do input) */
   .floating-group label {
     position: absolute !important;
     left: 12px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    padding: 0 6px !important;
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
     font-size: 16px !important;
     pointer-events: none !important;
-    transition: all 0.2s ease-out !important;
+    transition: all 0.25s ease !important;
+    margin: 0 !important;
     
-    /* EFEITO PARA GRADIENTES: */
-    background: rgba(255, 255, 255, 0.1) !important; /* Um "véu" bem clarinho */
-    backdrop-filter: blur(8px) !important; /* Desfoca o gradiente atrás do texto */
-    -webkit-backdrop-filter: blur(8px) !important;
-    border-radius: 2px !important;
+    /* Garantir que não haja fundo ou blur aqui */
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 5px !important;
+    z-index: 10 !important;
   }
 
-  /* ESTADO ATIVO: Quando focado ou preenchido */
+  /* ESTADO ATIVO (Quando sobe e sobrepõe a borda) */
   .floating-group .input__field:focus + label,
   .floating-group .input__field:not(:placeholder-shown) + label {
     top: 0 !important;
     font-size: 12px !important;
-    font-weight: bold !important;
+    font-weight: 600 !important;
     color: #fff !important;
     transform: translateY(-50%) !important;
-    /* Aumentamos um pouco a opacidade do fundo no topo */
-    background: rgba(0, 0, 0, 0.2) !important; 
+    
+    /* Ativa o fundo e o blur APENAS aqui */
+    background: rgba(255, 255, 255, 0.1) !important; 
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-radius: 2px !important;
   }
 
-  /* Placeholder some para não bater no label */
+  /* Placeholder nativo fica invisível para não confundir com o label */
   .floating-group .input__field::placeholder {
     color: transparent !important;
   }
   
+  /* Mostra o placeholder real (ex: Neymar) apenas quando focado */
   .floating-group .input__field:focus::placeholder {
     color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  .floating-group .input__field:focus {
+    border-color: #fff !important;
   }
 </style>
 
@@ -81,7 +93,7 @@
   </div>
 
   <div id="aviso" style="margin-top: 8px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
-    <label style="color: #fff !important;"> ⓘ Valor da personalização: R$18,00 </label>
+    <label style="color: #fff !important; background: transparent !important;"> ⓘ Valor da personalização: R$18,00 </label>
   </div>
 
 </div>
