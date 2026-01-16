@@ -1,5 +1,5 @@
 {%- comment -%}
-  Preservando sua lógica original do Tema Focal
+  Lógica de exibição original do Tema Focal
 {%- endcomment -%}
 {%- assign show_customization_fields_on_load = false -%}
 {%- if product.selected_or_first_available_variant.title contains 'Personalizar' or product.selected_or_first_available_variant.title contains 'Personalizada' -%}
@@ -7,35 +7,48 @@
 {%- endif -%}
 
 <style>
-  /* Container Principal */
-  .custom-field-v2 {
+  /* --- CONFIGURAÇÕES GERAIS --- */
+  .custom-field-v3 {
     position: relative !important;
     margin-top: 20px !important;
     display: block !important;
     width: 100% !important;
   }
 
-  /* Escondendo a borda original do Focal de forma agressiva */
-  .custom-field-v2 .input__field {
+  /* Anulando o estilo do tema Focal */
+  .custom-field-v3 .input__field {
     width: 100% !important;
-    height: 52px !important;
+    height: 54px !important;
     padding: 12px 16px !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
-    color: #fff !important; /* Cor do texto digitado */
+    color: #fff !important;
     font-size: 16px !important;
     z-index: 3 !important;
     position: relative !important;
     appearance: none !important;
   }
 
-  /* O Label - O "Coração" da animação */
-  .custom-field-v2 label {
+  /* Estilo da Borda Vectorial (Outline) */
+  .outline-vector {
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 12px !important; /* Raio solicitado */
+    z-index: 1 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    /* Inicialmente sem corte */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%) !important;
+  }
+
+  /* Estilo do Label */
+  .custom-field-v3 label {
     position: absolute !important;
     top: 50% !important;
-    left: 12px !important;
+    left: 16px !important;
     transform: translateY(-50%) !important;
     color: rgba(255, 255, 255, 0.6) !important;
     font-size: 16px !important;
@@ -43,38 +56,14 @@
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     z-index: 4 !important;
     margin: 0 !important;
-    padding: 0 4px !important;
+    padding: 0 !important;
   }
 
-  /* A Moldura Vectorial (Fieldset Hack) */
-  .notched-outline {
-    position: absolute !important;
-    inset: 0 !important;
-    pointer-events: none !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-radius: 4px !important;
-    z-index: 1 !important;
-    transition: border-color 0.2s !important;
-  }
+  /* --- COMPORTAMENTO AO FOCAR / PREENCHER --- */
 
-  /* O "Corte" na borda */
-  .notched-outline-notch {
-    position: absolute !important;
-    top: -1px !important;
-    left: 10px !important;
-    height: 2px !important;
-    width: 0 !important; /* Começa sem corte */
-    background: transparent !important;
-    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border-top: 1px solid transparent !important;
-    z-index: 2 !important;
-  }
-
-  /* --- ESTADOS ATIVOS (FOCUS / FILLED) --- */
-
-  /* 1. O Label sobe */
-  .custom-field-v2 .input__field:focus + label,
-  .custom-field-v2 .input__field:not(:placeholder-shown) + label {
+  /* Label subindo */
+  .custom-field-v3 .input__field:focus + label,
+  .custom-field-v3 .input__field:not(:placeholder-shown) + label {
     top: 0 !important;
     font-size: 12px !important;
     color: #fff !important;
@@ -82,55 +71,67 @@
     transform: translateY(-50%) !important;
   }
 
-  /* 2. A Borda brilha */
-  .custom-field-v2 .input__field:focus ~ .notched-outline {
+  /* Borda brilhando */
+  .custom-field-v3 .input__field:focus ~ .outline-vector {
     border-color: #fff !important;
-    border-width: 2px !important;
+    border-width: 1.5px !important;
   }
 
-  /* 3. O "Corte" acontece na borda (O vetor abre) */
-  .custom-field-v2 .input__field:focus ~ .notched-outline .notched-outline-notch,
-  .custom-field-v2 .input__field:not(:placeholder-shown) ~ .notched-outline .notched-outline-notch {
-    width: 55px !important; /* Tamanho do buraco para o texto */
-    background: transparent !important; /* Mantém o gradiente visível */
-    /* Usamos uma técnica de borda para "apagar" a linha debaixo */
-    box-shadow: 0px -2px 0px 0px black !important; /* Isso simula o corte no topo */
-    background: var(--background, #1a1a1a) !important; /* AQUI: Coloque a cor média do seu gradiente ou deixe transparente */
+  /* --- CORTES INDIVIDUAIS (CLIP-PATH) --- */
+
+  /* Ajuste para "Nome" (Corte menor) */
+  .field-nome .input__field:focus ~ .outline-vector,
+  .field-nome .input__field:not(:placeholder-shown) ~ .outline-vector {
+    clip-path: polygon(
+      0% 0%, 
+      12px 0%, 
+      12px 2px, 
+      52px 2px, 
+      52px 0%, 
+      100% 0%, 
+      100% 100%, 
+      0% 100%
+    ) !important;
   }
 
-  /* Solução Final para o Corte Perfeito em Gradiente: Clip-path dinâmico no Outline */
-  .custom-field-v2 .input__field:focus ~ .notched-outline,
-  .custom-field-v2 .input__field:not(:placeholder-shown) ~ .notched-outline {
-    clip-path: polygon(0% 0%, 12px 0%, 12px 2px, 65px 2px, 65px 0%, 100% 0%, 100% 100%, 0% 100%) !important;
+  /* Ajuste para "Número" (Corte maior para caber o acento e largura da palavra) */
+  .field-numero .input__field:focus ~ .outline-vector,
+  .field-numero .input__field:not(:placeholder-shown) ~ .outline-vector {
+    clip-path: polygon(
+      0% 0%, 
+      12px 0%, 
+      12px 2px, 
+      72px 2px, 
+      72px 0%, 
+      100% 0%, 
+      100% 100%, 
+      0% 100%
+    ) !important;
   }
 
-  /* Placeholder discreto */
-  .custom-field-v2 .input__field::placeholder { color: transparent !important; }
-  .custom-field-v2 .input__field:focus::placeholder { color: rgba(255,255,255,0.3) !important; transition: 0.3s; }
+  /* Placeholder some para não encavalar */
+  .custom-field-v3 .input__field::placeholder { color: transparent !important; }
+  .custom-field-v3 .input__field:focus::placeholder { color: rgba(255,255,255,0.3) !important; }
 </style>
 
 <div id="customization-fields"
      class="customization-fields"
      style="margin-bottom: 20px; display: {{ show_customization_fields_on_load | default: false | ternary: 'block', 'none' }};">
 
-  <div class="custom-field-v2">
+  <div class="custom-field-v3 field-nome">
     <input id="custom_name" type="text" placeholder="Ex: Neymar" name="properties[Nome personalizado]" class="input__field">
     <label for="custom_name">Nome</label>
-    <div class="notched-outline">
-        <div class="notched-outline-notch"></div>
-    </div>
+    <div class="outline-vector"></div>
   </div>
 
-  <div class="custom-field-v2" style="margin-top: 25px !important;">
+  <div class="custom-field-v3 field-numero" style="margin-top: 25px !important;">
     <input id="custom_number" type="text" placeholder="Ex: 10" name="properties[Número personalizado]" class="input__field">
     <label for="custom_number">Número</label>
-    <div class="notched-outline">
-        <div class="notched-outline-notch"></div>
-    </div>
+    <div class="outline-vector"></div>
   </div>
 
   <div id="aviso" style="margin-top: 15px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
-    <label style="color: #fff !important; font-size: 13px;"> ⓘ Valor da personalização: R$18,00 </label>
+    <label style="color: #fff !important; font-size: 13px; opacity: 0.8;"> ⓘ Valor da personalização: R$18,00 </label>
   </div>
 
 </div>
