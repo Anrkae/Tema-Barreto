@@ -18,7 +18,7 @@
     width: 100% !important;
     padding: 12px 14px !important;
     height: 50px !important;
-    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 12px !important;
     background: transparent !important;
     color: #fff !important;
@@ -43,7 +43,7 @@
     background: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    padding: 0 5px !important;
+    padding: 0 !important;
     z-index: 10 !important;
   }
 
@@ -57,7 +57,7 @@
     transform: translateY(-50%) !important;
     
     /* Ativa o fundo e o blur APENAS aqui */
-    background: rgba(0, 0, 0, 0.04) !important; 
+    background: rgba(0, 0, 0, 0.01) !important; 
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     border-radius: 14px !important;
@@ -74,7 +74,7 @@
   }
 
   .floating-group .input__field:focus {
-    border-color: #fff !important;
+    border-color: rgba(255, 255, 255, 0.7) !important;
   }
 </style>
 
@@ -88,7 +88,7 @@
   </div>
 
   <div class="product-form__line-item-property floating-group" style="margin-top: 1.5rem !important;">
-    <input id="custom_number" type="text" placeholder="Ex: 10" name="properties[Número personalizado]" class="input__field">
+    <input id="custom_number" type="text" placeholder="Ex: 100" name="properties[Número personalizado]" class="input__field">
     <label for="custom_number">Número</label>
   </div>
 
