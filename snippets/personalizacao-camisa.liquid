@@ -8,51 +8,66 @@
 {%- endif -%}
 
 <style>
+  /* Container para posicionamento relativo */
   .floating-group {
-    position: relative;
-    margin-bottom: 20px; /* Espaço entre os inputs */
+    position: relative !important;
+    margin-bottom: 20px !important;
+    margin-top: 10px !important;
   }
 
-  /* O Input em si */
+  /* O Input - Forçando altura, borda e espaçamento */
   .floating-group .input__field {
-    width: 100%;
-    padding: 12px 10px;
-    height: 50px; /* Altura fixa ajuda no alinhamento */
-    border: 1px solid #ccc; /* Ajuste a cor da borda se precisar *
-    background: transparent;
-    outline: none;
-    font-size: 16px;
+    width: 100% !important;
+    padding: 12px 14px !important;
+    height: 50px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    background: transparent !important;
+    outline: none !important;
+    font-size: 16px !important;
+    box-shadow: none !important; /* Remove sombras padrão do tema */
+    color: #333 !important;
   }
 
   /* O Label (Texto que flutua) */
   .floating-group label {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    background-color: #fff; /* Fundo branco para cobrir a linha da borda */
-    padding: 0 5px;
-    color: #666;
-    font-size: 16px;
-    pointer-events: none; /* Permite clicar "através" do label */
-    transition: 0.2s ease all;
+    position: absolute !important;
+    left: 10px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background-color: #fff !important; /* Deve ser a cor de fundo do seu site para cobrir a linha */
+    padding: 0 6px !important;
+    color: #666 !important;
+    font-size: 16px !important;
+    pointer-events: none !important; /* Permite clicar através do label */
+    transition: 0.2s ease all !important;
+    z-index: 10 !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    font-weight: normal !important;
   }
 
-  /* Efeito Mágico: Quando focado ou quando tem texto (placeholder não mostrado) */
+  /* ESTADO ATIVO: Quando focado ou quando tem texto digitado */
   .floating-group .input__field:focus + label,
   .floating-group .input__field:not(:placeholder-shown) + label {
-    top: 0;
-    font-size: 12px;
-    color: #000; /* Cor do label quando ativo */
-    font-weight: 600;
+    top: 0 !important;
+    transform: translateY(-50%) scale(0.9) !important; /* Sobe para a linha */
+    color: #000 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    z-index: 11 !important;
   }
 
-  /* Placeholder (Ex: Neymar): Só aparece quando focado */
+  /* Placeholder nativo: Escondido até focar */
   .floating-group .input__field::placeholder {
-    color: transparent;
+    color: transparent !important;
+    opacity: 0 !important;
   }
+  
+  /* Placeholder nativo: Mostra quando foca */
   .floating-group .input__field:focus::placeholder {
-    color: #ccc; /* Cor do texto de exemplo */
+    color: #ccc !important;
+    opacity: 1 !important;
   }
 </style>
 
@@ -71,7 +86,7 @@
   </div>
 
   <div id="aviso" style="margin-top: 8px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
-    <label> ⓘ Valor da personalização: R$18,00 </label>
+    <label style="margin: 0 !important;"> ⓘ Valor da personalização: R$18,00 </label>
   </div>
 
 </div>
