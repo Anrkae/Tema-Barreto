@@ -336,11 +336,12 @@
         "item-1": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/c85cc6ca.jpg",
             "label": "2026",
             "title": "Rumo ao hexa!",
             "content": "<p>Novo manto da maior seleção do planeta!!</p>",
             "button_text": "Aproveite!",
-            "button_link": "shopify://products/camisa-selecao-brasileira-25-26-amarela"
+            "button_link": "shopify://products/camisa-do-brasil-2026-casa"
           }
         },
         "item-2": {
