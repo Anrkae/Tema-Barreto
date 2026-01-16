@@ -1,128 +1,136 @@
 {%- comment -%}
-  Renderiza os campos SEMPRE no HTML, mas visíveis apenas se a variante inicial for "Personalizar"
+  Preservando sua lógica original do Tema Focal
 {%- endcomment -%}
-
 {%- assign show_customization_fields_on_load = false -%}
 {%- if product.selected_or_first_available_variant.title contains 'Personalizar' or product.selected_or_first_available_variant.title contains 'Personalizada' -%}
   {%- assign show_customization_fields_on_load = true -%}
 {%- endif -%}
 
 <style>
-  /* 1. ANULAR COMPLETAMENTE A BORDA DO TEMA FOCAL */
-  /* Usamos seletores compostos para ganhar da especificidade do theme.css */
-  .customization-fields .floating-group input.input__field,
-  .customization-fields .floating-group input.input__field:focus {
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    appearance: none !important;
-    -webkit-appearance: none !important;
-    z-index: 5 !important;
+  /* Container Principal */
+  .custom-field-v2 {
     position: relative !important;
-    color: #fff !important; /* Ajuste se seu fundo for claro */
-  }
-
-  .floating-group {
-    position: relative !important;
-    margin-top: 15px !important;
-    margin-bottom: 25px !important;
+    margin-top: 20px !important;
     display: block !important;
+    width: 100% !important;
   }
 
-  /* 2. CRIAR A BORDA NOVA EM UM ELEMENTO SEPARADO */
-  .floating-group::before {
-    content: "" !important;
+  /* Escondendo a borda original do Focal de forma agressiva */
+  .custom-field-v2 .input__field {
+    width: 100% !important;
+    height: 52px !important;
+    padding: 12px 16px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: #fff !important; /* Cor do texto digitado */
+    font-size: 16px !important;
+    z-index: 3 !important;
+    position: relative !important;
+    appearance: none !important;
+  }
+
+  /* O Label - O "Coração" da animação */
+  .custom-field-v2 label {
+    position: absolute !important;
+    top: 50% !important;
+    left: 12px !important;
+    transform: translateY(-50%) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 16px !important;
+    pointer-events: none !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 4 !important;
+    margin: 0 !important;
+    padding: 0 4px !important;
+  }
+
+  /* A Moldura Vectorial (Fieldset Hack) */
+  .notched-outline {
     position: absolute !important;
     inset: 0 !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    pointer-events: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 4px !important;
-    pointer-events: none !important;
     z-index: 1 !important;
-    transition: all 0.2s ease !important;
-    
-    /* Máscara inicial: mostra a borda inteira */
-    -webkit-mask-image: linear-gradient(#000, #000) !important;
-    mask-image: linear-gradient(#000, #000) !important;
+    transition: border-color 0.2s !important;
   }
 
-  /* 3. O CORTE (MÁSCARA) QUANDO ATIVO */
-  /* Quando o input está focado ou tem texto, aplicamos uma máscara que "apaga" o topo */
-  .floating-group:focus-within::before,
-  .floating-group:has(input:not(:placeholder-shown))::before {
-    border-color: #fff !important;
-    /* Essa máscara cria um retângulo preto em tudo, EXCETO onde o texto sobe */
-    -webkit-mask-image: linear-gradient(to right, 
-      black 0%, black 10px, 
-      transparent 10px, transparent 65px, 
-      black 65px, black 100%) !important;
-    mask-image: linear-gradient(to right, 
-      black 0%, black 10px, 
-      transparent 10px, transparent 65px, 
-      black 65px, black 100%) !important;
-    
-    /* Aplica a máscara apenas na parte de cima da borda */
-    -webkit-mask-size: 100% 2px !important;
-    mask-size: 100% 2px !important;
-    -webkit-mask-repeat: no-repeat !important;
-    mask-repeat: no-repeat !important;
-    
-    /* Como queremos que o resto da borda (lados e baixo) continue aparecendo, 
-       usamos múltiplas camadas de máscara */
-    -webkit-mask-image: 
-      linear-gradient(to right, black 10px, transparent 10px, transparent 65px, black 65px), /* Topo com furo */
-      linear-gradient(black, black) !important; /* Restante */
-    -webkit-mask-composite: source-in, destination-over !important;
-    mask-composite: intersect !important;
-  }
-
-  /* 4. ESTILIZAÇÃO DO LABEL */
-  .floating-group label {
+  /* O "Corte" na borda */
+  .notched-outline-notch {
     position: absolute !important;
-    left: 12px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    color: rgba(255, 255, 255, 0.7) !important;
-    font-size: 16px !important;
-    transition: all 0.2s ease !important;
-    z-index: 10 !important;
+    top: -1px !important;
+    left: 10px !important;
+    height: 2px !important;
+    width: 0 !important; /* Começa sem corte */
     background: transparent !important;
-    margin: 0 !important;
-    pointer-events: none !important;
+    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-top: 1px solid transparent !important;
+    z-index: 2 !important;
   }
 
-  /* Label subindo para o espaço vazio */
-  .floating-group input.input__field:focus + label,
-  .floating-group input.input__field:not(:placeholder-shown) + label {
+  /* --- ESTADOS ATIVOS (FOCUS / FILLED) --- */
+
+  /* 1. O Label sobe */
+  .custom-field-v2 .input__field:focus + label,
+  .custom-field-v2 .input__field:not(:placeholder-shown) + label {
     top: 0 !important;
     font-size: 12px !important;
-    font-weight: 600 !important;
     color: #fff !important;
+    font-weight: 600 !important;
     transform: translateY(-50%) !important;
-    padding: 0 5px !important;
   }
 
-  /* Esconder placeholder nativo */
-  .floating-group input.input__field::placeholder { color: transparent !important; }
-  .floating-group input.input__field:focus::placeholder { color: rgba(255, 255, 255, 0.3) !important; }
+  /* 2. A Borda brilha */
+  .custom-field-v2 .input__field:focus ~ .notched-outline {
+    border-color: #fff !important;
+    border-width: 2px !important;
+  }
+
+  /* 3. O "Corte" acontece na borda (O vetor abre) */
+  .custom-field-v2 .input__field:focus ~ .notched-outline .notched-outline-notch,
+  .custom-field-v2 .input__field:not(:placeholder-shown) ~ .notched-outline .notched-outline-notch {
+    width: 55px !important; /* Tamanho do buraco para o texto */
+    background: transparent !important; /* Mantém o gradiente visível */
+    /* Usamos uma técnica de borda para "apagar" a linha debaixo */
+    box-shadow: 0px -2px 0px 0px black !important; /* Isso simula o corte no topo */
+    background: var(--background, #1a1a1a) !important; /* AQUI: Coloque a cor média do seu gradiente ou deixe transparente */
+  }
+
+  /* Solução Final para o Corte Perfeito em Gradiente: Clip-path dinâmico no Outline */
+  .custom-field-v2 .input__field:focus ~ .notched-outline,
+  .custom-field-v2 .input__field:not(:placeholder-shown) ~ .notched-outline {
+    clip-path: polygon(0% 0%, 12px 0%, 12px 2px, 65px 2px, 65px 0%, 100% 0%, 100% 100%, 0% 100%) !important;
+  }
+
+  /* Placeholder discreto */
+  .custom-field-v2 .input__field::placeholder { color: transparent !important; }
+  .custom-field-v2 .input__field:focus::placeholder { color: rgba(255,255,255,0.3) !important; transition: 0.3s; }
 </style>
 
 <div id="customization-fields"
      class="customization-fields"
      style="margin-bottom: 20px; display: {{ show_customization_fields_on_load | default: false | ternary: 'block', 'none' }};">
 
-  <div class="product-form__line-item-property floating-group">
+  <div class="custom-field-v2">
     <input id="custom_name" type="text" placeholder="Ex: Neymar" name="properties[Nome personalizado]" class="input__field">
     <label for="custom_name">Nome</label>
+    <div class="notched-outline">
+        <div class="notched-outline-notch"></div>
+    </div>
   </div>
 
-  <div class="product-form__line-item-property floating-group" style="margin-top: 1.5rem !important;">
+  <div class="custom-field-v2" style="margin-top: 25px !important;">
     <input id="custom_number" type="text" placeholder="Ex: 10" name="properties[Número personalizado]" class="input__field">
     <label for="custom_number">Número</label>
+    <div class="notched-outline">
+        <div class="notched-outline-notch"></div>
+    </div>
   </div>
 
-  <div id="aviso" style="margin-top: 8px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
-    <label style="color: #fff !important; background: transparent !important;"> ⓘ Valor da personalização: R$18,00 </label>
+  <div id="aviso" style="margin-top: 15px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
+    <label style="color: #fff !important; font-size: 13px;"> ⓘ Valor da personalização: R$18,00 </label>
   </div>
 
 </div>
