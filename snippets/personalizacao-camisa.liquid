@@ -14,7 +14,24 @@
     margin-top: 15px !important;
   }
 
-  /* Criamos a borda em um pseudo-elemento para podermos "cortá-la" sem afetar o input */
+  /* 1. REMOVE A BORDA DO TEMA FOCAL */
+  .floating-group .input__field {
+    width: 100% !important;
+    padding: 12px 14px !important;
+    height: 50px !important;
+    background: transparent !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    outline: none !important;
+    position: relative !important;
+    z-index: 2 !important;
+    /* Anulando bordas e sombras do tema */
+    border: none !important; 
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+  }
+
+  /* 2. CRIA A NOSSA BORDA ÚNICA QUE PODE SER CORTADA */
   .floating-group::before {
     content: "" !important;
     position: absolute !important;
@@ -22,41 +39,30 @@
     border: 1px solid rgba(255, 255, 255, 0.4) !important; /* Cor da borda */
     border-radius: 4px !important;
     pointer-events: none !important;
-    transition: clip-path 0.2s ease !important;
-    /* Inicialmente a borda está inteira (quadrado completo) */
+    z-index: 1 !important;
+    transition: all 0.2s ease !important;
+    /* Começa sem corte */
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%) !important;
   }
 
-  /* Quando o input estiver focado ou preenchido, cortamos um pedaço do topo da borda */
+  /* 3. EFEITO DE CORTE QUANDO FOCADO OU PREENCHIDO */
   .floating-group:focus-within::before,
   .floating-group:has(input:not(:placeholder-shown))::before {
-    /* O polígono abaixo cria um "entalhe" no topo da borda */
+    border-color: #fff !important; /* Cor da borda quando ativa */
+    /* O polígono abaixo "abre" um buraco no topo da borda para o label passar */
     clip-path: polygon(
       0% 0%, 
       10px 0%, 
-      10px -10px, 
-      65px -10px, 
+      10px -15px, 
+      65px -15px, 
       65px 0%, 
       100% 0%, 
       100% 100%, 
       0% 100%
     ) !important;
-    border-color: #fff !important; /* Brilho na borda ao focar */
   }
 
-  .floating-group .input__field {
-    width: 100% !important;
-    padding: 12px 14px !important;
-    height: 50px !important;
-    border: none !important; /* Removemos a borda original do input */
-    background: transparent !important;
-    color: #fff !important;
-    font-size: 16px !important;
-    outline: none !important;
-    position: relative !important;
-    z-index: 1 !important;
-  }
-
+  /* 4. O LABEL */
   .floating-group label {
     position: absolute !important;
     left: 12px !important;
@@ -68,10 +74,10 @@
     transition: all 0.2s ease !important;
     z-index: 10 !important;
     margin: 0 !important;
-    background: transparent !important;
+    background: transparent !important; /* Transparente para ver o gradiente */
   }
 
-  /* Estado do Label quando sobe */
+  /* 5. LABEL SUBINDO PARA O BURACO DA BORDA */
   .floating-group .input__field:focus + label,
   .floating-group .input__field:not(:placeholder-shown) + label {
     top: 0 !important;
@@ -81,7 +87,7 @@
     transform: translateY(-50%) !important;
   }
 
-  /* Esconde o placeholder */
+  /* Placeholder some para não poluir */
   .floating-group .input__field::placeholder {
     color: transparent !important;
   }
@@ -106,7 +112,7 @@
   </div>
 
   <div id="aviso" style="margin-top: 8px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
-    <label style="color: #fff !important;"> ⓘ Valor da personalização: R$18,00 </label>
+    <label style="color: #fff !important; background: transparent !important;"> ⓘ Valor da personalização: R$18,00 </label>
   </div>
 
 </div>
