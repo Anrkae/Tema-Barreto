@@ -8,61 +8,75 @@
 {%- endif -%}
 
 <style>
+  /* 1. ANULAR COMPLETAMENTE A BORDA DO TEMA FOCAL */
+  /* Usamos seletores compostos para ganhar da especificidade do theme.css */
+  .customization-fields .floating-group input.input__field,
+  .customization-fields .floating-group input.input__field:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    z-index: 5 !important;
+    position: relative !important;
+    color: #fff !important; /* Ajuste se seu fundo for claro */
+  }
+
   .floating-group {
     position: relative !important;
-    margin-bottom: 20px !important;
     margin-top: 15px !important;
+    margin-bottom: 25px !important;
+    display: block !important;
   }
 
-  /* 1. REMOVE A BORDA DO TEMA FOCAL */
-  .floating-group .input__field {
-    width: 100% !important;
-    padding: 12px 14px !important;
-    height: 50px !important;
-    background: transparent !important;
-    color: #fff !important;
-    font-size: 16px !important;
-    outline: none !important;
-    position: relative !important;
-    z-index: 2 !important;
-    /* Anulando bordas e sombras do tema */
-    border: none !important; 
-    box-shadow: none !important;
-    -webkit-appearance: none !important;
-  }
-
-  /* 2. CRIA A NOSSA BORDA ÚNICA QUE PODE SER CORTADA */
+  /* 2. CRIAR A BORDA NOVA EM UM ELEMENTO SEPARADO */
   .floating-group::before {
     content: "" !important;
     position: absolute !important;
     inset: 0 !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important; /* Cor da borda */
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
     border-radius: 4px !important;
     pointer-events: none !important;
     z-index: 1 !important;
     transition: all 0.2s ease !important;
-    /* Começa sem corte */
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%) !important;
+    
+    /* Máscara inicial: mostra a borda inteira */
+    -webkit-mask-image: linear-gradient(#000, #000) !important;
+    mask-image: linear-gradient(#000, #000) !important;
   }
 
-  /* 3. EFEITO DE CORTE QUANDO FOCADO OU PREENCHIDO */
+  /* 3. O CORTE (MÁSCARA) QUANDO ATIVO */
+  /* Quando o input está focado ou tem texto, aplicamos uma máscara que "apaga" o topo */
   .floating-group:focus-within::before,
   .floating-group:has(input:not(:placeholder-shown))::before {
-    border-color: #fff !important; /* Cor da borda quando ativa */
-    /* O polígono abaixo "abre" um buraco no topo da borda para o label passar */
-    clip-path: polygon(
-      0% 0%, 
-      10px 0%, 
-      10px -15px, 
-      65px -15px, 
-      65px 0%, 
-      100% 0%, 
-      100% 100%, 
-      0% 100%
-    ) !important;
+    border-color: #fff !important;
+    /* Essa máscara cria um retângulo preto em tudo, EXCETO onde o texto sobe */
+    -webkit-mask-image: linear-gradient(to right, 
+      black 0%, black 10px, 
+      transparent 10px, transparent 65px, 
+      black 65px, black 100%) !important;
+    mask-image: linear-gradient(to right, 
+      black 0%, black 10px, 
+      transparent 10px, transparent 65px, 
+      black 65px, black 100%) !important;
+    
+    /* Aplica a máscara apenas na parte de cima da borda */
+    -webkit-mask-size: 100% 2px !important;
+    mask-size: 100% 2px !important;
+    -webkit-mask-repeat: no-repeat !important;
+    mask-repeat: no-repeat !important;
+    
+    /* Como queremos que o resto da borda (lados e baixo) continue aparecendo, 
+       usamos múltiplas camadas de máscara */
+    -webkit-mask-image: 
+      linear-gradient(to right, black 10px, transparent 10px, transparent 65px, black 65px), /* Topo com furo */
+      linear-gradient(black, black) !important; /* Restante */
+    -webkit-mask-composite: source-in, destination-over !important;
+    mask-composite: intersect !important;
   }
 
-  /* 4. O LABEL */
+  /* 4. ESTILIZAÇÃO DO LABEL */
   .floating-group label {
     position: absolute !important;
     left: 12px !important;
@@ -70,31 +84,27 @@
     transform: translateY(-50%) !important;
     color: rgba(255, 255, 255, 0.7) !important;
     font-size: 16px !important;
-    pointer-events: none !important;
     transition: all 0.2s ease !important;
     z-index: 10 !important;
+    background: transparent !important;
     margin: 0 !important;
-    background: transparent !important; /* Transparente para ver o gradiente */
+    pointer-events: none !important;
   }
 
-  /* 5. LABEL SUBINDO PARA O BURACO DA BORDA */
-  .floating-group .input__field:focus + label,
-  .floating-group .input__field:not(:placeholder-shown) + label {
+  /* Label subindo para o espaço vazio */
+  .floating-group input.input__field:focus + label,
+  .floating-group input.input__field:not(:placeholder-shown) + label {
     top: 0 !important;
     font-size: 12px !important;
     font-weight: 600 !important;
     color: #fff !important;
     transform: translateY(-50%) !important;
+    padding: 0 5px !important;
   }
 
-  /* Placeholder some para não poluir */
-  .floating-group .input__field::placeholder {
-    color: transparent !important;
-  }
-  
-  .floating-group .input__field:focus::placeholder {
-    color: rgba(255, 255, 255, 0.4) !important;
-  }
+  /* Esconder placeholder nativo */
+  .floating-group input.input__field::placeholder { color: transparent !important; }
+  .floating-group input.input__field:focus::placeholder { color: rgba(255, 255, 255, 0.3) !important; }
 </style>
 
 <div id="customization-fields"
