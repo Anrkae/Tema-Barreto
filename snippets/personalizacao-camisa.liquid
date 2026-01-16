@@ -1,5 +1,26 @@
 {%- comment -%}
-  Lógica de exibição original do Tema Focal
+  1. LÓGICA DE CÁLCULO DA DIFERENÇA DE PREÇO
+{%- endcomment -%}
+
+{%- assign price_standard = 0 -%}
+{%- assign price_custom = 0 -%}
+
+{%- for variant in product.variants -%}
+  {%- if variant.title contains 'Personalizar' or variant.title contains 'Personalizada' -%}
+    {%- if price_custom == 0 -%}
+      {%- assign price_custom = variant.price -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- if price_standard == 0 -%}
+      {%- assign price_standard = variant.price -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- assign customization_diff = price_custom | minus: price_standard -%}
+
+{%- comment -%}
+  2. LÓGICA DE EXIBIÇÃO ORIGINAL
 {%- endcomment -%}
 {%- assign show_customization_fields_on_load = false -%}
 {%- if product.selected_or_first_available_variant.title contains 'Personalizar' or product.selected_or_first_available_variant.title contains 'Personalizada' -%}
@@ -7,7 +28,7 @@
 {%- endif -%}
 
 <style>
-  /* --- CONFIGURAÇÕES GERAIS --- */
+  /* --- MANTENDO SEU CSS QUE FICOU PERFEITO --- */
   .custom-field-v3 {
     position: relative !important;
     margin-top: 20px !important;
@@ -15,7 +36,6 @@
     width: 100% !important;
   }
 
-  /* Anulando o estilo do tema Focal */
   .custom-field-v3 .input__field {
     width: 100% !important;
     height: 54px !important;
@@ -31,20 +51,17 @@
     appearance: none !important;
   }
 
-  /* Estilo da Borda Vectorial (Outline) */
   .outline-vector {
     position: absolute !important;
     inset: 0 !important;
     pointer-events: none !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-radius: 12px !important; /* Raio solicitado */
+    border-radius: 12px !important;
     z-index: 1 !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    /* Inicialmente sem corte */
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%) !important;
   }
 
-  /* Estilo do Label */
   .custom-field-v3 label {
     position: absolute !important;
     top: 50% !important;
@@ -52,16 +69,11 @@
     transform: translateY(-50%) !important;
     color: rgba(255, 255, 255, 0.6) !important;
     font-size: 16px !important;
-    pointer-events: none !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     z-index: 4 !important;
     margin: 0 !important;
-    padding: 0 !important;
   }
 
-  /* --- COMPORTAMENTO AO FOCAR / PREENCHER --- */
-
-  /* Label subindo */
   .custom-field-v3 .input__field:focus + label,
   .custom-field-v3 .input__field:not(:placeholder-shown) + label {
     top: 0 !important;
@@ -71,47 +83,23 @@
     transform: translateY(-50%) !important;
   }
 
-  /* Borda brilhando */
   .custom-field-v3 .input__field:focus ~ .outline-vector {
     border-color: #fff !important;
     border-width: 1.5px !important;
   }
 
-  /* --- CORTES INDIVIDUAIS (CLIP-PATH) --- */
-
-  /* Ajuste para "Nome" (Corte menor) */
+  /* CORTES INDIVIDUAIS */
   .field-nome .input__field:focus ~ .outline-vector,
   .field-nome .input__field:not(:placeholder-shown) ~ .outline-vector {
-    clip-path: polygon(
-      0% 0%, 
-      12px 0%, 
-      12px 2px, 
-      58px 2px, 
-      58px 0%, 
-      100% 0%, 
-      100% 100%, 
-      0% 100%
-    ) !important;
+    clip-path: polygon(0% 0%, 12px 0%, 12px 2px, 58px 2px, 58px 0%, 100% 0%, 100% 100%, 0% 100%) !important;
   }
 
-  /* Ajuste para "Número" (Corte maior para caber o acento e largura da palavra) */
   .field-numero .input__field:focus ~ .outline-vector,
   .field-numero .input__field:not(:placeholder-shown) ~ .outline-vector {
-    clip-path: polygon(
-      0% 0%, 
-      12px 0%, 
-      12px 2px, 
-      72px 2px, 
-      72px 0%, 
-      100% 0%, 
-      100% 100%, 
-      0% 100%
-    ) !important;
+    clip-path: polygon(0% 0%, 12px 0%, 12px 2px, 72px 2px, 72px 0%, 100% 0%, 100% 100%, 0% 100%) !important;
   }
 
-  /* Placeholder some para não encavalar */
   .custom-field-v3 .input__field::placeholder { color: transparent !important; }
-  .custom-field-v3 .input__field:focus::placeholder { color: rgba(255,255,255,0.3) !important; }
 </style>
 
 <div id="customization-fields"
@@ -131,7 +119,8 @@
   </div>
 
   <div id="aviso" style="margin-top: 15px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
-    <label style="color: #fff !important; font-size: 13px; opacity: 0.8;"> ⓘ Valor da personalização: R$18,00 </label>
+    <label style="color: #fff !important; font-size: 13px; opacity: 0.8;"> 
+      ⓘ Valor da personalização: {{ customization_diff | money }}
+    </label>
   </div>
-
 </div>
