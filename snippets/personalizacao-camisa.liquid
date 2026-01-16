@@ -14,20 +14,49 @@
     margin-top: 15px !important;
   }
 
+  /* Criamos a borda em um pseudo-elemento para podermos "cortá-la" sem afetar o input */
+  .floating-group::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important; /* Cor da borda */
+    border-radius: 4px !important;
+    pointer-events: none !important;
+    transition: clip-path 0.2s ease !important;
+    /* Inicialmente a borda está inteira (quadrado completo) */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%) !important;
+  }
+
+  /* Quando o input estiver focado ou preenchido, cortamos um pedaço do topo da borda */
+  .floating-group:focus-within::before,
+  .floating-group:has(input:not(:placeholder-shown))::before {
+    /* O polígono abaixo cria um "entalhe" no topo da borda */
+    clip-path: polygon(
+      0% 0%, 
+      10px 0%, 
+      10px -10px, 
+      65px -10px, 
+      65px 0%, 
+      100% 0%, 
+      100% 100%, 
+      0% 100%
+    ) !important;
+    border-color: #fff !important; /* Brilho na borda ao focar */
+  }
+
   .floating-group .input__field {
     width: 100% !important;
     padding: 12px 14px !important;
     height: 50px !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
-    border-radius: 12px !important;
+    border: none !important; /* Removemos a borda original do input */
     background: transparent !important;
     color: #fff !important;
     font-size: 16px !important;
     outline: none !important;
-    box-sizing: border-box !important;
+    position: relative !important;
+    z-index: 1 !important;
   }
 
-  /* ESTADO INICIAL DO LABEL (Dentro do input) */
   .floating-group label {
     position: absolute !important;
     left: 12px !important;
@@ -36,18 +65,13 @@
     color: rgba(255, 255, 255, 0.7) !important;
     font-size: 16px !important;
     pointer-events: none !important;
-    transition: all 0.25s ease !important;
-    margin: 0 !important;
-    
-    /* Garantir que não haja fundo ou blur aqui */
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    padding: 0 5px !important;
+    transition: all 0.2s ease !important;
     z-index: 10 !important;
+    margin: 0 !important;
+    background: transparent !important;
   }
 
-  /* ESTADO ATIVO (Quando sobe e sobrepõe a borda) */
+  /* Estado do Label quando sobe */
   .floating-group .input__field:focus + label,
   .floating-group .input__field:not(:placeholder-shown) + label {
     top: 0 !important;
@@ -55,26 +79,15 @@
     font-weight: 600 !important;
     color: #fff !important;
     transform: translateY(-50%) !important;
-    
-    /* Ativa o fundo e o blur APENAS aqui */
-    background: rgba(0, 0, 0, 0.5) !important; 
-    backdrop-filter: blur(6px) !important;
-    -webkit-backdrop-filter: blur(6px) !important;
-    border-radius: 10px !important;
   }
 
-  /* Placeholder nativo fica invisível para não confundir com o label */
+  /* Esconde o placeholder */
   .floating-group .input__field::placeholder {
     color: transparent !important;
   }
   
-  /* Mostra o placeholder real (ex: Neymar) apenas quando focado */
   .floating-group .input__field:focus::placeholder {
     color: rgba(255, 255, 255, 0.4) !important;
-  }
-
-  .floating-group .input__field:focus {
-    border-color: rgba(255, 255, 255, 0.7) !important;
   }
 </style>
 
@@ -88,12 +101,12 @@
   </div>
 
   <div class="product-form__line-item-property floating-group" style="margin-top: 1.5rem !important;">
-    <input id="custom_number" type="text" placeholder="Ex: 100" name="properties[Número personalizado]" class="input__field">
+    <input id="custom_number" type="text" placeholder="Ex: 10" name="properties[Número personalizado]" class="input__field">
     <label for="custom_number">Número</label>
   </div>
 
   <div id="aviso" style="margin-top: 8px; display: flex; justify-content: center; align-items: center; padding: 10px 0;">
-    <label style="color: #fff !important; background: transparent !important;"> ⓘ Valor da personalização: R$18,00 </label>
+    <label style="color: #fff !important;"> ⓘ Valor da personalização: R$18,00 </label>
   </div>
 
 </div>
