@@ -336,12 +336,12 @@
         "item-1": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ac6c45b0-299a21f71257dea4ba17207066848056-1024-1024.webp",
+            "image": "shopify://shop_images/48133442.jpg",
             "label": "",
             "title": "Rumo ao hexa!",
             "content": "<p>Novo manto da maior seleção do planeta!!</p>",
             "button_text": "Aproveite!",
-            "button_link": "shopify://products/camisa-do-brasil-2004-casa"
+            "button_link": "shopify://products/camisa-do-brasil-2026-casa"
           }
         },
         "item-2": {
@@ -376,7 +376,7 @@
         ".container {padding-top: 16px !important; padding-bottom: 25px !important;}"
       ],
       "settings": {
-        "subheading": "Futebol é história",
+        "subheading": "",
         "title": "",
         "text_position": "middle",
         "background": "rgba(0,0,0,0)",
