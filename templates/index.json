@@ -436,9 +436,9 @@
         ".product__media-image-wrapper {background: rgba(255, 255, 255, 0.03) !important;}"
       ],
       "settings": {
-        "product": "camisa-do-brasil-2002-casa",
-        "subheading": "Penta",
-        "title": "Campeão do mundo em 2002!",
+        "product": "camisa-do-brasil-2004-casa",
+        "subheading": "Único penta!",
+        "title": "A maior seleção do planeta!",
         "show_vendor": false,
         "show_sku": false,
         "show_taxes_included": false,
