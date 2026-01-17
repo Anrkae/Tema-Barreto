@@ -150,7 +150,7 @@
         "collection-1": {
           "type": "collection",
           "settings": {
-            "collection": "frontpage",
+            "collection": "casa",
             "label": "",
             "button_text": "",
             "button_url": "shopify://collections/copa-do-mundo-de-clubes"
