@@ -150,7 +150,7 @@
         "collection-1": {
           "type": "collection",
           "settings": {
-            "collection": "casa",
+            "collection": "recomendadas",
             "label": "",
             "button_text": "",
             "button_url": "shopify://collections/copa-do-mundo-de-clubes"
@@ -181,7 +181,7 @@
         "collection_QGD7B3": {
           "type": "collection",
           "settings": {
-            "collection": "frontpage",
+            "collection": "principais",
             "label": "",
             "button_text": "",
             "button_url": "shopify://collections/temporada-2025-26"
