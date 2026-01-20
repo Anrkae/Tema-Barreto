@@ -212,6 +212,7 @@
         "item-1": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/16006.jpg",
             "tab_label": "",
             "subheading": "Vista o manto do seu time com poder feminino!",
             "title": "",
@@ -236,6 +237,7 @@
         "item-1",
         "item-2"
       ],
+      "disabled": true,
       "custom_css": [
         ".container {box-shadow: none !important;}"
       ],
